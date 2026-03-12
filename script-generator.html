@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="scriptgen.title">AI短视频脚本生成器 - 让创作更简单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes pulse-border {
+            0%, 100% { border-color: #3b82f6; }
+            50% { border-color: #8b5cf6; }
+        }
+        .generating {
+            animation: pulse-border 1s infinite;
+        }
+        #langSwitcher {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div class="container mx-auto px-4 py-8 max-w-3xl">
+        <!-- 标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                🎬 <span data-i18n="scriptgen.title">AI短视频脚本生成器</span>
+            </h1>
+            <p class="text-gray-600" data-i18n="scriptgen.subtitle">30秒生成专业脚本，助力爆款短视频</p>
+        </div>
+
+        <!-- 主要表单 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    📝 <span data-i18n="scriptgen.input_topic">输入视频主题</span>
+                </label>
+                <textarea
+                    id="topic"
+                    rows="3"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all resize-none"
+                    data-i18n-placeholder="scriptgen.placeholder"
+                    placeholder="例如：如何制作健康的减肥餐、新手学摄影的三个技巧、办公室小技巧..."
+                ></textarea>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    ⏱️ <span data-i18n="scriptgen.select_duration">选择视频时长</span>
+                </label>
+                <div class="grid grid-cols-3 gap-3">
+                    <button
+                        class="duration-btn px-4 py-3 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-medium hover:bg-blue-100 transition-all"
+                        data-duration="30"
+                    >
+                        <span class="zh">30秒</span>
+                        <span class="en hidden">30s</span>
+                    </button>
+                    <button
+                        class="duration-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        data-duration="60"
+                    >
+                        <span class="zh">1分钟</span>
+                        <span class="en hidden">1min</span>
+                    </button>
+                    <button
+                        class="duration-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        data-duration="180"
+                    >
+                        <span class="zh">3分钟</span>
+                        <span class="en hidden">3min</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    🎭 <span data-i18n="scriptgen.select_style">选择风格</span>
+                </label>
+                <div class="grid grid-cols-2 gap-3">
+                    <button
+                        class="style-btn px-4 py-3 border-2 border-blue-500 bg-blue-50 text-blue-700 rounded-lg font-medium hover:bg-blue-100 transition-all"
+                        data-style="轻松搞笑"
+                    >
+                        😄 <span class="zh">轻松搞笑</span><span class="en hidden">Funny</span>
+                    </button>
+                    <button
+                        class="style-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        data-style="专业知识"
+                    >
+                        📚 <span class="zh">专业知识</span><span class="en hidden">Professional</span>
+                    </button>
+                    <button
+                        class="style-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        data-style="情感故事"
+                    >
+                        💕 <span class="zh">情感故事</span><span class="en hidden">Emotional Story</span>
+                    </button>
+                    <button
+                        class="style-btn px-4 py-3 border-2 border-gray-300 bg-white text-gray-700 rounded-lg font-medium hover:border-blue-500 hover:bg-blue-50 transition-all"
+                        data-style="干货分享"
+                    >
+                        💡 <span class="zh">干货分享</span><span class="en hidden">Tips Sharing</span>
+                    </button>
+                </div>
+            </div>
+
+            <button
+                id="generateBtn"
+                class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+            >
+                🚀 <span data-i18n="scriptgen.btn_generate">生成脚本</span>
+            </button>
+        </div>
+
+        <!-- 生成结果 -->
+        <div id="resultSection" class="bg-white rounded-2xl shadow-xl p-6 hidden">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-gray-800">📄 <span data-i18n="scriptgen.result_title">生成的脚本</span></h2>
+                <div class="space-x-2">
+                    <button
+                        id="copyBtn"
+                        class="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-all"
+                    >
+                        📋 <span data-i18n="scriptgen.btn_copy">复制</span>
+                    </button>
+                    <button
+                        id="regenerateBtn"
+                        class="px-4 py-2 bg-blue-100 text-blue-700 rounded-lg hover:bg-blue-200 transition-all"
+                    >
+                        🔄 <span data-i18n="scriptgen.btn_regenerate">重新生成</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="scriptContent" class="bg-gray-50 rounded-lg p-4 text-gray-700 leading-relaxed whitespace-pre-wrap min-h-[300px]">
+            </div>
+
+            <div class="mt-4 p-4 bg-blue-50 rounded-lg">
+                <p class="text-sm text-blue-800">
+                    💡 <span data-i18n="scriptgen.tip">提示：这个脚本使用了AI生成，可以根据实际情况进行调整优化。如需更专业的脚本定制，请联系我们！</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- 价格信息 -->
+        <div class="mt-6 bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="text-lg font-bold text-gray-800 mb-4">💰 <span data-i18n="scriptgen.pricing_title">收费标准</span></h3>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl mb-1"><span class="zh">30秒</span><span class="en hidden">30s</span></div>
+                    <div class="text-3xl font-bold text-blue-600">¥9.9</div>
+                    <div data-i18n="scriptgen.pricing_per" class="text-sm text-gray-500">/条</div>
+                </div>
+                <div class="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-500">
+                    <div class="text-2xl mb-1"><span class="zh">1分钟</span><span class="en hidden">1min</span></div>
+                    <div class="text-3xl font-bold text-blue-600">¥19.9</div>
+                    <div data-i18n="scriptgen.pricing_per" class="text-sm text-gray-500">/条</div>
+                    <div class="mt-2 text-xs text-blue-600" data-i18n="scriptgen.pricing_recommended">推荐</div>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-2xl mb-1"><span class="zh">3分钟</span><span class="en hidden">3min</span></div>
+                    <div class="text-3xl font-bold text-blue-600">¥49.9</div>
+                    <div data-i18n="scriptgen.pricing_per" class="text-sm text-gray-500">/条</div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <button onclick="window.location.href='payment.html?product=scriptgenerator&plan=vip'" class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg">
+                    <span data-i18n="scriptgen.pricing_vip">VIP会员：¥10,000/月 无限生成</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 返回主页 -->
+        <div class="mt-6 text-center">
+            <a href="index.html" class="text-blue-600 hover:text-blue-800">
+                ← <span data-i18n="back">返回项目主页</span>
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>© 2026 <span data-i18n="scriptgen.title">AI短视频脚本生成器</span> | <span class="zh">让创作更简单</span><span class="en hidden">Make Creation Easy</span></p>
+        </div>
+    </div>
+
+    <script src="js/i18n.js"></script>
+    <script>
+        // 状态管理
+        let selectedDuration = 30;
+        let selectedStyle = '轻松搞笑';
+        let isGenerating = false;
+
+        // DOM元素
+        const topicInput = document.getElementById('topic');
+        const generateBtn = document.getElementById('generateBtn');
+        const resultSection = document.getElementById('resultSection');
+        const scriptContent = document.getElementById('scriptContent');
+        const copyBtn = document.getElementById('copyBtn');
+        const regenerateBtn = document.getElementById('regenerateBtn');
+        const durationBtns = document.querySelectorAll('.duration-btn');
+        const styleBtns = document.querySelectorAll('.style-btn');
+
+        // 语言切换时更新占位符
+        const originalUpdatePageLanguage = window.updatePageLanguage;
+        window.updatePageLanguage = function() {
+            originalUpdatePageLanguage();
+            updatePlaceholders();
+        };
+
+        function updatePlaceholders() {
+            if (currentLang === 'en') {
+                topicInput.placeholder = translations['en']['scriptgen.placeholder'];
+            } else {
+                topicInput.placeholder = translations['zh-CN']['scriptgen.placeholder'];
+            }
+        }
+
+        // 时长选择
+        durationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                durationBtns.forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+                    b.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+                });
+                btn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+                btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+                selectedDuration = parseInt(btn.dataset.duration);
+            });
+        });
+
+        // 风格选择
+        styleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                styleBtns.forEach(b => {
+                    b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+                    b.classList.add('border-gray-300', 'bg-white', 'text-gray-700');
+                });
+                btn.classList.remove('border-gray-300', 'bg-white', 'text-gray-700');
+                btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+                selectedStyle = btn.dataset.style;
+            });
+        });
+
+        // 模拟脚本生成
+        function generateScript(topic, duration, style) {
+            const durationText = duration === 30 ? (currentLang === 'en' ? '30s' : '30秒') : 
+                              duration === 60 ? (currentLang === 'en' ? '1min' : '1分钟') : 
+                              (currentLang === 'en' ? '3min' : '3分钟');
+
+            const scripts = {
+                '轻松搞笑': {
+                    30: currentLang === 'en' ?
+`【0-3s Shot】
+Quick edit: Exaggerated facial expression with funny sound effects
+
+【0-3s Line】
+"Family! ${topic} can be done like this?!"
+
+【3-20s Shot】
+Funny demonstration: Exaggerated way of ${topic}, with memes
+
+【3-20s Line】
+"Today I'll share a super funny ${topic} method!
+Step 1: Do this...
+Step 2: Do that...
+Step 3: Hahaha too funny!
+
+Brothers, did you learn it?"
+
+【20-30s Shot】
+Final effect + Like hint
+
+【20-30s Line】
+"Isn't it super simple!
+Remember to like and save, find it when you want to watch!
+Follow me, next episode more exciting!"` :
+`【0-3秒 画面】
+快速剪辑：一个人面对镜头做夸张的表情，配上搞笑音效
+
+【0-3秒 台词】
+"家人们！${topic}竟然还能这样？！"
+
+【3-20秒 画面】
+搞笑演示：用夸张的方式展示${topic}的过程，中间穿插搞笑表情包
+
+【3-20秒 台词】
+"今天给大家分享一个超搞笑的${topic}方法！
+第一步：这样...（做动作）
+第二步：那样...（做动作）
+第三步：哈哈哈哈太搞笑了！
+
+兄弟们，学废了吗？"
+
+【20-30秒 画面】
+最后效果展示 + 点赞收藏提示
+
+【20-30秒 台词】
+"是不是超简单！
+记得点赞收藏，下次想看的时候随时能找到！
+关注我，下期更精彩！"`,
+
+                    60: currentLang === 'en' ?
+`【0-5s Intro】
+Shot: Fast rhythm edit + funny BGM
+Line: "Family! ${topic} has a trick! Laughed!"
+
+【5-20s Point 1】
+Shot: Funny demonstration of point 1
+Line: "First trick, ${topic} step 1!
+You see this... (funny action)
+Isn't it super funny?!"
+
+【20-35s Point 2】
+Shot: Funny demonstration of point 2
+Line: "Second trick!
+${topic} step 2... (funny meme)
+Hahaha too great!"
+
+【35-50s Point 3】
+Shot: Funny demonstration of point 3
+Line: "Last trick!
+${topic} final step...
+Done! Isn't it simple!"
+
+【50-60s Outro】
+Shot: Final effect + Like hint
+Line: "Three tricks to ${topic}!
+Like and save, follow for more!
+Next episode more exciting!"` :
+`【0-5秒 开头】
+画面：快节奏剪辑 + 搞笑BGM
+台词："家人们！${topic}有绝招！看笑了！"
+
+【5-20秒 第一点】
+画面：搞笑演示第一点
+台词："第一招，${topic}第一步！
+你看这样...（搞笑动作）
+是不是超搞笑？！"
+
+【20-35秒 第二点】
+画面：搞笑演示第二点
+台词："第二招来了！
+${topic}第二步...（搞笑表情包）
+哈哈哈太绝了！"
+
+【35-50秒 第三点】
+画面：搞笑演示第三点
+台词："最后一招！
+${topic}最后一步...
+完成！是不是很简单！"
+
+【50-60秒 结尾】
+画面：最终效果 + 点赞提示
+台词："三招搞定${topic}！
+点赞收藏，关注不迷路！
+下期更精彩！"`
+                },
+                '专业知识': {
+                    30: currentLang === 'en' ?
+`【0-3s Intro】
+Shot: Professional equipment/environment + push in
+Line: "Learn ${topic} in 30 seconds!"
+
+【3-20s Core】
+Shot: Step-by-step display
+Line:
+"The key to ${topic} is:
+Step 1: Grasp core points
+Step 2: Focus on details
+Step 3: Continuously optimize
+Remember these points, master easily!"
+
+【20-30s Outro】
+Shot: Success case + follow hint
+Line: "Learned yet?
+Follow me for more professional knowledge!"` :
+`【0-3秒 开头】
+画面：专业设备/环境 + 镜头推进
+台词："30秒学会${topic}！"
+
+【3-20秒 核心内容】
+画面：分步骤展示
+台词：
+"${topic}的关键是：
+第一步：把握核心要点
+第二步：注重细节处理
+第三步：持续优化提升
+记住这几点，轻松掌握！"
+
+【20-30秒 结尾】
+画面：成功案例 + 引导关注
+台词："学会了吗？
+关注我，获取更多专业知识！"`
+                },
+                '情感故事': {
+                    30: currentLang === 'en' ?
+`【0-3s Intro】
+Shot: Warm scene + soft music
+Line: "The story behind ${topic}..."` :
+`【0-3秒 开头】
+画面：温暖场景 + 柔和音乐
+台词："${topic}背后的故事..."`,
+
+                    60: currentLang === 'en' ?
+`【0-5s Intro】
+Shot: Warm scene
+Line: "About ${topic}, there's a story..."
+【5-55s Story】
+Shot: Scene switching
+Line: "..."
+【55-60s Outro】
+Shot: Warm ending
+Line: "Follow me, share more warm stories..."` :
+`【0-5秒 开头】
+画面：温馨场景
+台词："关于${topic}，有这样一个故事..."
+【5-55秒 故事】
+画面：故事场景切换
+台词："..."
+【55-60秒 结尾】
+画面：温暖收尾
+台词："关注我，分享更多温暖故事..."`
+                },
+                '干货分享': {
+                    30: currentLang === 'en' ?
+`【0-3s Intro】
+Shot: Info chart + quick cut
+Line: "3 tips for ${topic}!"
+
+【3-20s Tips】
+Shot: Point-by-point display
+Line: "Tip 1: ...
+Tip 2: ...
+Tip 3: ..."
+
+【20-30s Outro】
+Shot: Summary + guide
+Line: "Save it, check anytime!"` :
+`【0-3秒 开头】
+画面：信息图表 + 快速切入
+台词："${topic}的3个技巧！"
+
+【3-20秒 技巧展示】
+画面：分点展示
+台词："技巧一：...
+技巧二：...
+技巧三：..."
+
+【20-30秒 结尾】
+画面：总结 + 引导
+台词："收藏起来，随时查看！"`,
+
+                    60: currentLang === 'en' ?
+`【0-5s Intro】
+Shot: Quick intro
+Line: "${topic}, full of tips!"
+
+【5-55s Detailed Tips】
+Shot: Step-by-step display
+Line: "..."
+
+【55-60s Outro】
+Shot: Summary
+Line: "Like and save, don't lose it!"` :
+`【0-5秒 开头】
+画面：快速引入
+台词："${topic}，干货满满！"
+
+【5-55秒 详细技巧】
+画面：分步骤展示
+台词："..."
+
+【55-60秒 结尾】
+画面：总结
+台词："点赞收藏，避免丢失！"`
+                },
+            };
+
+            return scripts[style]?.[duration] || scripts['轻松搞笑'][30];
+        }
+
+        // 生成按钮点击
+        generateBtn.addEventListener('click', async () => {
+            const topic = topicInput.value.trim();
+
+            if (!topic) {
+                alert(currentLang === 'en' ? 'Please enter a video topic!' : '请输入视频主题！');
+                return;
+            }
+
+            if (isGenerating) return;
+
+            isGenerating = true;
+            generateBtn.innerHTML = currentLang === 'en' ? '⏳ Generating...' : '⏳ 生成中...';
+            generateBtn.classList.add('generating');
+            resultSection.classList.add('hidden');
+
+            await new Promise(resolve => setTimeout(resolve, 1500));
+
+            const script = generateScript(topic, selectedDuration, selectedStyle);
+
+            scriptContent.textContent = script;
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            isGenerating = false;
+            generateBtn.innerHTML = `🚀 ${t('scriptgen.btn_generate')}`;
+            generateBtn.classList.remove('generating');
+        });
+
+        // 复制按钮
+        copyBtn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(scriptContent.textContent);
+                copyBtn.innerHTML = `✅ ${t('copied')}`;
+                setTimeout(() => {
+                    copyBtn.innerHTML = `📋 ${t('copy')}`;
+                }, 2000);
+            } catch (err) {
+                alert(currentLang === 'en' ? 'Copy failed, please copy manually' : '复制失败，请手动复制');
+            }
+        });
+
+        // 重新生成按钮
+        regenerateBtn.addEventListener('click', () => {
+            generateBtn.click();
+        });
+    </script>
+</body>
+</html>

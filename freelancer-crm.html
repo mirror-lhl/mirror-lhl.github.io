@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自由职业者CRM - 让客户管理更简单</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold gradient-text">👥 FreelanceCRM</div>
+            <div class="flex items-center space-x-4">
+                <a href="#" class="text-gray-600 hover:text-purple-600" data-i18n="crm.nav_features">功能</a>
+                <a href="#" class="text-gray-600 hover:text-purple-600" data-i18n="crm.nav_pricing">定价</a>
+                <a href="#" class="text-gray-600 hover:text-purple-600" data-i18n="crm.nav_help">帮助</a>
+                <a href="#signup" class="px-4 py-2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all">
+                    <span data-i18n="crm.nav_trial">免费试用</span>
+                </a>
+                <button onclick="switchLanguage(currentLang === 'zh' ? 'en' : 'zh')" class="px-3 py-1 border border-purple-300 text-purple-600 rounded-lg hover:bg-purple-50 text-sm">
+                    <span class="zh">EN</span>
+                    <span class="en hidden">中文</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12 max-w-6xl">
+        <!-- Hero区域 -->
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-bold text-gray-800 mb-4">
+                <span data-i18n="crm.hero_title">让自由职业者的</span><span class="gradient-text" data-i18n="crm.hero_highlight">客户管理</span><span data-i18n="crm.hero_title_end">更简单</span>
+            </h1>
+            <p class="text-xl text-gray-600 mb-8 max-w-2xl mx-auto" data-i18n="crm.hero_subtitle">
+                专为自由职业者打造的轻量级CRM，轻松管理客户、项目、收入，专注于创造价值
+            </p>
+            <div class="space-x-4">
+                <a href="#signup" class="px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-lg rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg">
+                    <span data-i18n="crm.btn_start_free">免费开始使用</span>
+                </a>
+                <a href="#features" class="px-8 py-4 border-2 border-purple-500 text-purple-600 font-bold text-lg rounded-lg hover:bg-purple-50 transition-all">
+                    <span data-i18n="crm.btn_learn_more">了解更多</span>
+                </a>
+            </div>
+            <p class="text-sm text-gray-500 mt-4" data-i18n="crm.hero_benefits">✓ 无需信用卡 ✓ 14天免费试用 ✓ 随时取消</p>
+        </div>
+
+        <!-- 功能展示 -->
+        <div id="features" class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">核心功能</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">👥</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">客户管理</h3>
+                    <p class="text-gray-600 mb-4">集中管理所有客户信息，标签分类，快速查找</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 客户信息卡片</li>
+                        <li>✓ 标签分类</li>
+                        <li>✓ 搜索过滤</li>
+                        <li>✓ 沟通记录</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">项目跟踪</h3>
+                    <p class="text-gray-600 mb-4">实时跟踪项目进度，不错过任何重要节点</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 项目状态管理</li>
+                        <li>✓ 进度百分比</li>
+                        <li>✓ 时间线视图</li>
+                        <li>✓ 截止日期提醒</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">💰</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">收入追踪</h3>
+                    <p class="text-gray-600 mb-4">清晰了解收入状况，轻松导出报表</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 收入记录</li>
+                        <li>✓ 月度统计</li>
+                        <li>✓ 趋势图表</li>
+                        <li>✓ 报表导出</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">📋</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">发票管理</h3>
+                    <p class="text-gray-600 mb-4">自动提醒发票到期，不再有漏收款</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 发票记录</li>
+                        <li>✓ 到期提醒</li>
+                        <li>✓ 状态跟踪</li>
+                        <li>✓ 发票模板</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">✅</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">任务管理</h3>
+                    <p class="text-gray-600 mb-4">高效管理日常任务，提升工作效率</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 任务创建</li>
+                        <li>✓ 优先级设置</li>
+                        <li>✓ 截止日期</li>
+                        <li>✓ 完成提醒</li>
+                    </ul>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6 hover:shadow-2xl transition-all">
+                    <div class="text-4xl mb-4">🎨</div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">数据仪表盘</h3>
+                    <p class="text-gray-600 mb-4">一目了然的数据概览，快速了解业务状况</p>
+                    <ul class="text-sm text-gray-500 space-y-1">
+                        <li>✓ 今日任务</li>
+                        <li>✓ 本月收入</li>
+                        <li>✓ 进行中项目</li>
+                        <li>✓ 待处理发票</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 定价 -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">简单透明的定价</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 免费版 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">免费版</h3>
+                        <div class="text-4xl font-bold text-gray-800 mb-1">¥0</div>
+                        <div class="text-gray-500 mb-6">永久免费</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 最多10个客户
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 最多5个项目
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 基础功能
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 社区支持
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all">
+                        免费开始
+                    </button>
+                </div>
+
+                <!-- 个人版 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 relative hover:shadow-2xl transition-all border-2 border-purple-500">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-purple-500 to-indigo-600 text-white px-4 py-1 rounded-full text-sm font-bold">
+                        最受欢迎
+                    </div>
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">个人版</h3>
+                        <div class="text-4xl font-bold text-purple-600 mb-1">¥10,000</div>
+                        <div class="text-gray-500 mb-6">/年（约¥833/月）</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 无限客户
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 无限项目
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 所有基础功能
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 优先支持
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 7天历史数据
+                        </li>
+                    </ul>
+                    <button class="w-full py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all">
+                        立即订阅
+                    </button>
+                </div>
+
+                <!-- 团队版 -->
+                <div class="bg-white rounded-2xl shadow-xl p-8 hover:shadow-2xl transition-all">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">团队版</h3>
+                        <div class="text-4xl font-bold text-gray-800 mb-1">¥10,000</div>
+                        <div class="text-gray-500 mb-6">/年（约¥833/月）</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 最多5人
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 个人版所有功能
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 团队协作
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 专属支持
+                        </li>
+                        <li class="flex items-center text-gray-600">
+                            <span class="mr-2">✓</span> 无限历史数据
+                        </li>
+                    </ul>
+                    <a href="payment.html?product=FreelanceCRM-团队版&amount=299&order=ORD${Date.now()}" class="block w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all text-center">
+                        联系我们
+                    </a>
+                </div>
+            </div>
+            <p class="text-center text-gray-500 mt-6">
+                💰 首年订阅享5折优惠 | 🎁 推荐好友得1个月免费 | 👥 5人团购享7折
+            </p>
+        </div>
+
+        <!-- 试用注册 -->
+        <div id="signup" class="mb-20">
+            <div class="bg-gradient-to-r from-purple-500 to-indigo-600 rounded-2xl shadow-xl p-12 text-center text-white">
+                <h2 class="text-3xl font-bold mb-4" data-i18n="crm.signup_title">立即开始，14天免费试用</h2>
+                <p class="text-purple-100 mb-8 text-lg" data-i18n="crm.signup_subtitle">无需信用卡，随时取消，没有任何风险</p>
+                <form class="max-w-md mx-auto space-y-4">
+                    <input
+                        type="email"
+                        placeholder="输入您的邮箱 / Enter your email"
+                        class="w-full px-6 py-4 rounded-lg text-gray-800 focus:ring-2 focus:ring-white"
+                    >
+                    <input
+                        type="password"
+                        placeholder="设置密码 / Set password"
+                        class="w-full px-6 py-4 rounded-lg text-gray-800 focus:ring-2 focus:ring-white"
+                    >
+                    <button
+                        type="submit"
+                        class="w-full py-4 bg-white text-purple-600 font-bold text-lg rounded-lg hover:bg-purple-50 transition-all"
+                    >
+                        <span data-i18n="crm.btn_signup_free">免费开始使用</span>
+                    </button>
+                </form>
+                <p class="text-sm text-purple-100 mt-4">
+                    <span class="zh" data-i18n="crm.signup_terms">点击注册即表示您同意我们的</span><a href="#" class="underline" data-i18n="crm.terms">服务条款</a><span class="zh" data-i18n="crm.signup_and">和</span><a href="#" class="underline" data-i18n="crm.privacy">隐私政策</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- 用户评价 -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">用户评价</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mr-3 text-xl">
+                            👨‍💻
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">张三</div>
+                            <div class="text-sm text-gray-500">独立开发者</div>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600">
+                        "自从用了FreelanceCRM，我的客户管理效率提升了300%！再也不用担心忘记跟进客户了。"
+                    </p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3 text-xl">
+                            👩‍🎨
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">李四</div>
+                            <div class="text-sm text-gray-500">UI设计师</div>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600">
+                        "作为设计师，我需要同时管理多个客户和项目。这个工具帮我完美解决了这个痛点！"
+                    </p>
+                </div>
+                <div class="bg-white rounded-2xl shadow-xl p-6">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3 text-xl">
+                            👨‍💼
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">王五</div>
+                            <div class="text-sm text-gray-500">商业顾问</div>
+                        </div>
+                    </div>
+                    <div class="text-yellow-400 mb-2">⭐⭐⭐⭐⭐</div>
+                    <p class="text-gray-600">
+                        "简单易用，功能强大。收入追踪功能让我清楚了解自己的业务状况。强烈推荐！"
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 常见问题 -->
+        <div class="mb-20">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">常见问题</h2>
+            <div class="max-w-3xl mx-auto space-y-4">
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">免费版有什么限制？</h3>
+                    <p class="text-gray-600">免费版最多可以管理10个客户和5个项目，功能齐全。如需更多，可以升级到付费版。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">可以随时取消订阅吗？</h3>
+                    <p class="text-gray-600">可以，您可以在任何时候取消订阅，我们会继续提供服务直到订阅期结束。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">数据安全吗？</h3>
+                    <p class="text-gray-600">我们采用企业级加密技术，确保您的数据安全。您也可以随时导出数据。</p>
+                </div>
+                <div class="bg-white rounded-xl shadow-lg p-6">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">有移动端应用吗？</h3>
+                    <p class="text-gray-600">目前网页版完美适配移动设备，我们正在开发原生应用，敬请期待。</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4" data-i18n="crm.cta_title">准备好提升工作效率了吗？</h2>
+            <p class="text-xl text-gray-600 mb-8" data-i18n="crm.cta_subtitle">加入超过1000名自由职业者，开始更高效的工作方式</p>
+            <a href="#signup" class="px-8 py-4 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold text-lg rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg">
+                <span data-i18n="crm.btn_start_free">免费开始使用</span>
+            </a>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="border-t border-gray-200 pt-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="text-2xl font-bold gradient-text mb-4">👥 FreelanceCRM</div>
+                    <p class="text-gray-600 text-sm">专为自由职业者打造的轻量级CRM</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-4">产品</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">功能</a></li>
+                        <li><a href="#" class="hover:text-purple-600">定价</a></li>
+                        <li><a href="#" class="hover:text-purple-600">更新日志</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-4">公司</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">关于我们</a></li>
+                        <li><a href="#" class="hover:text-purple-600">博客</a></li>
+                        <li><a href="#" class="hover:text-purple-600">联系我们</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-gray-800 mb-4">法律</h4>
+                    <ul class="space-y-2 text-sm text-gray-600">
+                        <li><a href="#" class="hover:text-purple-600">服务条款</a></li>
+                        <li><a href="#" class="hover:text-purple-600">隐私政策</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-gray-500 text-sm">
+                <p>© 2026 FreelanceCRM. 让客户管理更简单。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面加载后初始化语言
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initLanguage === 'function') {
+                initLanguage();
+            }
+        });
+    </script>
+</body>
+</html>

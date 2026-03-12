@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="index.title">1000亿创业计划 - 项目展示</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/i18n.js"></script>
+    <style>
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-green-50">
+    <!-- 头部 -->
+    <div class="container mx-auto px-4 py-8 max-w-6xl">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+                💰 1000亿创业计划
+            </h1>
+            <p class="text-xl text-gray-600">10年时间，从0到1000亿的创业之路</p>
+        </div>
+
+        <!-- 进度统计 -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+            <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+                <div class="text-4xl font-bold text-purple-600 mb-2">6</div>
+                <div class="text-gray-600" data-i18n="index.projects">已启动项目</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+                <div class="text-4xl font-bold text-blue-600 mb-2">0</div>
+                <div class="text-gray-600" data-i18n="index.planning">规划中项目</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+                <div class="text-4xl font-bold text-green-600 mb-2">0</div>
+                <div class="text-gray-600" data-i18n="index.revenue">累计收入（元）</div>
+            </div>
+            <div class="bg-white rounded-2xl shadow-xl p-6 text-center">
+                <div class="text-4xl font-bold text-yellow-600 mb-2">10</div>
+                <div class="text-gray-600" data-i18n="index.years">年时间</div>
+            </div>
+        </div>
+
+        <!-- 已启动项目 -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-6" data-i18n="index.status_launched">🚀 已启动项目</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 mb-12">
+            <!-- 项目1 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-blue-500 to-purple-600 p-6">
+                    <div class="text-white text-4xl mb-2">🎬</div>
+                    <h3 class="text-xl font-bold text-white">AI短视频脚本生成器</h3>
+                    <p class="text-blue-100 mt-2 text-sm">面向全国的AI内容创作工具</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>月收入目标</span>
+                            <span class="font-bold">¥10,000-55,000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">短视频创作者</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">80%+</span>
+                        </div>
+                    </div>
+                    <a href="script-generator.html" class="block text-center py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all text-sm">
+                        立即使用 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 项目2 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-green-500 to-blue-600 p-6">
+                    <div class="text-white text-4xl mb-2">🎯</div>
+                    <h3 class="text-xl font-bold text-white">本地商家GEO优化服务</h3>
+                    <p class="text-green-100 mt-2 text-sm">本地化AI搜索优化解决方案</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>月收入目标</span>
+                            <span class="font-bold">¥10,000-500,000</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">本地商家</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">70%+</span>
+                        </div>
+                    </div>
+                    <a href="geo-optimizer.html" class="block text-center py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all text-sm">
+                        免费诊断 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 项目3 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-purple-500 to-indigo-600 p-6">
+                    <div class="text-white text-4xl mb-2">👥</div>
+                    <h3 class="text-xl font-bold text-white">自由职业者CRM</h3>
+                    <p class="text-purple-100 mt-2 text-sm">面向自由职业者的轻量级CRM</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>年收入目标</span>
+                            <span class="font-bold">¥100-500万</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">自由职业者</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">90%+</span>
+                        </div>
+                    </div>
+                    <a href="freelancer-crm.html" class="block text-center py-3 bg-gradient-to-r from-purple-500 to-indigo-600 text-white font-bold rounded-lg hover:from-purple-600 hover:to-indigo-700 transition-all text-sm">
+                        免费试用 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 项目4 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-pink-500 to-rose-600 p-6">
+                    <div class="text-white text-4xl mb-2">✍️</div>
+                    <h3 class="text-xl font-bold text-white">AI内容创作平台</h3>
+                    <p class="text-pink-100 mt-2 text-sm">一站式AI内容创作SaaS平台</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>年收入目标</span>
+                            <span class="font-bold">¥300-5000万</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">内容创作者/企业</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">85%+</span>
+                        </div>
+                    </div>
+                    <a href="ai-creator.html" class="block text-center py-3 bg-gradient-to-r from-pink-500 to-rose-600 text-white font-bold rounded-lg hover:from-pink-600 hover:to-rose-700 transition-all text-sm">
+                        免费试用 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 项目5 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-orange-500 to-red-600 p-6">
+                    <div class="text-white text-4xl mb-2">🛒</div>
+                    <h3 class="text-xl font-bold text-white">本地生活服务平台</h3>
+                    <p class="text-orange-100 mt-2 text-sm">本地生活服务聚合平台</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>年收入目标</span>
+                            <span class="font-bold">¥5-50亿</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">本地商家+消费者</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">75%+</span>
+                        </div>
+                    </div>
+                    <a href="local-life.html" class="block text-center py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white font-bold rounded-lg hover:from-orange-600 hover:to-red-700 transition-all text-sm">
+                        立即体验 →
+                    </a>
+                </div>
+            </div>
+
+            <!-- 项目6 -->
+            <div class="bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all">
+                <div class="bg-gradient-to-r from-indigo-500 to-purple-600 p-6">
+                    <div class="text-white text-4xl mb-2">🏢</div>
+                    <h3 class="text-xl font-bold text-white">AI企业服务矩阵</h3>
+                    <p class="text-indigo-100 mt-2 text-sm">多垂直领域SaaS产品矩阵</p>
+                </div>
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-sm text-gray-500">开发状态</span>
+                        <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-bold">✅ 已上线</span>
+                    </div>
+                    <div class="space-y-2 text-gray-700 mb-6 text-sm">
+                        <div class="flex justify-between">
+                            <span>年收入目标</span>
+                            <span class="font-bold">¥2-3亿</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>客户类型</span>
+                            <span class="font-bold">中小企业</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>利润率</span>
+                            <span class="font-bold">90%+</span>
+                        </div>
+                    </div>
+                    <a href="enterprise-ai.html" class="block text-center py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-bold rounded-lg hover:from-indigo-600 hover:to-purple-700 transition-all text-sm">
+                        立即试用 →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 收入目标进度 -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">📊 收入目标进度</h2>
+        <div class="bg-white rounded-2xl shadow-xl p-8 mb-12">
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-lg font-bold text-gray-800">1000亿总目标</span>
+                    <span class="text-2xl font-bold text-purple-600">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-6">
+                    <div class="bg-gradient-to-r from-purple-500 to-blue-500 h-6 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-sm text-gray-500 mb-1">第1年目标</div>
+                    <div class="text-2xl font-bold text-blue-600">100万</div>
+                    <div class="text-sm text-gray-500 mt-1">进度: 0%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-sm text-gray-500 mb-1">第3年目标</div>
+                    <div class="text-2xl font-bold text-green-600">1亿</div>
+                    <div class="text-sm text-gray-500 mt-1">进度: 0%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="text-center p-4 bg-gray-50 rounded-lg">
+                    <div class="text-sm text-gray-500 mb-1">第10年目标</div>
+                    <div class="text-2xl font-bold text-purple-600">1000亿</div>
+                    <div class="text-sm text-gray-500 mt-1">进度: 0%</div>
+                    <div class="w-full bg-gray-200 rounded-full h-2 mt-2">
+                        <div class="bg-purple-500 h-2 rounded-full" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 时间线 -->
+        <h2 class="text-3xl font-bold text-gray-800 mb-6">📅 发展时间线</h2>
+        <div class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="relative">
+                <!-- 时间线节点 -->
+                <div class="space-y-8">
+                    <div class="flex">
+                        <div class="w-24 flex-shrink-0 text-right pr-4">
+                            <div class="font-bold text-blue-600">2026</div>
+                            <div class="text-sm text-gray-500" data-i18n="index.year_1">第1年</div>
+                        </div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold z-10">1</div>
+                        <div class="ml-4 flex-grow">
+                            <div class="font-bold text-gray-800" data-i18n="index.phase_validation">验证期 - 目标100万</div>
+                            <div class="text-sm text-gray-600" data-i18n="index.phase_validation_desc">启动6个MVP，建立现金流，验证商业模式</div>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-24 flex-shrink-0 text-right pr-4">
+                            <div class="font-bold text-green-600">2027-28</div>
+                            <div class="text-sm text-gray-500" data-i18n="index.year_2_3">第2-3年</div>
+                        </div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white font-bold z-10">2</div>
+                        <div class="ml-4 flex-grow">
+                            <div class="font-bold text-gray-800" data-i18n="index.phase_scale">规模化 - 目标1000万</div>
+                            <div class="text-sm text-gray-600" data-i18n="index.phase_scale_desc">SaaS产品上线，扩大团队，多城市布局</div>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-24 flex-shrink-0 text-right pr-4">
+                            <div class="font-bold text-purple-600">2029-31</div>
+                            <div class="text-sm text-gray-500" data-i18n="index.year_4_6">第4-6年</div>
+                        </div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold z-10">3</div>
+                        <div class="ml-4 flex-grow">
+                            <div class="font-bold text-gray-800" data-i18n="index.phase_platform">平台化 - 目标1亿</div>
+                            <div class="text-sm text-gray-600" data-i18n="index.phase_platform_desc">平台生态建设，用户突破100万，准备上市</div>
+                        </div>
+                    </div>
+
+                    <div class="flex">
+                        <div class="w-24 flex-shrink-0 text-right pr-4">
+                            <div class="font-bold text-yellow-600">2032-35</div>
+                            <div class="text-sm text-gray-500" data-i18n="index.year_7_10">第7-10年</div>
+                        </div>
+                        <div class="flex-shrink-0 w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center text-white font-bold z-10">4</div>
+                        <div class="ml-4 flex-grow">
+                            <div class="font-bold text-gray-800" data-i18n="index.phase_monopoly">垄断化 - 目标1000亿</div>
+                            <div class="text-sm text-gray-600" data-i18n="index.phase_monopoly_desc">行业领导者，海外扩张，资本运作</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="mt-12 text-center text-gray-500 text-sm">
+            <p data-i18n="index.footer_text">© 2026 1000亿创业计划 | 每一天都在向目标迈进 💪</p>
+        </div>
+    </div>
+</body>
+</html>

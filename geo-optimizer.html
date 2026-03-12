@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI搜索诊断工具 - 本地商家GEO优化服务</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes scan {
+            0% { left: 0%; }
+            100% { left: 100%; }
+        }
+        .scanning .scan-line {
+            animation: scan 2s linear infinite;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-green-50 to-blue-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 语言切换按钮 -->
+        <div class="absolute top-4 right-4">
+            <button id="langSwitch" onclick="switchLanguage(currentLang === 'zh' ? 'en' : 'zh')" class="px-4 py-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-all text-sm font-medium">
+                <span class="zh">English</span>
+                <span class="en hidden">中文</span>
+            </button>
+        </div>
+
+        <!-- 标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-800 mb-2">
+                🎯 <span data-i18n="geo.hero_title">AI搜索诊断工具</span>
+            </h1>
+            <p class="text-gray-600" data-i18n="geo.hero_subtitle">免费检测您在AI搜索引擎中的表现</p>
+        </div>
+
+        <!-- 主要表单 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        🏪 商家名称
+                    </label>
+                    <input
+                        type="text"
+                        id="merchantName"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        placeholder="例如：张三烤肉店"
+                    >
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        📍 所在行业
+                    </label>
+                    <select id="industry" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                        <option value="">请选择行业</option>
+                        <option value="餐饮">餐饮行业</option>
+                        <option value="美容">美容美发</option>
+                        <option value="健身">健身运动</option>
+                        <option value="教育培训">教育培训</option>
+                        <option value="零售">零售商店</option>
+                        <option value="其他">其他</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    📍 商家地址
+                </label>
+                <input
+                    type="text"
+                    id="address"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="例如：北京市朝阳区XXX街道XXX号"
+                >
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    📱 手机号码
+                </label>
+                <input
+                    type="tel"
+                    id="phone"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                    placeholder="我们将通过短信发送诊断报告"
+                >
+            </div>
+
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2">
+                    🎯 主要业务关键词
+                </label>
+                <textarea
+                    id="keywords"
+                    rows="3"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent resize-none"
+                    placeholder="例如：烤肉、韩式料理、聚餐、美食、夜宵"
+                ></textarea>
+            </div>
+
+            <button
+                id="diagnoseBtn"
+                class="w-full py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold text-lg rounded-lg hover:from-green-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg"
+            >
+                🔍 开始诊断
+            </button>
+        </div>
+
+        <!-- 诊断结果 -->
+        <div id="resultSection" class="bg-white rounded-2xl shadow-xl p-6 hidden">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">📊 诊断结果</h2>
+
+            <!-- 总体评分 -->
+            <div class="mb-6">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-lg font-medium text-gray-700">AI搜索表现综合评分</span>
+                    <span id="totalScore" class="text-3xl font-bold text-blue-600">0/100</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4">
+                    <div id="scoreBar" class="bg-gradient-to-r from-blue-500 to-green-500 h-4 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- 详细评分 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-700">关键词优化</span>
+                        <span id="keywordScore" class="text-xl font-bold text-blue-600">0/20</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="keywordBar" class="bg-blue-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="keywordTip" class="text-sm text-gray-500 mt-2"></p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-700">内容质量</span>
+                        <span id="contentScore" class="text-xl font-bold text-green-600">0/25</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="contentBar" class="bg-green-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="contentTip" class="text-sm text-gray-500 mt-2"></p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-700">平台覆盖</span>
+                        <span id="platformScore" class="text-xl font-bold text-yellow-600">0/25</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="platformBar" class="bg-yellow-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="platformTip" class="text-sm text-gray-500 mt-2"></p>
+                </div>
+
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-medium text-gray-700">AI问答提及</span>
+                        <span id="qaScore" class="text-xl font-bold text-purple-600">0/30</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div id="qaBar" class="bg-purple-500 h-2 rounded-full transition-all duration-1000" style="width: 0%"></div>
+                    </div>
+                    <p id="qaTip" class="text-sm text-gray-500 mt-2"></p>
+                </div>
+            </div>
+
+            <!-- 改进建议 -->
+            <div class="bg-blue-50 rounded-lg p-4 mb-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-3">💡 改进建议</h3>
+                <ul id="suggestions" class="space-y-2 text-gray-700">
+                </ul>
+            </div>
+
+            <!-- 优化潜力 -->
+            <div class="bg-green-50 rounded-lg p-4 mb-6">
+                <h3 class="text-lg font-bold text-gray-800 mb-3">📈 优化潜力分析</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-green-600" id="trafficIncrease">+50%</div>
+                        <div class="text-sm text-gray-600">流量增长预期</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-blue-600" id="inquiryIncrease">+80%</div>
+                        <div class="text-sm text-gray-600">咨询量增长预期</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-3xl font-bold text-purple-600" id="roiEstimate">5倍</div>
+                        <div class="text-sm text-gray-600">投资回报比</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="text-center">
+                <button
+                    id="consultBtn"
+                    class="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold text-lg rounded-lg hover:from-green-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg"
+                >
+                    📞 联系专业优化团队
+                </button>
+                <p class="text-sm text-gray-500 mt-2">免费咨询，定制优化方案</p>
+            </div>
+        </div>
+
+        <!-- 服务套餐 -->
+        <div class="mt-6 bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💰 <span data-i18n="geo.plans_title">服务套餐</span></h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div class="border-2 border-gray-200 rounded-lg p-4 hover:border-green-500 transition-all">
+                    <div class="text-lg font-bold text-gray-800 mb-2" data-i18n="geo.plan_basic">基础套餐</div>
+                    <div class="text-3xl font-bold text-green-600 mb-2">¥2,000</div>
+                    <div class="text-sm text-gray-500 mb-4" data-i18n="geo.per_month">/月</div>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>✅ 10 <span data-i18n="geo.keywords_optimized">个关键词优化</span></li>
+                        <li>✅ 1 <span data-i18n="geo.platform_optimized">个平台优化</span></li>
+                        <li>✅ <span data-i18n="geo.monthly_report">月度报告</span></li>
+                        <li>✅ 2 <span data-i18n="geo.content_articles">篇内容/月</span></li>
+                    </ul>
+                </div>
+                <div class="border-2 border-green-500 rounded-lg p-4 relative hover:shadow-lg transition-all">
+                    <div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">
+                        <span data-i18n="geo.recommended">推荐</span>
+                    </div>
+                    <div class="text-lg font-bold text-gray-800 mb-2" data-i18n="geo.plan_standard">标准套餐</div>
+                    <div class="text-3xl font-bold text-green-600 mb-2">¥5,000</div>
+                    <div class="text-sm text-gray-500 mb-4" data-i18n="geo.per_month">/月</div>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>✅ 30 <span data-i18n="geo.keywords_optimized">个关键词优化</span></li>
+                        <li>✅ 3 <span data-i18n="geo.platform_optimized">个平台优化</span></li>
+                        <li>✅ <span data-i18n="geo.ai_qa_training">AI问答训练</span></li>
+                        <li>✅ <span data-i18n="geo.weekly_report">周度报告</span></li>
+                        <li>✅ 8 <span data-i18n="geo.content_articles">篇内容/月</span></li>
+                    </ul>
+                </div>
+                <div class="border-2 border-gray-200 rounded-lg p-4 hover:border-green-500 transition-all">
+                    <div class="text-lg font-bold text-gray-800 mb-2" data-i18n="geo.plan_premium">高级套餐</div>
+                    <div class="text-3xl font-bold text-green-600 mb-2">¥10,000</div>
+                    <div class="text-sm text-gray-500 mb-4" data-i18n="geo.per_month">/月</div>
+                    <ul class="text-sm text-gray-600 space-y-1">
+                        <li>✅ 100+ <span data-i18n="geo.keywords_optimized">个关键词优化</span></li>
+                        <li>✅ <span data-i18n="geo.all_platforms">全平台优化</span></li>
+                        <li>✅ <span data-i18n="geo.deep_ai_training">深度AI训练</span></li>
+                        <li>✅ <span data-i18n="geo.daily_monitoring">每日监控</span></li>
+                        <li>✅ 20 <span data-i18n="geo.content_articles">篇内容/月</span></li>
+                        <li>✅ <span data-i18n="geo.dedicated_manager">专属客户经理</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 成功案例 -->
+        <div class="mt-6 bg-white rounded-2xl shadow-xl p-6">
+            <h3 class="text-xl font-bold text-gray-800 mb-4 text-center">🏆 成功案例</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center mb-2">
+                        <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+                            🍜
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">王记牛肉面</div>
+                            <div class="text-sm text-gray-500">餐饮行业</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        "优化后，AI搜索推荐率提升200%，月客流增长80%！"
+                    </div>
+                    <div class="mt-2 text-sm text-green-600 font-bold">
+                        月收入增长: +150%
+                    </div>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-center mb-2">
+                        <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                            💇
+                        </div>
+                        <div>
+                            <div class="font-bold text-gray-800">时尚发艺</div>
+                            <div class="text-sm text-gray-500">美容美发</div>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600">
+                        "现在在AI搜索中排名第一，新客户咨询量翻倍！"
+                    </div>
+                    <div class="mt-2 text-sm text-blue-600 font-bold">
+                        新客户增长: +120%
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>© 2026 本地商家GEO优化服务 | 让您的生意在AI时代脱颖而出</p>
+        </div>
+    </div>
+
+    <script>
+        // DOM元素
+        const diagnoseBtn = document.getElementById('diagnoseBtn');
+        const resultSection = document.getElementById('resultSection');
+        const consultBtn = document.getElementById('consultBtn');
+
+        // 翻译字典
+        const geoTranslations = {
+            zh: {
+                please_fill: '请填写完整信息！',
+                diagnosing: '诊断中...',
+                keyword_tip_good: '关键词表现良好',
+                keyword_tip_bad: '建议增加关键词覆盖和优化',
+                content_tip_good: '内容质量优秀',
+                content_tip_bad: '需要优化内容质量和AI友好度',
+                platform_tip_good: '平台覆盖较好',
+                platform_tip_bad: '建议扩展到更多平台',
+                qa_tip_good: 'AI问答表现良好',
+                qa_tip_bad: 'AI问答提及率较低，需要训练',
+                suggestion_keywords: '🔹 增加行业相关关键词，覆盖用户搜索场景',
+                suggestion_content: '🔹 创建AI搜索友好的内容，提高信息质量',
+                suggestion_platform: '🔹 优化各大平台商家信息，统一品牌形象',
+                suggestion_qa: '🔹 训练AI理解商家特色，提高问答提及率',
+                suggestion_urgent: '🔹 建议尽快进行专业优化，提升竞争力',
+                consult_alert: `感谢{merchantName}的咨询！我们的专业顾问将在24小时内与您联系，为您定制优化方案。\n\n联系电话：400-888-8888\n微信：geo-optimizer\n\n您也可以直接在下方选择套餐进行订阅。`
+            },
+            en: {
+                please_fill: 'Please fill in all required fields!',
+                diagnosing: 'Diagnosing...',
+                keyword_tip_good: 'Keywords perform well',
+                keyword_tip_bad: 'Recommend adding more keywords coverage',
+                content_tip_good: 'Content quality is excellent',
+                content_tip_bad: 'Need to optimize content quality and AI-friendliness',
+                platform_tip_good: 'Platform coverage is good',
+                platform_tip_bad: 'Recommend expanding to more platforms',
+                qa_tip_good: 'AI Q&A performs well',
+                qa_tip_bad: 'AI Q&A mention rate is low, need training',
+                suggestion_keywords: '🔹 Add industry-related keywords to cover user search scenarios',
+                suggestion_content: '🔹 Create AI search-friendly content to improve information quality',
+                suggestion_platform: '🔹 Optimize business information across platforms for consistent branding',
+                suggestion_qa: '🔹 Train AI to understand your business features to improve Q&A mention rate',
+                suggestion_urgent: '🔹 Recommend professional optimization soon to enhance competitiveness',
+                consult_alert: `Thank you {merchantName} for your inquiry! Our professional consultant will contact you within 24 hours to customize an optimization plan.\n\nPhone: 400-888-8888\nWeChat: geo-optimizer\n\nYou can also subscribe to a package directly below.`
+            }
+        };
+
+        // 获取翻译
+        function getGeoTrans(key) {
+            return geoTranslations[currentLang]?.[key] || geoTranslations['zh'][key] || key;
+        }
+
+        // 诊断功能
+        diagnoseBtn.addEventListener('click', async () => {
+            const merchantName = document.getElementById('merchantName').value.trim();
+            const industry = document.getElementById('industry').value;
+            const address = document.getElementById('address').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const keywords = document.getElementById('keywords').value.trim();
+
+            if (!merchantName || !industry || !address || !phone) {
+                alert(getGeoTrans('please_fill'));
+                return;
+            }
+
+            // 显示加载状态
+            diagnoseBtn.innerHTML = `⏳ ${getGeoTrans('diagnosing')}`;
+            diagnoseBtn.disabled = true;
+
+            // 模拟诊断过程
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // 生成随机评分
+            const keywordScore = Math.floor(Math.random() * 15) + 5; // 5-20
+            const contentScore = Math.floor(Math.random() * 20) + 5; // 5-25
+            const platformScore = Math.floor(Math.random() * 20) + 5; // 5-25
+            const qaScore = Math.floor(Math.random() * 20) + 5; // 5-25
+            const totalScore = keywordScore + contentScore + platformScore + qaScore;
+
+            // 更新评分显示
+            document.getElementById('totalScore').textContent = `${totalScore}/100`;
+            document.getElementById('scoreBar').style.width = `${totalScore}%`;
+
+            document.getElementById('keywordScore').textContent = `${keywordScore}/20`;
+            document.getElementById('keywordBar').style.width = `${(keywordScore / 20) * 100}%`;
+            document.getElementById('keywordTip').textContent = keywordScore < 15 ? getGeoTrans('keyword_tip_bad') : getGeoTrans('keyword_tip_good');
+
+            document.getElementById('contentScore').textContent = `${contentScore}/25`;
+            document.getElementById('contentBar').style.width = `${(contentScore / 25) * 100}%`;
+            document.getElementById('contentTip').textContent = contentScore < 20 ? getGeoTrans('content_tip_bad') : getGeoTrans('content_tip_good');
+
+            document.getElementById('platformScore').textContent = `${platformScore}/25`;
+            document.getElementById('platformBar').style.width = `${(platformScore / 25) * 100}%`;
+            document.getElementById('platformTip').textContent = platformScore < 20 ? getGeoTrans('platform_tip_bad') : getGeoTrans('platform_tip_good');
+
+            document.getElementById('qaScore').textContent = `${qaScore}/30`;
+            document.getElementById('qaBar').style.width = `${(qaScore / 30) * 100}%`;
+            document.getElementById('qaTip').textContent = qaScore < 25 ? getGeoTrans('qa_tip_bad') : getGeoTrans('qa_tip_good');
+
+            // 生成建议
+            const suggestions = [];
+            if (keywordScore < 15) suggestions.push(getGeoTrans('suggestion_keywords'));
+            if (contentScore < 20) suggestions.push(getGeoTrans('suggestion_content'));
+            if (platformScore < 20) suggestions.push(getGeoTrans('suggestion_platform'));
+            if (qaScore < 25) suggestions.push(getGeoTrans('suggestion_qa'));
+            if (totalScore < 60) suggestions.push(getGeoTrans('suggestion_urgent'));
+
+            const suggestionsList = document.getElementById('suggestions');
+            suggestionsList.innerHTML = suggestions.map(s => `<li>${s}</li>`).join('');
+
+            // 更新优化潜力
+            const trafficIncrease = Math.floor(Math.random() * 100) + 50;
+            const inquiryIncrease = Math.floor(Math.random() * 100) + 80;
+            document.getElementById('trafficIncrease').textContent = `+${trafficIncrease}%`;
+            document.getElementById('inquiryIncrease').textContent = `+${inquiryIncrease}%`;
+
+            // 显示结果
+            resultSection.classList.remove('hidden');
+            resultSection.scrollIntoView({ behavior: 'smooth' });
+
+            // 恢复按钮状态
+            diagnoseBtn.innerHTML = `🔍 ${t('geo.btn_diagnose')}`;
+            diagnoseBtn.disabled = false;
+        });
+
+        // 联系按钮
+        consultBtn.addEventListener('click', () => {
+            const merchantName = document.getElementById('merchantName').value.trim();
+            alert(getGeoTrans('consult_alert').replace('{merchantName}', merchantName || ''));
+        });
+
+        // 页面加载后初始化语言
+        document.addEventListener('DOMContentLoaded', () => {
+            if (typeof initLanguage === 'function') {
+                initLanguage();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>加入我们 - Claw 创业合伙人计划</title>
+    <script src="js/i18n.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            color: white;
+            padding: 60px 20px;
+            animation: fadeInDown 1s ease;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+        }
+
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* Commission Table */
+        .commission-section {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .commission-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .commission-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+        }
+
+        .commission-table th,
+        .commission-table td {
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+
+        .commission-table th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+
+        .commission-table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .commission-table .percentage {
+            font-size: 2em;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .commission-table .earning {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .highlight-tier {
+            background: #fff3cd !important;
+            border: 3px solid #ffc107 !important;
+        }
+
+        .highlight-tier td {
+            font-weight: bold;
+        }
+
+        /* Benefits */
+        .benefits {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease 0.7s both;
+        }
+
+        .benefit-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .benefit-card .icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .benefit-card ul {
+            list-style: none;
+        }
+
+        .benefit-card ul li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .benefit-card ul li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* How it works */
+        .how-it-works {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 0.9s both;
+        }
+
+        .how-it-works h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .step .step-number {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+        }
+
+        .step h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Payment Instructions */
+        .payment-instructions {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 1.3s both;
+        }
+
+        .payment-instructions h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .instructions-content {
+            display: grid;
+            gap: 30px;
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .instruction-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        .instruction-icon {
+            font-size: 3em;
+            flex-shrink: 0;
+        }
+
+        .instruction-text h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .instruction-text p {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+
+        .instruction-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .format {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .example {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 0.95em;
+        }
+
+        .instruction-text ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .instruction-text ul li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+        }
+
+        .instruction-text ul li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+        /* Calculator */
+        .calculator {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            margin-bottom: 60px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 1.1s both;
+        }
+
+        .calculator h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .calculator-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 15px;
+            font-size: 1.1em;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .calculate-btn {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .calculate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .result.show {
+            display: block;
+        }
+
+        .result h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-item span:first-child {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .result-item span:last-child {
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        /* CTA */
+        .cta {
+            background: white;
+            padding: 60px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 1.3s both;
+        }
+
+        .cta h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+
+        .cta p {
+            font-size: 1.3em;
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 20px 60px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1.1em;
+            }
+
+            .commission-section,
+            .calculator,
+            .how-it-works,
+            .payment-instructions {
+                padding: 30px;
+            }
+
+            .steps {
+                flex-direction: column;
+            }
+
+            .commission-table th,
+            .commission-table td {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+
+            .commission-table .percentage {
+                font-size: 1.5em;
+            }
+
+            .instruction-item {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .instruction-icon {
+                margin: 0 auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 data-i18n="join.title">🚀 Claw 创业合伙人计划</h1>
+        <p data-i18n="join.subtitle">加入我们，共享千亿市场红利，实现财富自由！</p>
+    </header>
+
+    <div class="container">
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <h3>¥10,000亿</h3>
+                <p data-i18n="join.stat_target">10年收入目标</p>
+            </div>
+            <div class="stat-card">
+                <h3>6</h3>
+                <p data-i18n="join.stat_projects">核心项目矩阵</p>
+            </div>
+            <div class="stat-card">
+                <h3>85%</h3>
+                <p data-i18n="join.stat_commission">最高返佣比例</p>
+            </div>
+            <div class="stat-card">
+                <h3>∞</h3>
+                <p data-i18n="join.stat_unlimited">收益上限</p>
+            </div>
+        </div>
+
+        <!-- Commission Table -->
+        <div class="commission-section">
+            <h2 data-i18n="join.commission_title">💰 超高返佣制度</h2>
+            <p style="text-align: center; margin-bottom: 30px; font-size: 1.2em;" data-i18n="join.commission_desc">
+                我们提供行业领先的返佣比例，你的贡献，我们共同分享！
+            </p>
+            <table class="commission-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="join.commission_table_sales">销售业绩</th>
+                        <th data-i18n="join.commission_table_rate">返佣比例</th>
+                        <th data-i18n="join.commission_table_earning">你的收益</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>¥100万及以下</td>
+                        <td class="percentage">60%</td>
+                        <td class="earning">最高¥60万</td>
+                    </tr>
+                    <tr>
+                        <td>¥100万 - ¥1,000万</td>
+                        <td class="percentage">70%</td>
+                        <td class="earning">¥60万 - ¥700万</td>
+                    </tr>
+                    <tr class="highlight-tier">
+                        <td>¥1,000万 - ¥1亿</td>
+                        <td class="percentage">75%</td>
+                        <td class="earning">¥700万 - ¥7,500万</td>
+                    </tr>
+                    <tr class="highlight-tier">
+                        <td>¥1亿 - ¥100亿</td>
+                        <td class="percentage">80%</td>
+                        <td class="earning">¥7,500万 - ¥80亿</td>
+                    </tr>
+                    <tr class="highlight-tier">
+                        <td>¥100亿及以上</td>
+                        <td class="percentage">85%</td>
+                        <td class="earning">¥80亿+</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="text-align: center; color: #666; font-size: 0.95em;" data-i18n="join.commission_tip">
+                * 高亮区域为重点推荐目标，达成这些目标将获得丰厚回报！
+            </p>
+        </div>
+
+        <!-- Benefits -->
+        <div class="benefits">
+            <div class="benefit-card">
+                <div class="icon">💎</div>
+                <h3>超高返佣</h3>
+                <ul>
+                    <li>行业领先的返佣比例</li>
+                    <li>最高可达85%</li>
+                    <li>阶梯式增长激励</li>
+                    <li>无收益上限</li>
+                </ul>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🚀</div>
+                <h3>快速启动</h3>
+                <ul>
+                    <li>无需任何投资</li>
+                    <li>零风险创业</li>
+                    <li>提供完整培训</li>
+                    <li>即时开始赚钱</li>
+                </ul>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🤝</div>
+                <h3>全程支持</h3>
+                <ul>
+                    <li>专业培训指导</li>
+                    <li>营销素材支持</li>
+                    <li>一对一顾问服务</li>
+                    <li>24/7在线支持</li>
+                </ul>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">📊</div>
+                <h3>数据透明</h3>
+                <ul>
+                    <li>实时数据看板</li>
+                    <li>收益实时到账</li>
+                    <li>销售明细查询</li>
+                    <li>月度详细报表</li>
+                </ul>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🎯</div>
+                <h3>多元产品</h3>
+                <ul>
+                    <li>7个核心项目</li>
+                    <li>覆盖多个市场</li>
+                    <li>满足不同需求</li>
+                    <li>收入来源多样</li>
+                </ul>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🌟</div>
+                <h3>长期合作</h3>
+                <ul>
+                    <li>10年战略规划</li>
+                    <li>可持续发展模式</li>
+                    <li>持续收益增长</li>
+                    <li>共创共享未来</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- How it works -->
+        <div class="how-it-works">
+            <h2>📋 如何开始</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>申请加入</h3>
+                    <p>填写申请表单，提交你的基本信息</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>审核通过</h3>
+                    <p>我们审核你的申请，确认合作关系</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>培训赋能</h3>
+                    <p>接受专业培训，学习产品知识和销售技巧</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>开始赚钱</h3>
+                    <p>推广产品，获取客户，享受高额返佣</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calculator -->
+        <div class="calculator">
+            <h2>🧮 收益计算器</h2>
+            <p style="text-align: center; margin-bottom: 30px; color: #666;">
+                输入你的预期销售业绩，立即查看你的收益
+            </p>
+            <div class="calculator-form">
+                <div class="form-group">
+                    <label for="salesAmount">销售业绩 (¥)</label>
+                    <input type="number" id="salesAmount" placeholder="例如: 5000000" min="0">
+                </div>
+                <button class="calculate-btn" onclick="calculateCommission()">计算我的收益</button>
+                <div class="result" id="result">
+                    <h3>🎉 你的收益分析</h3>
+                    <div class="result-item">
+                        <span>销售业绩:</span>
+                        <span id="resultSales">¥0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>返佣比例:</span>
+                        <span id="resultRate">0%</span>
+                    </div>
+                    <div class="result-item">
+                        <span>你的收益:</span>
+                        <span id="resultEarning">¥0</span>
+                    </div>
+                    <div class="result-item">
+                        <span>月均收入:</span>
+                        <span id="resultMonthly">¥0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Instructions -->
+        <div class="payment-instructions">
+            <h2 data-i18n="join.payment_title">💳 付款返佣说明</h2>
+            <div class="instructions-content">
+                <div class="instruction-item">
+                    <div class="instruction-icon">📝</div>
+                    <div class="instruction-text">
+                        <h3 data-i18n="join.payment_important">重要提示</h3>
+                        <p data-i18n="join.payment_important_desc">为了确保您的返佣能准确到账,请务必在付款时填写正确的信息!</p>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">💰</div>
+                    <div class="instruction-text">
+                        <h3 data-i18n="join.payment_format_title">付款备注格式</h3>
+                        <p class="format" data-i18n="join.payment_format">佣金收款人姓名 + 账号</p>
+                        <p class="example" data-i18n="join.payment_example">示例: 张三 6222021234567890</p>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">🎯</div>
+                    <div class="instruction-text">
+                        <h3 data-i18n="join.payment_why_title">为什么需要填写?</h3>
+                        <p data-i18n="join.payment_why_desc">系统需要通过备注信息识别对应的合伙人,才能准确发放返佣。信息错误可能导致返佣失败或延迟。</p>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">⚠️</div>
+                    <div class="instruction-text">
+                        <h3 data-i18n="join.payment_notice_title">注意事项</h3>
+                        <ul>
+                            <li data-i18n="join.payment_notice_1">请确保收款人姓名与合伙人注册姓名一致</li>
+                            <li data-i18n="join.payment_notice_2">银行卡号请仔细核对,避免输入错误</li>
+                            <li data-i18n="join.payment_notice_3">微信/支付宝账号请提供准确的微信号/支付宝账号</li>
+                            <li data-i18n="join.payment_notice_4">备注信息将在支付完成后7个工作日内处理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta">
+            <h2>🎯 准备好开始了吗？</h2>
+            <p>立即加入Claw创业合伙人计划，开启你的财富自由之旅！</p>
+            <a href="#contact" class="cta-btn">立即申请加入</a>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Claw 创业合伙人计划 - 共创共享，共赢未来</p>
+    </footer>
+
+    <script>
+        function calculateCommission() {
+            const salesAmount = parseFloat(document.getElementById('salesAmount').value);
+
+            if (isNaN(salesAmount) || salesAmount < 0) {
+                alert('请输入有效的销售业绩金额');
+                return;
+            }
+
+            let commissionRate = 0;
+            let earning = 0;
+
+            if (salesAmount <= 1000000) {
+                commissionRate = 0.60;
+            } else if (salesAmount <= 10000000) {
+                commissionRate = 0.70;
+            } else if (salesAmount <= 100000000) {
+                commissionRate = 0.75;
+            } else if (salesAmount <= 10000000000) {
+                commissionRate = 0.80;
+            } else {
+                commissionRate = 0.85;
+            }
+
+            earning = salesAmount * commissionRate;
+            const monthlyEarning = earning / 12;
+
+            // Update result display
+            document.getElementById('resultSales').textContent = formatCurrency(salesAmount);
+            document.getElementById('resultRate').textContent = (commissionRate * 100).toFixed(0) + '%';
+            document.getElementById('resultEarning').textContent = formatCurrency(earning);
+            document.getElementById('resultMonthly').textContent = formatCurrency(monthlyEarning);
+
+            // Show result
+            document.getElementById('result').classList.add('show');
+        }
+
+        function formatCurrency(amount) {
+            if (amount >= 100000000) {
+                return '¥' + (amount / 100000000).toFixed(2) + '亿';
+            } else if (amount >= 10000) {
+                return '¥' + (amount / 10000).toFixed(2) + '万';
+            } else {
+                return '¥' + amount.toLocaleString();
+            }
+        }
+
+        // Auto-calculate when input changes
+        document.getElementById('salesAmount').addEventListener('input', function() {
+            const salesAmount = parseFloat(this.value);
+            if (salesAmount > 0) {
+                calculateCommission();
+            } else {
+                document.getElementById('result').classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

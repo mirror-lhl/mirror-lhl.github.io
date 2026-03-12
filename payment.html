@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>收银台 - 选择支付方式</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .payment-method {
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .payment-method.selected {
+            border-color: #3b82f6;
+            background: #eff6ff;
+        }
+        .loading {
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <!-- 页面标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">💳 收银台</h1>
+            <p class="text-gray-600">请选择支付方式完成订单</p>
+        </div>
+
+        <!-- 订单信息 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">📋 订单信息</h2>
+            <div class="space-y-3">
+                <div class="flex justify-between">
+                    <span class="text-gray-600">商品名称</span>
+                    <span class="font-medium text-gray-800" id="productName">AI短视频脚本生成器 - VIP会员</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">订单编号</span>
+                    <span class="font-medium text-gray-800" id="orderId">ORD2026031000001</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-gray-600">订单金额</span>
+                    <span class="font-bold text-2xl text-red-600" id="amount">¥99.00</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支付方式选择 -->
+        <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">💳 选择支付方式</h2>
+            <div class="space-y-4">
+                <!-- 支付宝 -->
+                <div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer selected" onclick="selectPayment('alipay')">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800">支付宝</div>
+                                <div class="text-sm text-gray-500">推荐使用支付宝支付，安全快捷</div>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 border-2 border-blue-500 rounded-full flex items-center justify-center">
+                            <div class="w-4 h-4 bg-blue-500 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 微信支付 -->
+                <div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer" onclick="selectPayment('wechat')">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800">微信支付</div>
+                                <div class="text-sm text-gray-500">使用微信支付，便捷高效</div>
+                            </div>
+                        </div>
+                        <div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center">
+                            <div class="w-4 h-4 bg-green-500 rounded-full hidden"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支付按钮 -->
+        <button
+            id="payBtn"
+            class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+            onclick="initiatePayment()"
+        >
+            🚀 立即支付
+        </button>
+
+        <!-- 安全提示 -->
+        <div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <div class="flex items-start">
+                <div class="text-yellow-600 mr-2">🔒</div>
+                <div class="text-sm text-yellow-800">
+                    <div class="font-bold mb-1">安全支付保障</div>
+                    <ul class="space-y-1">
+                        <li>• 支付过程全程加密，保障您的资金安全</li>
+                        <li>• 我们采用支付宝/微信官方支付接口</li>
+                        <li>• 如遇支付问题请联系客服：400-888-8888</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支付成功提示（隐藏） -->
+        <div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in">
+                <div class="text-center">
+                    <div class="text-6xl mb-4">✅</div>
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2">支付成功！</h2>
+                    <p class="text-gray-600 mb-6">感谢您的购买，订单已成功支付</p>
+                    <div class="bg-gray-50 rounded-lg p-4 mb-6 text-left">
+                        <div class="text-sm text-gray-500 mb-2">订单详情</div>
+                        <div class="flex justify-between mb-1">
+                            <span>订单编号</span>
+                            <span class="font-medium" id="successOrderId">ORD2026031000001</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>支付金额</span>
+                            <span class="font-medium text-red-600" id="successAmount">¥99.00</span>
+                        </div>
+                    </div>
+                    <button
+                        class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
+                        onclick="closeModal()"
+                    >
+                        返回首页
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 支付二维码（隐藏） -->
+        <div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in">
+                <div class="text-center">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-2" id="qrTitle">扫码支付</h2>
+                    <p class="text-gray-600 mb-6">请使用手机扫描二维码完成支付</p>
+                    <div class="bg-gray-50 rounded-lg p-6 mb-6">
+                        <!-- 二维码占位符 - 实际使用时替换为真实二维码 -->
+                        <div class="w-48 h-48 mx-auto bg-white border-2 border-gray-200 rounded-lg flex items-center justify-center">
+                            <div class="text-center">
+                                <div class="text-4xl mb-2" id="qrIcon">📱</div>
+                                <div class="text-sm text-gray-500">二维码加载中...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-center mb-4" id="paymentStatus">
+                        <div class="loading w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full mr-2"></div>
+                        <span class="text-gray-600">等待支付...</span>
+                    </div>
+                    <button
+                        class="w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all mb-2"
+                        onclick="checkPaymentStatus()"
+                    >
+                        检查支付状态
+                    </button>
+                    <button
+                        class="w-full py-3 text-gray-500 hover:text-gray-700"
+                        onclick="closeQrModal()"
+                    >
+                        取消支付
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="mt-8 text-center text-gray-500 text-sm">
+            <p>© 2026 Claw创业计划 | 安全支付保障</p>
+        </div>
+    </div>
+
+    <script>
+        // 全局变量
+        let selectedPayment = 'alipay';
+        let currentOrderId = '';
+        let currentAmount = 0;
+
+        // 产品和套餐映射
+        const productPlans = {
+            'scriptgenerator': {
+                name: 'AI短视频脚本生成器',
+                plans: {
+                    'vip': { name: 'VIP会员', amount: '10000.00' }
+                }
+            },
+            'geo-optimizer': {
+                name: 'GEO优化服务',
+                plans: {
+                    'standard': { name: '标准套餐', amount: '10000.00' },
+                    'consult': { name: '咨询服务', amount: '0.00' }
+                }
+            },
+            'freelancer-crm': {
+                name: 'Freelancer CRM',
+                plans: {
+                    'personal': { name: '个人版', amount: '10000.00' },
+                    'team': { name: '团队版', amount: '10000.00' }
+                }
+            },
+            'aicreator': {
+                name: 'AI创作家',
+                plans: {
+                    'free': { name: '免费版', amount: '0.00' },
+                    'basic': { name: '基础版', amount: '10000.00' },
+                    'pro': { name: '专业版', amount: '10000.00' },
+                    'enterprise': { name: '企业版', amount: '10000.00' }
+                }
+            },
+            'locallife': {
+                name: '生活圈 - 商家入驻',
+                plans: {
+                    'merchant': { name: '商家入驻', amount: '0.00' }
+                }
+            },
+            'enterprisecrm': {
+                name: '企业智脑 - AI智能CRM',
+                plans: {
+                    'basic': { name: '基础版(5用户)', amount: '10000.00' }
+                }
+            },
+            'enterprisehr': {
+                name: '企业智脑 - AI人力资源系统',
+                plans: {
+                    'basic': { name: '基础版(50员工)', amount: '10000.00' }
+                }
+            },
+            'enterprisefinance': {
+                name: '企业智脑 - AI财务管理',
+                plans: {
+                    'basic': { name: '基础版', amount: '10000.00' }
+                }
+            },
+            'enterprisescm': {
+                name: '企业智脑 - AI供应链管理',
+                plans: {
+                    'basic': { name: '基础版', amount: '10000.00' }
+                }
+            },
+            'enterprisepm': {
+                name: '企业智脑 - AI项目协作平台',
+                plans: {
+                    'basic': { name: '基础版(10用户)', amount: '10000.00' }
+                }
+            },
+            'enterprisebi': {
+                name: '企业智脑 - AI数据分析平台',
+                plans: {
+                    'basic': { name: '基础版', amount: '10000.00' }
+                }
+            },
+            'enterpriseai': {
+                name: '企业智脑 - 全产品试用',
+                plans: {
+                    'trial': { name: '14天免费试用', amount: '0.00' }
+                }
+            }
+        };
+
+        // 从URL获取订单信息
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const product = urlParams.get('product') || 'scriptgenerator';
+            const plan = urlParams.get('plan') || 'vip';
+            const customAmount = urlParams.get('amount');
+            const orderId = urlParams.get('order') || generateOrderId();
+
+            // 获取产品信息
+            let productName, amount;
+            if (productPlans[product] && productPlans[product].plans[plan]) {
+                productName = `${productPlans[product].name} - ${productPlans[product].plans[plan].name}`;
+                amount = customAmount || productPlans[product].plans[plan].amount;
+            } else {
+                productName = '未知产品';
+                amount = '0.00';
+            }
+
+            document.getElementById('productName').textContent = productName;
+            document.getElementById('amount').textContent = `¥${amount}`;
+            document.getElementById('orderId').textContent = orderId;
+            document.getElementById('successOrderId').textContent = orderId;
+            document.getElementById('successAmount').textContent = `¥${amount}`;
+
+            currentOrderId = orderId;
+            currentAmount = parseFloat(amount);
+        };
+
+        // 生成订单号
+        function generateOrderId() {
+            const now = new Date();
+            const timestamp = now.getFullYear().toString() +
+                (now.getMonth() + 1).toString().padStart(2, '0') +
+                now.getDate().toString().padStart(2, '0') +
+                now.getHours().toString().padStart(2, '0') +
+                now.getMinutes().toString().padStart(2, '0') +
+                now.getSeconds().toString().padStart(2, '0');
+            const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            return `ORD${timestamp}${random}`;
+        }
+
+        // 选择支付方式
+        function selectPayment(method) {
+            selectedPayment = method;
+
+            // 更新UI
+            const methods = document.querySelectorAll('.payment-method');
+            methods.forEach(m => {
+                m.classList.remove('selected');
+                const circle = m.querySelector('.rounded-full');
+                const dot = circle.querySelector('div');
+                if (dot) {
+                    dot.classList.add('hidden');
+                }
+                circle.classList.remove('border-blue-500', 'border-green-500');
+                circle.classList.add('border-gray-300');
+            });
+
+            // 选中当前
+            const selectedMethod = method === 'alipay' ? methods[0] : methods[1];
+            selectedMethod.classList.add('selected');
+            const selectedCircle = selectedMethod.querySelector('.rounded-full');
+            const selectedDot = selectedCircle.querySelector('div');
+            if (selectedDot) {
+                selectedDot.classList.remove('hidden');
+            }
+            selectedCircle.classList.remove('border-gray-300');
+            selectedCircle.classList.add(method === 'alipay' ? 'border-blue-500' : 'border-green-500');
+        }
+
+        // 发起支付
+        async function initiatePayment() {
+            const payBtn = document.getElementById('payBtn');
+            payBtn.textContent = '⏳ 处理中...';
+            payBtn.disabled = true;
+
+            // 模拟API调用
+            await new Promise(resolve => setTimeout(resolve, 1000));
+
+            // 根据支付方式显示不同的支付界面
+            if (selectedPayment === 'alipay') {
+                // 支付宝 - 跳转到支付宝页面（实际使用时）
+                // window.location.href = `https://openapi.alipay.com/gateway.do?...`;
+                
+                // 演示：显示支付成功
+                showPaymentSuccess();
+            } else {
+                // 微信支付 - 显示二维码
+                showQrCode();
+            }
+
+            payBtn.textContent = '🚀 立即支付';
+            payBtn.disabled = false;
+        }
+
+        // 显示支付二维码
+        function showQrCode() {
+            const modal = document.getElementById('qrModal');
+            const title = document.getElementById('qrTitle');
+            const icon = document.getElementById('qrIcon');
+
+            if (selectedPayment === 'wechat') {
+                title.textContent = '微信扫码支付';
+                icon.textContent = '💬';
+            } else {
+                title.textContent = '支付宝扫码支付';
+                icon.textContent = '📱';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            // 模拟支付完成
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+                showPaymentSuccess();
+            }, 5000);
+        }
+
+        // 检查支付状态
+        function checkPaymentStatus() {
+            // 实际使用时，调用后端API检查支付状态
+            const status = document.getElementById('paymentStatus');
+            status.innerHTML = '<div class="text-green-600">✓ 支付成功！</div>';
+            
+            setTimeout(() => {
+                document.getElementById('qrModal').classList.add('hidden');
+                document.getElementById('qrModal').classList.remove('flex');
+                showPaymentSuccess();
+            }, 1000);
+        }
+
+        // 显示支付成功
+        function showPaymentSuccess() {
+            const modal = document.getElementById('successModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        // 关闭成功弹窗
+        function closeModal() {
+            document.getElementById('successModal').classList.add('hidden');
+            document.getElementById('successModal').classList.remove('flex');
+            window.location.href = 'index.html';
+        }
+
+        // 关闭二维码弹窗
+        function closeQrModal() {
+            document.getElementById('qrModal').classList.add('hidden');
+            document.getElementById('qrModal').classList.remove('flex');
+        }
+
+        // 页面加载后初始化语言
+        document.addEventListener('DOMContentLoaded', () => {
+            // 初始化i18n
+            if (typeof initLanguage === 'function') {
+                initLanguage();
+            }
+            
+            // 添加语言切换事件
+            const originalSwitchLanguage = window.switchLanguage;
+            window.switchLanguage = function(lang) {
+                originalSwitchLanguage(lang);
+                // 更新页面元素
+                updatePaymentElements();
+            };
+        });
+
+        // 更新支付页面元素
+        function updatePaymentElements() {
+            // 更新页脚语言
+            const footer = document.querySelector('.mt-8 p');
+            if (footer) {
+                const zhText = footer.querySelector('.zh');
+                const enText = footer.querySelector('.en');
+                if (zhText && enText) {
+                    zhText.classList.toggle('hidden', currentLang === 'en');
+                    enText.classList.toggle('hidden', currentLang !== 'en');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
