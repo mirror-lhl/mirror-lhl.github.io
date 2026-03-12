@@ -1,25 +1,25 @@
-// 多语言支持库
-// 2026-03-10 - 支持中英双语切换
+// Multi-language support library
+// 2026-03-12 - English only
 
 const translations = {
-    'zh-CN': {
-        // 通用
-        'home': '首页',
-        'back': '返回',
-        'save': '保存',
-        'cancel': '取消',
-        'confirm': '确认',
-        'submit': '提交',
-        'search': '搜索',
-        'loading': '加载中...',
-        'success': '成功',
-        'error': '错误',
-        'warning': '警告',
-        'copy': '复制',
-        'copied': '已复制',
-        'delete': '删除',
-        'edit': '编辑',
-        'close': '关闭',
+    'en': {
+        // Common
+        'home': 'Home',
+        'back': 'Back',
+        'save': 'Save',
+        'cancel': 'Cancel',
+        'confirm': 'Confirm',
+        'submit': 'Submit',
+        'search': 'Search',
+        'loading': 'Loading...',
+        'success': 'Success',
+        'error': 'Error',
+        'warning': 'Warning',
+        'copy': 'Copy',
+        'copied': 'Copied',
+        'delete': 'Delete',
+        'edit': 'Edit',
+        'close': 'Close',
         
         // 导航
         'nav.features': '功能',
@@ -753,12 +753,12 @@ const translations = {
     }
 };
 
-// 当前语言设置
-let currentLang = 'zh-CN';
+// Current language setting
+let currentLang = 'en';
 
-// 初始化语言
+// Initialize language
 function initLanguage() {
-    // 从URL获取语言参数
+    // Get language parameter from URL
     const urlParams = new URLSearchParams(window.location.search);
     const langParam = urlParams.get('lang');
     

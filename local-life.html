@@ -1,779 +1,490 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>生活圈 - 本地生活服务平台</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: #666;
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: #667eea;
-        }
-        
-        .header-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .btn {
-            padding: 10px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            color: #667eea;
-            border: 2px solid #667eea;
-        }
-        
-        .btn-outline:hover {
-            background: #667eea;
-            color: white;
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 150px 0 80px;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero h1 {
-            font-size: 56px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-        }
-        
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
-        .search-box {
-            background: white;
-            border-radius: 50px;
-            padding: 20px;
-            display: flex;
-            gap: 15px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        }
-        
-        .search-box input {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            padding: 0 20px;
-        }
-        
-        .search-box select {
-            border: none;
-            outline: none;
-            font-size: 16px;
-            padding: 0 20px;
-            border-left: 2px solid #e5e7eb;
-            cursor: pointer;
-        }
-        
-        .search-box button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .search-box button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* Categories */
-        .categories {
-            padding: 80px 0;
-            background: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 42px;
-            margin-bottom: 60px;
-            color: #333;
-        }
-        
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 30px;
-        }
-        
-        .category-card {
-            text-align: center;
-            padding: 40px 20px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-        
-        .category-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
-        }
-        
-        .category-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        .category-card h3 {
-            font-size: 18px;
-            color: #333;
-            margin-bottom: 8px;
-        }
-        
-        .category-card p {
-            font-size: 14px;
-            color: #999;
-        }
-        
-        /* Featured Merchants */
-        .merchants {
-            padding: 80px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-        
-        .merchants-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .merchant-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-        }
-        
-        .merchant-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
-        }
-        
-        .merchant-image {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-        }
-        
-        .merchant-info {
-            padding: 25px;
-        }
-        
-        .merchant-info h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-            color: #333;
-        }
-        
-        .merchant-info .rating {
-            color: #f59e0b;
-            margin-bottom: 10px;
-            font-size: 14px;
-        }
-        
-        .merchant-info p {
-            color: #666;
-            font-size: 14px;
-            margin-bottom: 15px;
-        }
-        
-        .merchant-tags {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 15px;
-        }
-        
-        .merchant-tags span {
-            padding: 5px 12px;
-            background: #f5f5f5;
-            border-radius: 15px;
-            font-size: 12px;
-            color: #666;
-        }
-        
-        .merchant-info .discount {
-            color: #ef4444;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        
-        /* Merchant Registration */
-        .merchant-section {
-            padding: 100px 0;
-            background: white;
-        }
-        
-        .merchant-cta {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 30px;
-            padding: 60px;
-            text-align: center;
-            color: white;
-        }
-        
-        .merchant-cta h2 {
-            font-size: 42px;
-            margin-bottom: 20px;
-        }
-        
-        .merchant-cta p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            opacity: 0.9;
-        }
-        
-        .merchant-benefits {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin: 40px 0;
-        }
-        
-        .benefit-item {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-        }
-        
-        .benefit-item .icon {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        
-        .benefit-item h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-        
-        .benefit-item p {
-            font-size: 14px;
-            opacity: 0.8;
-        }
-        
-        /* Stats */
-        .stats {
-            padding: 80px 0;
-            background: #1a1a2e;
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .stat-item h3 {
-            font-size: 48px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-        
-        .stat-item p {
-            font-size: 18px;
-            opacity: 0.8;
-        }
-        
-        /* How it works */
-        .how-it-works {
-            padding: 100px 0;
-            background: white;
-        }
-        
-        .steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-        
-        .step {
-            text-align: center;
-            padding: 30px;
-        }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            font-weight: 700;
-            color: white;
-            margin: 0 auto 20px;
-        }
-        
-        .step h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .step p {
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        /* Footer */
-        footer {
-            background: #1a1a2e;
-            color: white;
-            padding: 60px 0 30px;
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-section h4 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.5);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .search-box {
-                flex-direction: column;
-                padding: 15px;
-            }
-            
-            .search-box select {
-                border-left: none;
-                border-top: 2px solid #e5e7eb;
-                padding: 15px;
-            }
-            
-            .section-title {
-                font-size: 32px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">🌐 生活圈</div>
-                <ul class="nav-links">
-                    <li><a href="#categories" data-i18n="local.categories_title">服务分类</a></li>
-                    <li><a href="#merchants" data-i18n="local.merchants_title">精选商家</a></li>
-                    <li><a href="#how-it-works" data-i18n="local.how_title">如何使用</a></li>
-                    <li><a href="#merchant" data-i18n="local.merchant_join">商家入驻</a></li>
-                </ul>
-                <div class="header-buttons">
-                    <button class="btn btn-outline" onclick="window.location.href='payment.html?product=locallife&plan=merchant'" data-i18n="local.merchant_login">商家登录</button>
-                    <button class="btn btn-primary" onclick="window.location.href='payment.html?product=locallife&plan=merchant'" data-i18n="local.merchant_join">立即入驻</button>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1 data-i18n="local.hero_title">发现身边的美好生活</h1>
-            <p data-i18n="local.hero_desc">连接本地商家和消费者，提供一站式本地生活服务</p>
-            <div class="search-box">
-                <input type="text" data-i18n-placeholder="local.search" placeholder="搜索商家、服务或地点">
-                <select id="categorySelect">
-                    <option data-i18n="local.all_categories">全部分类</option>
-                    <option data-i18n="local.food">美食餐饮</option>
-                    <option data-i18n="local.beauty">美容美发</option>
-                    <option data-i18n="local.services">家政服务</option>
-                    <option data-i18n="local.entertainment">休闲娱乐</option>
-                    <option data-i18n="local.fitness">运动健身</option>
-                </select>
-                <button data-i18n="local.search_btn">搜索</button>
-            </div>
-            <div style="display: flex; gap: 20px; justify-content: center;">
-                <a href="#categories" class="btn btn-primary" style="display: inline-block;" data-i18n="local.btn_explore">探索服务</a>
-                <a href="#merchant" class="btn" style="display: inline-block; background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white;" data-i18n="local.btn_merchant_join">商家入驻</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Categories -->
-    <section class="categories" id="categories">
-        <div class="container">
-            <h2 class="section-title" data-i18n="local.categories_title">热门服务分类</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">🍔</div>
-                    <h3 data-i18n="local.food">美食餐饮</h3>
-                    <p>10,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">💇</div>
-                    <h3 data-i18n="local.beauty">美容美发</h3>
-                    <p>5,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🧹</div>
-                    <h3 data-i18n="local.services">家政服务</h3>
-                    <p>3,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🎬</div>
-                    <h3 data-i18n="local.entertainment">休闲娱乐</h3>
-                    <p>2,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">💪</div>
-                    <h3 data-i18n="local.fitness">运动健身</h3>
-                    <p>1,500+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🚗</div>
-                    <h3 data-i18n="local.auto">汽车服务</h3>
-                    <p>2,500+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🏥</div>
-                    <h3 data-i18n="local.health">医疗健康</h3>
-                    <p>1,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">🎓</div>
-                    <h3 data-i18n="local.education">教育培训</h3>
-                    <p>2,000+<span class="zh">商家</span><span class="en hidden">Merchants</span></p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Merchants -->
-    <section class="merchants" id="merchants">
-        <div class="container">
-            <h2 class="section-title">精选优质商家</h2>
-            <div class="merchants-grid">
-                <div class="merchant-card">
-                    <div class="merchant-image">🍜</div>
-                    <div class="merchant-info">
-                        <h3>川味香火锅</h3>
-                        <div class="rating">⭐⭐⭐⭐⭐ 4.9 (2,580评价)</div>
-                        <p>正宗川味，麻辣鲜香，食材新鲜</p>
-                        <div class="merchant-tags">
-                            <span>火锅</span>
-                            <span>川菜</span>
-                            <span>聚餐</span>
-                        </div>
-                        <div class="discount">限时优惠：新客立减¥20</div>
-                    </div>
-                </div>
-                <div class="merchant-card">
-                    <div class="merchant-image">💅</div>
-                    <div class="merchant-info">
-                        <h3>时尚造型沙龙</h3>
-                        <div class="rating">⭐⭐⭐⭐⭐ 4.8 (1,890评价)</div>
-                        <p>专业造型师，打造完美形象</p>
-                        <div class="merchant-tags">
-                            <span>美发</span>
-                            <span>造型</span>
-                            <span>染烫</span>
-                        </div>
-                        <div class="discount">会员专享：8折优惠</div>
-                    </div>
-                </div>
-                <div class="merchant-card">
-                    <div class="merchant-image">🧼</div>
-                    <div class="merchant-info">
-                        <h3>专业家政服务</h3>
-                        <div class="rating">⭐⭐⭐⭐⭐ 4.7 (3,200评价)</div>
-                        <p>专业团队，贴心服务，放心选择</p>
-                        <div class="merchant-tags">
-                            <span>保洁</span>
-                            <span>清洗</span>
-                            <span>收纳</span>
-                        </div>
-                        <div class="discount">首单体验价：¥99</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>10,000+</h3>
-                    <p data-i18n="local.stats_merchants">入驻商家</p>
-                </div>
-                <div class="stat-item">
-                    <h3>500,000+</h3>
-                    <p data-i18n="local.stats_users">活跃用户</p>
-                </div>
-                <div class="stat-item">
-                    <h3>1,000,000+</h3>
-                    <p data-i18n="local.stats_orders">完成订单</p>
-                </div>
-                <div class="stat-item">
-                    <h3>50+</h3>
-                    <p data-i18n="local.stats_cities">覆盖城市</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Merchant Section -->
-    <section class="merchant-section" id="merchant">
-        <div class="container">
-            <div class="merchant-cta">
-                <h2 data-i18n="local.merchant_cta_title">商家免费入驻，开启财富之路</h2>
-                <p data-i18n="local.merchant_cta_desc">低佣金、高流量、精准用户，让生意更简单</p>
-                <div class="merchant-benefits">
-                    <div class="benefit-item">
-                        <div class="icon">💰</div>
-                        <h4 data-i18n="local.benefit_low_commission">低佣金</h4>
-                        <p data-i18n="local.benefit_low_commission_desc">比其他平台低30-50%</p>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="icon">👥</div>
-                        <h4 data-i18n="local.benefit_traffic">精准流量</h4>
-                        <p data-i18n="local.benefit_traffic_desc">基于地理位置推荐</p>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="icon">📊</div>
-                        <h4 data-i18n="local.benefit_analytics">数据分析</h4>
-                        <p data-i18n="local.benefit_analytics_desc">实时掌握经营数据</p>
-                    </div>
-                    <div class="benefit-item">
-                        <div class="icon">🎯</div>
-                        <h4 data-i18n="local.benefit_marketing">营销工具</h4>
-                        <p data-i18n="local.benefit_marketing_desc">多种促销活动支持</p>
-                    </div>
-                </div>
-                <button class="btn" style="background: white; color: #667eea; font-size: 18px; padding: 15px 50px;" onclick="window.location.href='payment.html?product=locallife&plan=merchant'" data-i18n="local.free_join">立即免费入驻</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- How it works -->
-    <section class="how-it-works" id="how-it-works">
-        <div class="container">
-            <h2 class="section-title" data-i18n="local.how_title">如何使用</h2>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3 data-i18n="local.step1_title">搜索服务</h3>
-                    <p data-i18n="local.step1_desc">在首页搜索框输入您需要的服务或商家，选择分类</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3 data-i18n="local.step2_title">浏览选择</h3>
-                    <p data-i18n="local.step2_desc">浏览商家详情，查看评价、价格和优惠活动</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3 data-i18n="local.step3_title">在线预订</h3>
-                    <p data-i18n="local.step3_desc">选择服务时间和数量，提交订单并支付</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <h3 data-i18n="local.step4_title">享受服务</h3>
-                    <p data-i18n="local.step4_desc">按预约时间到店享受服务，完成后评价</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4 data-i18n="local.footer_about">关于我们</h4>
-                    <ul>
-                        <li><a href="#" data-i18n="local.footer_about_company">公司介绍</a></li>
-                        <li><a href="#" data-i18n="local.footer_history">发展历程</a></li>
-                        <li><a href="#" data-i18n="local.footer_join">加入我们</a></li>
-                        <li><a href="#" data-i18n="local.footer_contact">联系方式</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="local.footer_merchant_service">商家服务</h4>
-                    <ul>
-                        <li><a href="#" data-i18n="local.merchant_join">商家入驻</a></li>
-                        <li><a href="#" data-i18n="local.footer_merchant_center">商家中心</a></li>
-                        <li><a href="#" data-i18n="local.footer_promotion">营销推广</a></li>
-                        <li><a href="#" data-i18n="local.footer_help">帮助中心</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="local.footer_user_service">用户服务</h4>
-                    <ul>
-                        <li><a href="#" data-i18n="local.footer_guide">使用指南</a></li>
-                        <li><a href="#" data-i18n="local.footer_faq">常见问题</a></li>
-                        <li><a href="#" data-i18n="local.footer_support">客服中心</a></li>
-                        <li><a href="#" data-i18n="local.footer_feedback">意见反馈</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="local.footer_follow">关注我们</h4>
-                    <ul>
-                        <li><a href="#" data-i18n="local.footer_wechat">微信公众号</a></li>
-                        <li><a href="#" data-i18n="local.footer_weibo">微博</a></li>
-                        <li><a href="#" data-i18n="local.footer_douyin">抖音</a></li>
-                        <li><a href="#" data-i18n="local.footer_xiaohongshu">小红书</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-i18n="local.copyright">&copy; 2026 生活圈. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Local Life Services Platform - Your Local Life, Made Better</title><style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+ 
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: #333;
+ line-height: 1.6;
+ }
+ 
+ .container {
+ max-width: 1200px;
+ margin: 0 auto;
+ padding: 0 20px;
+ }
+ 
+ /* Header */
+ header {
+ background: rgba(255, 255, 255, 0.95);
+ backdrop-filter: blur(10px);
+ position: fixed;
+ width: 100%;
+ top: 0;
+ z-index: 1000;
+ box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+ }
+ 
+ nav {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 15px 0;
+ }
+ 
+ .logo {
+ font-size: 28px;
+ font-weight: 700;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ }
+ 
+ .nav-links {
+ display: flex;
+ gap: 30px;
+ list-style: none;
+ }
+ 
+ .nav-links a {
+ text-decoration: none;
+ color: #666;
+ font-weight: 500;
+ transition: color 0.3s;
+ }
+ 
+ .nav-links a:hover {
+ color: #667eea;
+ }
+ 
+ .header-buttons {
+ display: flex;
+ gap: 15px;
+ }
+ 
+ .btn {
+ padding: 10px 25px;
+ border-radius: 25px;
+ text-decoration: none;
+ font-weight: 600;
+ transition: all 0.3s;
+ border: none;
+ cursor: pointer;
+ }
+ 
+ .btn-primary {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ }
+ 
+ .btn-primary:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+ }
+ 
+ .btn-outline {
+ background: transparent;
+ color: #667eea;
+ border: 2px solid #667eea;
+ }
+ 
+ .btn-outline:hover {
+ background: #667eea;
+ color: white;
+ }
+ 
+ /* Hero Section */
+ .hero {
+ padding: 150px 0 80px;
+ text-align: center;
+ color: white;
+ }
+ 
+ .hero h1 {
+ font-size: 56px;
+ margin-bottom: 20px;
+ line-height: 1.2;
+ }
+ 
+ .hero p {
+ font-size: 22px;
+ margin-bottom: 40px;
+ opacity: 0.9;
+ }
+ 
+ .search-box {
+ background: white;
+ border-radius: 50px;
+ padding: 20px;
+ display: flex;
+ gap: 15px;
+ max-width: 700px;
+ margin: 0 auto 40px;
+ box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+ }
+ 
+ .search-box input {
+ flex: 1;
+ border: none;
+ outline: none;
+ font-size: 16px;
+ padding: 0 20px;
+ }
+ 
+ .search-box select {
+ border: none;
+ outline: none;
+ font-size: 16px;
+ padding: 0 20px;
+ border-left: 2px solid #e5e7eb;
+ cursor: pointer;
+ }
+ 
+ .search-box button {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ border: none;
+ padding: 12px 30px;
+ border-radius: 30px;
+ font-size: 16px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s;
+ }
+ 
+ .search-box button:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+ }
+ 
+ /* Categories */
+ .categories {
+ padding: 80px 0;
+ background: white;
+ }
+ 
+ .section-title {
+ text-align: center;
+ font-size: 42px;
+ margin-bottom: 60px;
+ color: #333;
+ }
+ 
+ .categories-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+ gap: 30px;
+ }
+ 
+ .category-card {
+ text-align: center;
+ padding: 40px 20px;
+ background: white;
+ border-radius: 20px;
+ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+ transition: all 0.3s;
+ cursor: pointer;
+ }
+ 
+ .category-card:hover {
+ transform: translateY(-10px);
+ box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+ }
+ 
+ .category-icon {
+ font-size: 48px;
+ margin-bottom: 15px;
+ }
+ 
+ .category-card h3 {
+ font-size: 18px;
+ color: #333;
+ margin-bottom: 8px;
+ }
+ 
+ .category-card p {
+ font-size: 14px;
+ color: #999;
+ }
+ 
+ /* Featured Merchants */
+ .merchants {
+ padding: 80px 0;
+ background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+ }
+ 
+ .merchants-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 30px;
+ }
+ 
+ .merchant-card {
+ background: white;
+ border-radius: 20px;
+ overflow: hidden;
+ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+ transition: all 0.3s;
+ }
+ 
+ .merchant-card:hover {
+ transform: translateY(-10px);
+ box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+ }
+ 
+ .merchant-image {
+ height: 200px;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 60px;
+ }
+ 
+ .merchant-info {
+ padding: 25px;
+ }
+ 
+ .merchant-info h3 {
+ font-size: 22px;
+ margin-bottom: 10px;
+ color: #333;
+ }
+ 
+ .merchant-info .rating {
+ color: #f59e0b;
+ margin-bottom: 10px;
+ font-size: 14px;
+ }
+ 
+ .merchant-info p {
+ color: #666;
+ font-size: 14px;
+ margin-bottom: 15px;
+ }
+ 
+ .merchant-tags {
+ display: flex;
+ gap: 10px;
+ flex-wrap: wrap;
+ margin-bottom: 15px;
+ }
+ 
+ .merchant-tags span {
+ padding: 5px 12px;
+ background: #f5f5f5;
+ border-radius: 15px;
+ font-size: 12px;
+ color: #666;
+ }
+ 
+ .merchant-info .discount {
+ color: #ef4444;
+ font-weight: 600;
+ font-size: 16px;
+ }
+ 
+ /* Merchant Registration */
+ .merchant-section {
+ padding: 100px 0;
+ background: white;
+ }
+ 
+ .merchant-cta {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ border-radius: 30px;
+ padding: 60px;
+ text-align: center;
+ color: white;
+ }
+ 
+ .merchant-cta h2 {
+ font-size: 42px;
+ margin-bottom: 20px;
+ }
+ 
+ .merchant-cta p {
+ font-size: 20px;
+ margin-bottom: 30px;
+ opacity: 0.9;
+ }
+ 
+ .merchant-benefits {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 30px;
+ margin: 40px 0;
+ }
+ 
+ .benefit-item {
+ padding: 20px;
+ background: rgba(255, 255, 255, 0.1);
+ border-radius: 15px;
+ }
+ 
+ .benefit-item .icon {
+ font-size: 36px;
+ margin-bottom: 10px;
+ }
+ 
+ .benefit-item h4 {
+ font-size: 18px;
+ margin-bottom: 8px;
+ }
+ 
+ .benefit-item p {
+ font-size: 14px;
+ opacity: 0.8;
+ }
+ 
+ /* Stats */
+ .stats {
+ padding: 80px 0;
+ background: #1a1a2e;
+ color: white;
+ }
+ 
+ .stats-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 40px;
+ text-align: center;
+ }
+ 
+ .stat-item h3 {
+ font-size: 48px;
+ font-weight: 700;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ margin-bottom: 10px;
+ }
+ 
+ .stat-item p {
+ font-size: 18px;
+ opacity: 0.8;
+ }
+ 
+ /* How it works */
+ .how-it-works {
+ padding: 100px 0;
+ background: white;
+ }
+ 
+ .steps {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+ gap: 40px;
+ margin-top: 60px;
+ }
+ 
+ .step {
+ text-align: center;
+ padding: 30px;
+ }
+ 
+ .step-number {
+ width: 60px;
+ height: 60px;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ border-radius: 50%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 28px;
+ font-weight: 700;
+ color: white;
+ margin: 0 auto 20px;
+ }
+ 
+ .step h3 {
+ font-size: 22px;
+ margin-bottom: 15px;
+ color: #333;
+ }
+ 
+ .step p {
+ color: #666;
+ line-height: 1.8;
+ }
+ 
+ /* Footer */
+ footer {
+ background: #1a1a2e;
+ color: white;
+ padding: 60px 0 30px;
+ }
+ 
+ .footer-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 40px;
+ margin-bottom: 40px;
+ }
+ 
+ .footer-section h4 {
+ font-size: 20px;
+ margin-bottom: 20px;
+ }
+ 
+ .footer-section ul {
+ list-style: none;
+ }
+ 
+ .footer-section li {
+ margin-bottom: 10px;
+ }
+ 
+ .footer-section a {
+ color: rgba(255, 255, 255, 0.7);
+ text-decoration: none;
+ transition: color 0.3s;
+ }
+ 
+ .footer-section a:hover {
+ color: white;
+ }
+ 
+ .footer-bottom {
+ text-align: center;
+ padding-top: 30px;
+ border-top: 1px solid rgba(255, 255, 255, 0.1);
+ color: rgba(255, 255, 255, 0.5);
+ }
+ 
+ /* Responsive */
+ @media (max-width: 768px) {
+ .hero h1 {
+ font-size: 36px;
+ }
+ 
+ .hero p {
+ font-size: 18px;
+ }
+ 
+ .search-box {
+ flex-direction: column;
+ padding: 15px;
+ }
+ 
+ .search-box select {
+ border-left: none;
+ border-top: 2px solid #e5e7eb;
+ padding: 15px;
+ }
+ 
+ .section-title {
+ font-size: 32px;
+ }
+ 
+ .nav-links {
+ display: none;
+ }
+ }
+ </style></head><body><!-- Header --><header><div class="container"><nav><div class="logo">🌐 </div><ul class="nav-links"><li><a href="#categories"></a></li><li><a href="#merchants"></a></li><li><a href="#how-it-works"></a></li><li><a href="#merchant"></a></li></ul><div class="header-buttons"><button class="btn btn-outline" onclick="window.location.href='payment.html?product=locallife&plan=merchant'"></button><button class="btn btn-primary" onclick="window.location.href='payment.html?product=locallife&plan=merchant'"></button></div></nav></div></header><!-- Hero Section --><section class="hero"><div class="container"><h1></h1><p>，Local Life Service</p><div class="search-box"><input type="text" placeholder="Search、"><select id="categorySelect"><option>All</option><option></option><option>Beauty & Hair</option><option></option><option></option><option></option></select><button>Search</button></div><div style="display: flex; gap: 20px; justify-content: center;"><a href="#categories" class="btn btn-primary" style="display: inline-block;"></a><a href="#merchant" class="btn" style="display: inline-block; background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid white;"></a></div></div></section><!-- Categories --><section class="categories" id="categories"><div class="container"><h2 class="section-title"></h2><div class="categories-grid"><div class="category-card"><div class="category-icon">🍔</div><h3></h3><p>10,000+</p></div><div class="category-card"><div class="category-icon">💇</div><h3>Beauty & Hair</h3><p>5,000+</p></div><div class="category-card"><div class="category-icon">🧹</div><h3></h3><p>3,000+</p></div><div class="category-card"><div class="category-icon">🎬</div><h3></h3><p>2,000+</p></div><div class="category-card"><div class="category-icon">💪</div><h3></h3><p>1,500+</p></div><div class="category-card"><div class="category-icon">🚗</div><h3>Auto Service</h3><p>2,500+</p></div><div class="category-card"><div class="category-icon">🏥</div><h3></h3><p>1,000+</p></div><div class="category-card"><div class="category-icon">🎓</div><h3>Education</h3><p>2,000+</p></div></div></div></section><!-- Featured Merchants --><section class="merchants" id="merchants"><div class="container"><h2 class="section-title"></h2><div class="merchants-grid"><div class="merchant-card"><div class="merchant-image">🍜</div><div class="merchant-info"><h3></h3><div class="rating">⭐⭐⭐⭐⭐ 4.9 (2,580)</div><p>，，</p><div class="merchant-tags"><span></span><span></span><span></span></div><div class="discount">：$10,000</div></div></div><div class="merchant-card"><div class="merchant-image">💅</div><div class="merchant-info"><h3></h3><div class="rating">⭐⭐⭐⭐⭐ 4.8 (1,890)</div><p>，</p><div class="merchant-tags"><span></span><span></span><span></span></div><div class="discount">：8</div></div></div><div class="merchant-card"><div class="merchant-image">🧼</div><div class="merchant-info"><h3></h3><div class="rating">⭐⭐⭐⭐⭐ 4.7 (3,200)</div><p>，，</p><div class="merchant-tags"><span></span><span></span><span></span></div><div class="discount">：$100,000</div></div></div></div></div></section><!-- Stats --><section class="stats"><div class="container"><div class="stats-grid"><div class="stat-item"><h3>10,000+</h3><p></p></div><div class="stat-item"><h3>500,000+</h3><p></p></div><div class="stat-item"><h3>1,000,000+</h3><p>Complete</p></div><div class="stat-item"><h3>50+</h3><p>City</p></div></div></div></section><!-- Merchant Section --><section class="merchant-section" id="merchant"><div class="container"><div class="merchant-cta"><h2>，</h2><p>、、，Simpler for Freelancers</p><div class="merchant-benefits"><div class="benefit-item"><div class="icon">💰</div><h4></h4><p>Other30-50%</p></div><div class="benefit-item"><div class="icon">👥</div><h4></h4><p></p></div><div class="benefit-item"><div class="icon">📊</div><h4>Data Analysis</h4><p></p></div><div class="benefit-item"><div class="icon">🎯</div><h4></h4><p></p></div></div><button class="btn" style="background: white; color: #667eea; font-size: 18px; padding: 15px 50px;" onclick="window.location.href='payment.html?product=locallife&plan=merchant'"></button></div></div></section><!-- How it works --><section class="how-it-works" id="how-it-works"><div class="container"><h2 class="section-title"></h2><div class="steps"><div class="step"><div class="step-number">1</div><h3>Search</h3><p>HomeSearch，</p></div><div class="step"><div class="step-number">2</div><h3></h3><p>Details，View、</p></div><div class="step"><div class="step-number">3</div><h3></h3><p>，Submit</p></div><div class="step"><div class="step-number">4</div><h3></h3><p>approx，Complete</p></div></div></div></section><!-- Footer --><footer><div class="container"><div class="footer-grid"><div class="footer-section"><h4>About Us</h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#">Contact Us</a></li></ul></div><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#">Help</a></li></ul></div><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li></ul></div><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 . .</p></div></div></footer></body></html>

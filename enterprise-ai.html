@@ -1,844 +1,468 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="enterprise.title">企业智脑 - AI企业服务矩阵</title>
-    <script src="js/i18n.js"></script>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        .hidden {
-            display: none !important;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        
-        /* Header */
-        header {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(10px);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-        
-        .nav-links a {
-            text-decoration: none;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 500;
-            transition: color 0.3s;
-        }
-        
-        .nav-links a:hover {
-            color: white;
-        }
-        
-        .header-buttons {
-            display: flex;
-            gap: 15px;
-        }
-        
-        .btn {
-            padding: 10px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .btn-outline {
-            background: transparent;
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Hero Section */
-        .hero {
-            padding: 180px 0 100px;
-            text-align: center;
-            color: white;
-        }
-        
-        .hero h1 {
-            font-size: 64px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-bottom: 60px;
-        }
-        
-        .hero-buttons a {
-            padding: 16px 40px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 18px;
-            transition: all 0.3s;
-        }
-        
-        .hero-buttons .primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .hero-buttons .primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        .hero-buttons .secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-        
-        .hero-buttons .secondary:hover {
-            background: rgba(255, 255, 255, 0.2);
-        }
-        
-        /* Products */
-        .products {
-            padding: 100px 0;
-            background: white;
-        }
-        
-        .section-title {
-            text-align: center;
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #1a1a2e;
-        }
-        
-        .section-subtitle {
-            text-align: center;
-            font-size: 20px;
-            color: #666;
-            margin-bottom: 60px;
-        }
-        
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 60px;
-        }
-        
-        .product-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            transition: all 0.3s;
-            border: 1px solid #e5e7eb;
-        }
-        
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
-        }
-        
-        .product-header {
-            padding: 30px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-        
-        .product-header .icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-        }
-        
-        .product-header h3 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .product-header p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-        
-        .product-body {
-            padding: 30px;
-        }
-        
-        .product-features {
-            list-style: none;
-            margin-bottom: 25px;
-        }
-        
-        .product-features li {
-            padding: 8px 0;
-            color: #666;
-            display: flex;
-            align-items: center;
-        }
-        
-        .product-features li::before {
-            content: '✓';
-            color: #10b981;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        .pricing {
-            margin-bottom: 25px;
-        }
-        
-        .pricing-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #f0f0f0;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .pricing-item strong {
-            color: #667eea;
-        }
-        
-        .product-btn {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .product-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        }
-        
-        /* Benefits */
-        .benefits {
-            padding: 100px 0;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        }
-        
-        .benefits-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-        }
-        
-        .benefit-card {
-            background: white;
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-            text-align: center;
-        }
-        
-        .benefit-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 36px;
-        }
-        
-        .benefit-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-            color: #333;
-        }
-        
-        .benefit-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-        
-        /* Stats */
-        .stats {
-            padding: 80px 0;
-            background: #1a1a2e;
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            text-align: center;
-        }
-        
-        .stat-item h3 {
-            font-size: 56px;
-            font-weight: 700;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-        
-        .stat-item p {
-            font-size: 18px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-        
-        /* Contact */
-        .contact {
-            padding: 100px 0;
-            background: white;
-        }
-        
-        .contact-cta {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 30px;
-            padding: 80px;
-            text-align: center;
-            color: white;
-        }
-        
-        .contact-cta h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
-        }
-        
-        .contact-cta p {
-            font-size: 20px;
-            margin-bottom: 40px;
-            opacity: 0.9;
-        }
-        
-        .contact-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-        }
-        
-        .contact-buttons .btn {
-            padding: 15px 40px;
-            font-size: 18px;
-        }
-        
-        .contact-buttons .btn-white {
-            background: white;
-            color: #667eea;
-        }
-        
-        .contact-buttons .btn-white:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
-        }
-        
-        /* Footer */
-        footer {
-            background: #1a1a2e;
-            color: rgba(255, 255, 255, 0.7);
-            padding: 60px 0 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-section h4 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: white;
-        }
-        
-        .footer-section ul {
-            list-style: none;
-        }
-        
-        .footer-section li {
-            margin-bottom: 10px;
-        }
-        
-        .footer-section a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: white;
-        }
-        
-        .footer-bottom {
-            text-align: center;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-            }
-            
-            .section-title {
-                font-size: 32px;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .products-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">🏢 企业智脑</div>
-                <ul class="nav-links">
-                    <li><a href="#products" data-i18n="enterprise.products">产品矩阵</a></li>
-                    <li><a href="#benefits" data-i18n="enterprise.benefits_title">核心优势</a></li>
-                    <li><a href="#contact" data-i18n="enterprise.footer_contact_us">联系我们</a></li>
-                </ul>
-                <div class="header-buttons">
-                    <button class="btn btn-outline" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'" data-i18n="nav.login">登录</button>
-                    <button class="btn btn-primary" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'" data-i18n="enterprise.btn_trial">免费试用</button>
-                </div>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1 data-i18n="enterprise.hero_title">AI驱动的一体化企业服务</h1>
-            <p data-i18n="enterprise.hero_desc">6大产品矩阵，一站式解决中小企业数字化转型需求</p>
-            <div class="hero-buttons">
-                <a href="#products" class="primary" data-i18n="enterprise.btn_explore">探索产品</a>
-                <a href="#contact" class="secondary" data-i18n="enterprise.btn_demo">预约演示</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Products -->
-    <section class="products" id="products">
-        <div class="container">
-            <h2 class="section-title" data-i18n="enterprise.products">产品矩阵</h2>
-            <p class="section-subtitle" data-i18n="enterprise.products_subtitle">6大核心产品，覆盖企业全场景需求</p>
-            
-            <div class="products-grid">
-                <!-- Product 1 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">👥</div>
-                        <h3><span class="zh">AI智能CRM</span><span class="en hidden">AI Smart CRM</span></h3>
-                        <p><span class="zh">客户关系管理系统</span><span class="en hidden">Customer Relationship Management</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">360度客户视图</span><span class="en hidden">360° Customer View</span></li>
-                            <li><span class="zh">销售机会管理</span><span class="en hidden">Sales Opportunity Management</span></li>
-                            <li><span class="zh">营销自动化</span><span class="en hidden">Marketing Automation</span></li>
-                            <li><span class="zh">AI销售预测</span><span class="en hidden">AI Sales Prediction</span></li>
-                            <li><span class="zh">智能推荐引擎</span><span class="en hidden">Smart Recommendation Engine</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月 (5用户)</span><span class="en hidden">/mo (5 users)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥10,000<span class="zh">/月 (20用户)</span><span class="en hidden">/mo (20 users)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥1,299<span class="zh">/月 (无限用户)</span><span class="en hidden">/mo (unlimited)</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisecrm&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-
-                <!-- Product 2 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">👨‍💼</div>
-                        <h3><span class="zh">AI人力资源系统</span><span class="en hidden">AI HR System</span></h3>
-                        <p><span class="zh">HR管理系统</span><span class="en hidden">HR Management System</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">员工档案管理</span><span class="en hidden">Employee Records</span></li>
-                            <li><span class="zh">招聘智能匹配</span><span class="en hidden">Smart Recruitment</span></li>
-                            <li><span class="zh">薪资自动计算</span><span class="en hidden">Auto Payroll</span></li>
-                            <li><span class="zh">考勤绩效管理</span><span class="en hidden">Attendance & Performance</span></li>
-                            <li><span class="zh">流失预测分析</span><span class="en hidden">Churn Prediction</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月 (50员工)</span><span class="en hidden">/mo (50 employees)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥699<span class="zh">/月 (200员工)</span><span class="en hidden">/mo (200 employees)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥1,999<span class="zh">/月 (无限员工)</span><span class="en hidden">/mo (unlimited)</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisehr&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-
-                <!-- Product 3 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">💰</div>
-                        <h3><span class="zh">AI财务管理</span><span class="en hidden">AI Finance</span></h3>
-                        <p><span class="zh">财务会计系统</span><span class="en hidden">Financial Accounting</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">会计核算</span><span class="en hidden">Accounting</span></li>
-                            <li><span class="zh">发票智能管理</span><span class="en hidden">Invoice Management</span></li>
-                            <li><span class="zh">费用自动报销</span><span class="en hidden">Auto Reimbursement</span></li>
-                            <li><span class="zh">AI财务分析</span><span class="en hidden">AI Financial Analysis</span></li>
-                            <li><span class="zh">智能报税助手</span><span class="en hidden">Tax Assistant</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥10,000<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥2,999<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisefinance&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-
-                <!-- Product 4 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">📦</div>
-                        <h3><span class="zh">AI供应链管理</span><span class="en hidden">AI SCM</span></h3>
-                        <p><span class="zh">SCM系统</span><span class="en hidden">Supply Chain Management</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">采购供应商管理</span><span class="en hidden">Vendor Management</span></li>
-                            <li><span class="zh">库存智能预警</span><span class="en hidden">Smart Inventory Alerts</span></li>
-                            <li><span class="zh">销售订单追踪</span><span class="en hidden">Order Tracking</span></li>
-                            <li><span class="zh">AI需求预测</span><span class="en hidden">AI Demand Forecast</span></li>
-                            <li><span class="zh">供应商智能匹配</span><span class="en hidden">Vendor Matching</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥1,299<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥3,999<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisescm&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-
-                <!-- Product 5 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">🤝</div>
-                        <h3><span class="zh">AI项目协作平台</span><span class="en hidden">AI Project Hub</span></h3>
-                        <p><span class="zh">团队协作系统</span><span class="en hidden">Team Collaboration</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">任务看板管理</span><span class="en hidden">Task Board</span></li>
-                            <li><span class="zh">实时团队协作</span><span class="en hidden">Real-time Collaboration</span></li>
-                            <li><span class="zh">工时成本追踪</span><span class="en hidden">Time & Cost Tracking</span></li>
-                            <li><span class="zh">AI任务智能分配</span><span class="en hidden">AI Task Assignment</span></li>
-                            <li><span class="zh">项目风险预警</span><span class="en hidden">Risk Alerts</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月 (10用户)</span><span class="en hidden">/mo (10 users)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥10,000<span class="zh">/月 (50用户)</span><span class="en hidden">/mo (50 users)</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥799<span class="zh">/月 (无限用户)</span><span class="en hidden">/mo (unlimited)</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisepm&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-
-                <!-- Product 6 -->
-                <div class="product-card">
-                    <div class="product-header">
-                        <div class="icon">📊</div>
-                        <h3><span class="zh">AI数据分析平台</span><span class="en hidden">AI Analytics</span></h3>
-                        <p><span class="zh">商业智能BI系统</span><span class="en hidden">Business Intelligence</span></p>
-                    </div>
-                    <div class="product-body">
-                        <ul class="product-features">
-                            <li><span class="zh">数据可视化大屏</span><span class="en hidden">Data Visualization</span></li>
-                            <li><span class="zh">业务多维分析</span><span class="en hidden">Multi-dimensional Analysis</span></li>
-                            <li><span class="zh">AI趋势预测</span><span class="en hidden">AI Trend Forecast</span></li>
-                            <li><span class="zh">异常智能检测</span><span class="en hidden">Anomaly Detection</span></li>
-                            <li><span class="zh">自定义报表工具</span><span class="en hidden">Custom Reports</span></li>
-                        </ul>
-                        <div class="pricing">
-                            <div class="pricing-item">
-                                <span class="zh">基础版</span><span class="en hidden">Basic</span>
-                                <strong>¥10,000<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">专业版</span><span class="en hidden">Professional</span>
-                                <strong>¥799<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                            <div class="pricing-item">
-                                <span class="zh">企业版</span><span class="en hidden">Enterprise</span>
-                                <strong>¥2,499<span class="zh">/月</span><span class="en hidden">/mo</span></strong>
-                            </div>
-                        </div>
-                        <button class="product-btn" onclick="window.location.href='payment.html?product=enterprisebi&plan=basic'" data-i18n="enterprise.btn_try">免费试用14天</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Benefits -->
-    <section class="benefits" id="benefits">
-        <div class="container">
-            <h2 class="section-title" data-i18n="enterprise.benefits_title">核心优势</h2>
-            <p class="section-subtitle" data-i18n="enterprise.benefits_subtitle">为什么选择企业智脑？</p>
-            <div class="benefits-grid">
-                <div class="benefit-card">
-                    <div class="benefit-icon">🤖</div>
-                    <h3 data-i18n="enterprise.benefit_ai">AI驱动</h3>
-                    <p data-i18n="enterprise.benefit_ai_desc">所有产品都集成AI能力，提供智能化服务，让决策更精准</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🔗</div>
-                    <h3 data-i18n="enterprise.benefit_integrated">一体化方案</h3>
-                    <p data-i18n="enterprise.benefit_integrated_desc">6个产品无缝集成，企业只需一个供应商，降低管理成本</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">📋</div>
-                    <h3 data-i18n="enterprise.benefit_industry">行业模板</h3>
-                    <p data-i18n="enterprise.benefit_industry_desc">提供零售、制造、服务等行业预配置模板，快速上线</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">💎</div>
-                    <h3 data-i18n="enterprise.benefit_value">高性价比</h3>
-                    <p data-i18n="enterprise.benefit_value_desc">价格比传统企业软件低50-70%，让中小企业也能用上好系统</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🚀</div>
-                    <h3 data-i18n="enterprise.benefit_deploy">快速部署</h3>
-                    <p data-i18n="enterprise.benefit_deploy_desc">SaaS模式，开箱即用，无需IT团队，3天即可上线</p>
-                </div>
-                <div class="benefit-card">
-                    <div class="benefit-icon">🔒</div>
-                    <h3 data-i18n="enterprise.benefit_security">安全可靠</h3>
-                    <p data-i18n="enterprise.benefit_security_desc">企业级安全保障，数据加密，定期备份，SLA保障</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats -->
-    <section class="stats">
-        <div class="container">
-            <div class="stats-grid">
-                <div class="stat-item">
-                    <h3>6</h3>
-                    <p data-i18n="enterprise.stat_products">核心产品</p>
-                </div>
-                <div class="stat-item">
-                    <h3>5,000+</h3>
-                    <p data-i18n="enterprise.stat_customers">企业客户</p>
-                </div>
-                <div class="stat-item">
-                    <h3>99.9%</h3>
-                    <p data-i18n="enterprise.stat_uptime">系统可用性</p>
-                </div>
-                <div class="stat-item">
-                    <h3>24/7</h3>
-                    <p data-i18n="enterprise.stat_support">技术支持</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="contact-cta">
-                <h2 data-i18n="enterprise.cta_title">开启企业数字化转型之旅</h2>
-                <p data-i18n="enterprise.cta_desc">14天免费试用,无需信用卡,全功能体验</p>
-                <div class="contact-buttons">
-                    <button class="btn btn-white" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'" data-i18n="enterprise.btn_trial">立即试用</button>
-                    <button class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3);" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'" data-i18n="enterprise.btn_demo">预约演示</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-section">
-                    <h4 data-i18n="enterprise.footer_product">产品</h4>
-                    <ul>
-                        <li><a href="#"><span class="zh">AI智能CRM</span><span class="en hidden">AI Smart CRM</span></a></li>
-                        <li><a href="#"><span class="zh">AI人力资源系统</span><span class="en hidden">AI HR System</span></a></li>
-                        <li><a href="#"><span class="zh">AI财务管理</span><span class="en hidden">AI Finance</span></a></li>
-                        <li><a href="#"><span class="zh">AI供应链管理</span><span class="en hidden">AI SCM</span></a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="enterprise.footer_support">支持</h4>
-                    <ul>
-                        <li><a href="#"><span class="zh">帮助中心</span><span class="en hidden">Help Center</span></a></li>
-                        <li><a href="#"><span class="zh">视频教程</span><span class="en hidden">Video Tutorials</span></a></li>
-                        <li><a href="#"><span class="zh">API文档</span><span class="en hidden">API Docs</span></a></li>
-                        <li><a href="#"><span class="zh">系统状态</span><span class="en hidden">System Status</span></a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="enterprise.footer_company">公司</h4>
-                    <ul>
-                        <li><a href="#"><span class="zh">关于我们</span><span class="en hidden">About Us</span></a></li>
-                        <li><a href="#"><span class="zh">客户案例</span><span class="en hidden">Case Studies</span></a></li>
-                        <li><a href="#"><span class="zh">合作伙伴</span><span class="en hidden">Partners</span></a></li>
-                        <li><a href="#"><span class="zh">联系我们</span><span class="en hidden">Contact Us</span></a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4 data-i18n="enterprise.footer_contact">联系方式</h4>
-                    <ul>
-                        <li><span class="zh">电话: 400-XXX-XXXX</span><span class="en hidden">Phone: 400-XXX-XXXX</span></li>
-                        <li><span class="zh">邮箱: contact@enterpriseai.com</span><span class="en hidden">Email: contact@enterpriseai.com</span></li>
-                        <li><span class="zh">地址: 北京市朝阳区XXX大厦</span><span class="en hidden">Address: XXX Building, Chaoyang District, Beijing</span></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p data-i18n="enterprise.copyright">&copy; 2026 企业智脑. 保留所有权利.</p>
-            </div>
-        </div>
-    </footer>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>AI Business Services Suite - Enterprise AI Solutions</title><style>
+ * {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ }
+ 
+ body {
+ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+ background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+ color: #333;
+ line-height: 1.6;
+ }
+ 
+ .container {
+ max-width: 1400px;
+ margin: 0 auto;
+ padding: 0 20px;
+ }
+ 
+ /* Header */
+ header {
+ background: rgba(26, 26, 46, 0.95);
+ backdrop-filter: blur(10px);
+ position: fixed;
+ width: 100%;
+ top: 0;
+ z-index: 1000;
+ border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ nav {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 15px 0;
+ }
+ 
+ .logo {
+ font-size: 28px;
+ font-weight: 700;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ }
+ 
+ .nav-links {
+ display: flex;
+ gap: 30px;
+ list-style: none;
+ }
+ 
+ .nav-links a {
+ text-decoration: none;
+ color: rgba(255, 255, 255, 0.7);
+ font-weight: 500;
+ transition: color 0.3s;
+ }
+ 
+ .nav-links a:hover {
+ color: white;
+ }
+ 
+ .header-buttons {
+ display: flex;
+ gap: 15px;
+ }
+ 
+ .btn {
+ padding: 10px 25px;
+ border-radius: 25px;
+ text-decoration: none;
+ font-weight: 600;
+ transition: all 0.3s;
+ border: none;
+ cursor: pointer;
+ }
+ 
+ .btn-primary {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ }
+ 
+ .btn-primary:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+ }
+ 
+ .btn-outline {
+ background: transparent;
+ color: white;
+ border: 2px solid rgba(255, 255, 255, 0.3);
+ }
+ 
+ .btn-outline:hover {
+ background: rgba(255, 255, 255, 0.1);
+ }
+ 
+ /* Hero Section */
+ .hero {
+ padding: 180px 0 100px;
+ text-align: center;
+ color: white;
+ }
+ 
+ .hero h1 {
+ font-size: 64px;
+ margin-bottom: 20px;
+ line-height: 1.2;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ }
+ 
+ .hero p {
+ font-size: 22px;
+ margin-bottom: 40px;
+ color: rgba(255, 255, 255, 0.8);
+ }
+ 
+ .hero-buttons {
+ display: flex;
+ gap: 20px;
+ justify-content: center;
+ margin-bottom: 60px;
+ }
+ 
+ .hero-buttons a {
+ padding: 16px 40px;
+ border-radius: 30px;
+ text-decoration: none;
+ font-weight: 600;
+ font-size: 18px;
+ transition: all 0.3s;
+ }
+ 
+ .hero-buttons .primary {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ }
+ 
+ .hero-buttons .primary:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+ }
+ 
+ .hero-buttons .secondary {
+ background: rgba(255, 255, 255, 0.1);
+ color: white;
+ border: 2px solid rgba(255, 255, 255, 0.3);
+ }
+ 
+ .hero-buttons .secondary:hover {
+ background: rgba(255, 255, 255, 0.2);
+ }
+ 
+ /* Products */
+ .products {
+ padding: 100px 0;
+ background: white;
+ }
+ 
+ .section-title {
+ text-align: center;
+ font-size: 48px;
+ margin-bottom: 20px;
+ color: #1a1a2e;
+ }
+ 
+ .section-subtitle {
+ text-align: center;
+ font-size: 20px;
+ color: #666;
+ margin-bottom: 60px;
+ }
+ 
+ .products-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+ gap: 30px;
+ margin-bottom: 60px;
+ }
+ 
+ .product-card {
+ background: white;
+ border-radius: 20px;
+ overflow: hidden;
+ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+ transition: all 0.3s;
+ border: 1px solid #e5e7eb;
+ }
+ 
+ .product-card:hover {
+ transform: translateY(-10px);
+ box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+ }
+ 
+ .product-header {
+ padding: 30px;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ }
+ 
+ .product-header .icon {
+ font-size: 48px;
+ margin-bottom: 15px;
+ }
+ 
+ .product-header h3 {
+ font-size: 28px;
+ margin-bottom: 10px;
+ }
+ 
+ .product-header p {
+ font-size: 14px;
+ opacity: 0.9;
+ }
+ 
+ .product-body {
+ padding: 30px;
+ }
+ 
+ .product-features {
+ list-style: none;
+ margin-bottom: 25px;
+ }
+ 
+ .product-features li {
+ padding: 8px 0;
+ color: #666;
+ display: flex;
+ align-items: center;
+ }
+ 
+ .product-features li::before {
+ content: '✓';
+ color: #10b981;
+ font-weight: bold;
+ margin-right: 10px;
+ }
+ 
+ .pricing {
+ margin-bottom: 25px;
+ }
+ 
+ .pricing-item {
+ display: flex;
+ justify-content: space-between;
+ padding: 10px 0;
+ border-bottom: 1px solid #f0f0f0;
+ color: #666;
+ font-size: 14px;
+ }
+ 
+ .pricing-item strong {
+ color: #667eea;
+ }
+ 
+ .product-btn {
+ width: 100%;
+ padding: 15px;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ color: white;
+ border: none;
+ border-radius: 10px;
+ font-size: 16px;
+ font-weight: 600;
+ cursor: pointer;
+ transition: all 0.3s;
+ }
+ 
+ .product-btn:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+ }
+ 
+ /* Benefits */
+ .benefits {
+ padding: 100px 0;
+ background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+ }
+ 
+ .benefits-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+ gap: 40px;
+ }
+ 
+ .benefit-card {
+ background: white;
+ padding: 40px;
+ border-radius: 20px;
+ box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+ text-align: center;
+ }
+ 
+ .benefit-icon {
+ width: 80px;
+ height: 80px;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ border-radius: 20px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ margin: 0 auto 20px;
+ font-size: 36px;
+ }
+ 
+ .benefit-card h3 {
+ font-size: 24px;
+ margin-bottom: 15px;
+ color: #333;
+ }
+ 
+ .benefit-card p {
+ color: #666;
+ line-height: 1.8;
+ }
+ 
+ /* Stats */
+ .stats {
+ padding: 80px 0;
+ background: #1a1a2e;
+ color: white;
+ }
+ 
+ .stats-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 40px;
+ text-align: center;
+ }
+ 
+ .stat-item h3 {
+ font-size: 56px;
+ font-weight: 700;
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ -webkit-background-clip: text;
+ -webkit-text-fill-color: transparent;
+ background-clip: text;
+ margin-bottom: 10px;
+ }
+ 
+ .stat-item p {
+ font-size: 18px;
+ color: rgba(255, 255, 255, 0.8);
+ }
+ 
+ /* Contact */
+ .contact {
+ padding: 100px 0;
+ background: white;
+ }
+ 
+ .contact-cta {
+ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+ border-radius: 30px;
+ padding: 80px;
+ text-align: center;
+ color: white;
+ }
+ 
+ .contact-cta h2 {
+ font-size: 48px;
+ margin-bottom: 20px;
+ }
+ 
+ .contact-cta p {
+ font-size: 20px;
+ margin-bottom: 40px;
+ opacity: 0.9;
+ }
+ 
+ .contact-buttons {
+ display: flex;
+ gap: 20px;
+ justify-content: center;
+ }
+ 
+ .contact-buttons .btn {
+ padding: 15px 40px;
+ font-size: 18px;
+ }
+ 
+ .contact-buttons .btn-white {
+ background: white;
+ color: #667eea;
+ }
+ 
+ .contact-buttons .btn-white:hover {
+ transform: translateY(-2px);
+ box-shadow: 0 10px 30px rgba(255, 255, 255, 0.4);
+ }
+ 
+ /* Footer */
+ footer {
+ background: #1a1a2e;
+ color: rgba(255, 255, 255, 0.7);
+ padding: 60px 0 30px;
+ border-top: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ .footer-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ gap: 40px;
+ margin-bottom: 40px;
+ }
+ 
+ .footer-section h4 {
+ font-size: 20px;
+ margin-bottom: 20px;
+ color: white;
+ }
+ 
+ .footer-section ul {
+ list-style: none;
+ }
+ 
+ .footer-section li {
+ margin-bottom: 10px;
+ }
+ 
+ .footer-section a {
+ color: rgba(255, 255, 255, 0.7);
+ text-decoration: none;
+ transition: color 0.3s;
+ }
+ 
+ .footer-section a:hover {
+ color: white;
+ }
+ 
+ .footer-bottom {
+ text-align: center;
+ padding-top: 30px;
+ border-top: 1px solid rgba(255, 255, 255, 0.1);
+ }
+ 
+ /* Responsive */
+ @media (max-width: 768px) {
+ .hero h1 {
+ font-size: 36px;
+ }
+ 
+ .hero p {
+ font-size: 18px;
+ }
+ 
+ .hero-buttons {
+ flex-direction: column;
+ }
+ 
+ .section-title {
+ font-size: 32px;
+ }
+ 
+ .nav-links {
+ display: none;
+ }
+ 
+ .products-grid {
+ grid-template-columns: 1fr;
+ }
+ }
+ </style></head><body><!-- Header --><header><div class="container"><nav><div class="logo">🏢 </div><ul class="nav-links"><li><a href="#products"></a></li><li><a href="#benefits"></a></li><li><a href="#contact">Contact Us</a></li></ul><div class="header-buttons"><button class="btn btn-outline" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'"></button><button class="btn btn-primary" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'">Free Trial</button></div></nav></div></header><!-- Hero Section --><section class="hero"><div class="container"><h1>AI</h1><p>6，</p><div class="hero-buttons"><a href="#products" class="primary"></a><a href="#contact" class="secondary">approx</a></div></div></section><!-- Products --><section class="products" id="products"><div class="container"><h2 class="section-title"></h2><p class="section-subtitle">6，</p><div class="products-grid"><!-- Product 1 --><div class="product-card"><div class="product-header"><div class="icon">👥</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$180</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisecrm&plan=basic'">Free Trial14</button></div></div><!-- Product 2 --><div class="product-card"><div class="product-header"><div class="icon">👨‍💼</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$97.08</strong></div><div class="pricing-item"><strong>$10,000</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisehr&plan=basic'">Free Trial14</button></div></div><!-- Product 3 --><div class="product-card"><div class="product-header"><div class="icon">💰</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$417</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisefinance&plan=basic'">Free Trial14</button></div></div><!-- Product 4 --><div class="product-card"><div class="product-header"><div class="icon">📦</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$180</strong></div><div class="pricing-item"><strong>$555</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisescm&plan=basic'">Free Trial14</button></div></div><!-- Product 5 --><div class="product-card"><div class="product-header"><div class="icon">🤝</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$111</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisepm&plan=basic'">Free Trial14</button></div></div><!-- Product 6 --><div class="product-card"><div class="product-header"><div class="icon">📊</div><h3></h3><p></p></div><div class="product-body"><ul class="product-features"><li></li><li></li><li></li><li></li><li></li></ul><div class="pricing"><div class="pricing-item"><strong>$1,000,000</strong></div><div class="pricing-item"><strong>$111</strong></div><div class="pricing-item"><strong>$347</strong></div></div><button class="product-btn" onclick="window.location.href='payment.html?product=enterprisebi&plan=basic'">Free Trial14</button></div></div></div></div></section><!-- Benefits --><section class="benefits" id="benefits"><div class="container"><h2 class="section-title"></h2><p class="section-subtitle">？</p><div class="benefits-grid"><div class="benefit-card"><div class="benefit-icon">🤖</div><h3>AI</h3><p>AI，，</p></div><div class="benefit-card"><div class="benefit-icon">🔗</div><h3></h3><p>6，Supplier，</p></div><div class="benefit-card"><div class="benefit-icon">📋</div><h3>Industry</h3><p>、、Industry，</p></div><div class="benefit-card"><div class="benefit-icon">💎</div><h3></h3><p>50-70%，</p></div><div class="benefit-card"><div class="benefit-icon">🚀</div><h3></h3><p>SaaS，，IT，3</p></div><div class="benefit-card"><div class="benefit-icon">🔒</div><h3>Secure & Reliable</h3><p>，Data Encryption，，SLA</p></div></div></div></section><!-- Stats --><section class="stats"><div class="container"><div class="stats-grid"><div class="stat-item"><h3>6</h3><p></p></div><div class="stat-item"><h3>5,000+</h3><p>Customer</p></div><div class="stat-item"><h3>99.9%</h3><p></p></div><div class="stat-item"><h3>24/7</h3><p>Technical Support</p></div></div></div></section><!-- Contact --><section class="contact" id="contact"><div class="container"><div class="contact-cta"><h2></h2><p>14Free Trial,,Features</p><div class="contact-buttons"><button class="btn btn-white" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'"></button><button class="btn" style="background: rgba(255, 255, 255, 0.2); color: white; border: 2px solid rgba(255, 255, 255, 0.3);" onclick="window.location.href='payment.html?product=enterpriseai&plan=trial'">approx</button></div></div></div></section><!-- Footer --><footer><div class="container"><div class="footer-grid"><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li></ul></div><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li></ul></div><div class="footer-section"><h4></h4><ul><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li></ul></div><div class="footer-section"><h4>Contact Us</h4><ul><li></li><li></li><li></li></ul></div></div><div class="footer-bottom"><p>&copy; 2026 . .</p></div></div></footer></body></html>
