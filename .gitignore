@@ -1,0 +1,5 @@
+# 排除.trae目录
+.trae/
+
+# 排除.workbuddy目录
+.workbuddy/
