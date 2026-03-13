@@ -47,7 +47,51 @@
  class="px-8 py-4 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold text-lg rounded-lg hover:from-green-600 hover:to-blue-700 transition-all transform hover:scale-105 shadow-lg"
  >
  📞 
- </button><p class="text-sm text-gray-500 mt-2">，</p></div></div><div class="mt-6 bg-white rounded-2xl shadow-xl p-6"><h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💰 <span>ServicePackage</span></h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4"><div class="border-2 border-gray-200 rounded-lg p-4 hover:border-green-500 transition-all"><div class="text-lg font-bold text-gray-800 mb-2">Package</div><div class="text-3xl font-bold text-green-600 mb-2">$10,000</div><div class="text-sm text-gray-500 mb-4">/month</div><ul class="text-sm text-gray-600 space-y-1"><li>✅ 10 <span>Keyword Optimization</span></li><li>✅ 1 <span></span></li><li>✅ <span>month</span></li><li>✅ 2 <span>Content Pieces/month</span></li></ul></div><div class="border-2 border-green-500 rounded-lg p-4 relative hover:shadow-lg transition-all"><div class="absolute -top-3 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold"><span>Recommended</span></div><div class="text-lg font-bold text-gray-800 mb-2">Package</div><div class="text-3xl font-bold text-green-600 mb-2">$100,000</div><div class="text-sm text-gray-500 mb-4">/month</div><ul class="text-sm text-gray-600 space-y-1"><li>✅ 30 <span>Keyword Optimization</span></li><li>✅ 3 <span></span></li><li>✅ <span>AI Q&A Training</span></li><li>✅ <span>Weekly Report</span></li><li>✅ 8 <span>Content Pieces/month</span></li></ul></div><div class="border-2 border-gray-200 rounded-lg p-4 hover:border-green-500 transition-all"><div class="text-lg font-bold text-gray-800 mb-2">Package</div><div class="text-3xl font-bold text-green-600 mb-2">$1,000,000</div><div class="text-sm text-gray-500 mb-4">/month</div><ul class="text-sm text-gray-600 space-y-1"><li>✅ 100+ <span>Keyword Optimization</span></li><li>✅ <span>Full Platform Optimization</span></li><li>✅ <span>Deep AI Training</span></li><li>✅ <span>Daily Monitoring</span></li><li>✅ 20 <span>Content Pieces/month</span></li><li>✅ <span>Dedicated Account Manager</span></li></ul></div></div></div><div class="mt-6 bg-white rounded-2xl shadow-xl p-6"><h3 class="text-xl font-bold text-gray-800 mb-4 text-center">🏆 Success Stories</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-gray-50 rounded-lg p-4"><div class="flex items-center mb-2"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
+ </button><p class="text-sm text-gray-500 mt-2">，</p></div></div><div class="mt-6 bg-white rounded-2xl shadow-xl p-6"><h3 class="text-xl font-bold text-gray-800 mb-4 text-center">💰 Service Packages</h3><div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="geoPricingCards">
+<div class="geo-plan border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-green-400 transition-all" data-plan="standard" data-amount="10000" data-label="Standard · ¥10,000/month">
+  <div class="text-lg font-bold text-gray-800 mb-2">Standard</div>
+  <div class="text-3xl font-bold text-green-600 mb-1">¥10,000</div>
+  <div class="text-sm text-gray-500 mb-4">/month</div>
+  <ul class="text-sm text-gray-600 space-y-1">
+    <li>✅ 10 Keyword Optimizations</li>
+    <li>✅ 1 Platform Coverage</li>
+    <li>✅ Monthly Report</li>
+    <li>✅ 2 Content Pieces/month</li>
+  </ul>
+</div>
+<div class="geo-plan border-2 border-green-500 bg-green-50 rounded-xl p-4 relative cursor-pointer hover:shadow-lg transition-all" data-plan="pro" data-amount="100000" data-label="Pro · ¥100,000/month">
+  <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">⭐ Recommended</div>
+  <div class="text-lg font-bold text-gray-800 mb-2">Pro</div>
+  <div class="text-3xl font-bold text-green-600 mb-1">¥100,000</div>
+  <div class="text-sm text-gray-500 mb-4">/month</div>
+  <ul class="text-sm text-gray-600 space-y-1">
+    <li>✅ 30 Keyword Optimizations</li>
+    <li>✅ 3 Platform Coverage</li>
+    <li>✅ AI Q&A Training</li>
+    <li>✅ Weekly Report</li>
+    <li>✅ 8 Content Pieces/month</li>
+  </ul>
+</div>
+<div class="geo-plan border-2 border-gray-200 rounded-xl p-4 cursor-pointer hover:border-green-400 transition-all" data-plan="enterprise" data-amount="1000000" data-label="Enterprise · ¥1,000,000/month">
+  <div class="text-lg font-bold text-gray-800 mb-2">Enterprise</div>
+  <div class="text-3xl font-bold text-green-600 mb-1">¥1,000,000</div>
+  <div class="text-sm text-gray-500 mb-4">/month</div>
+  <ul class="text-sm text-gray-600 space-y-1">
+    <li>✅ 100+ Keyword Optimizations</li>
+    <li>✅ Full Platform Optimization</li>
+    <li>✅ Deep AI Training</li>
+    <li>✅ Daily Monitoring</li>
+    <li>✅ 20 Content Pieces/month</li>
+    <li>✅ Dedicated Account Manager</li>
+  </ul>
+</div>
+</div>
+<div class="mt-4">
+  <button id="geoBuyBtn" class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-blue-700 transition-all shadow-md">
+    🚀 Buy Now — Pro · ¥100,000/month
+  </button>
+</div>
+</div><div class="mt-6 bg-white rounded-2xl shadow-xl p-6"><h3 class="text-xl font-bold text-gray-800 mb-4 text-center">🏆 Success Stories</h3><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div class="bg-gray-50 rounded-lg p-4"><div class="flex items-center mb-2"><div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-3">
  🍜
  </div><div><div class="font-bold text-gray-800">Wang's Beef Noodles</div><div class="text-sm text-gray-500">RestaurantIndustry</div></div></div><div class="text-sm text-gray-600">
  "，AISearchRecommended200%，month80%！"
@@ -180,5 +224,27 @@
  if (typeof initLanguage === 'function') {
  initLanguage();
  }
+
+ // ── Pricing card selection ──
+ let geoSelectedPlan = { plan: 'pro', amount: '100000', label: 'Pro · ¥100,000/month' };
+ const geoCards = document.querySelectorAll('.geo-plan');
+ const geoBuyBtn = document.getElementById('geoBuyBtn');
+
+ geoCards.forEach(card => {
+   card.addEventListener('click', () => {
+     geoCards.forEach(c => {
+       c.classList.remove('border-green-500', 'bg-green-50');
+       c.classList.add('border-gray-200');
+     });
+     card.classList.remove('border-gray-200');
+     card.classList.add('border-green-500', 'bg-green-50');
+     geoSelectedPlan = { plan: card.dataset.plan, amount: card.dataset.amount, label: card.dataset.label };
+     geoBuyBtn.textContent = '🚀 Buy Now — ' + geoSelectedPlan.label;
+   });
  });
+
+ geoBuyBtn.addEventListener('click', () => {
+   window.location.href = 'payment.html?product=geo-optimizer&plan=' + geoSelectedPlan.plan + '&amount=' + geoSelectedPlan.amount;
+ });
+});
  </script></body></html>
