@@ -1,275 +1,268 @@
-# 项目部署指南
+# Project Deployment Guide
 
-## 概述
+## Overview
 
-本指南提供了将 1000亿创业计划的所有项目部署到生产环境的完整步骤和最佳实践。
+This guide provides complete steps and best practices for deploying all projects in the 10 Billion Startup Plan to production.
 
-**项目数量**: 6个产品页面 + 1个首页 + 1个支付页面
-**推荐平台**: Vercel / Netlify / CloudFlare Pages
-**预计部署时间**: 15-30 分钟
+**Project Count**: 6 product pages + 1 homepage + 1 payment page
+**Recommended Platforms**: Vercel / Netlify / CloudFlare Pages
+**Estimated Deployment Time**: 15-30 minutes
 
 ---
 
-## 🎯 部署平台对比
+## 🎯 Deployment Platform Comparison
 
-### Vercel (推荐)
+### Vercel (Recommended)
 
-**优点**:
-- ✅ 零配置部署
-- ✅ 自动 HTTPS
-- ✅ 全球 CDN
-- ✅ 预览环境
-- ✅ 边缘函数支持
-- ✅ 免费额度充足
+**Pros**:
+- ✅ Zero-configuration deployment
+- ✅ Automatic HTTPS
+- ✅ Global CDN
+- ✅ Preview environments
+- ✅ Edge function support
+- ✅ Generous free tier
 
-**缺点**:
-- ⚠️ 构建时间限制(免费版)
-- ⚠️ 带宽限制
+**Cons**:
+- ⚠️ Build time limits (free tier)
+- ⚠️ Bandwidth limits
 
-**适用场景**: 静态网站、React/Vue 应用
+**Use Case**: Static websites, React/Vue applications
 
-**免费额度**:
-- 100GB 带宽/月
-- 无限部署
-- 6 小时构建时间/月
+**Free Tier**:
+- 100GB bandwidth/month
+- Unlimited deployments
+- 6 hours build time/month
 
-**定价**: $20/月起(Pro)
+**Pricing**: From $20/month (Pro)
 
 ---
 
 ### Netlify
 
-**优点**:
-- ✅ 简单的拖放部署
-- ✅ 自动 HTTPS
-- ✅ 表单处理
-- ✅ 函数支持
-- ✅ 部署钩子
+**Pros**:
+- ✅ Simple drag-and-drop deployment
+- ✅ Automatic HTTPS
+- ✅ Form handling
+- ✅ Function support
+- ✅ Deploy hooks
 
-**缺点**:
-- ⚠️ 构建队列延迟
-- ⚠️ 较少边缘计算功能
+**Cons**:
+- ⚠️ Build queue delays
+- ⚠️ Fewer edge computing features
 
-**适用场景**: 静态网站、JAMstack 应用
+**Use Case**: Static websites, JAMstack applications
 
-**免费额度**:
-- 100GB 带宽/月
-- 300 分钟构建时间/月
-- 无限站点
+**Free Tier**:
+- 100GB bandwidth/month
+- 300 minutes build time/month
+- Unlimited sites
 
-**定价**: $19/月起(Pro)
+**Pricing**: From $19/month (Pro)
 
 ---
 
 ### CloudFlare Pages
 
-**优点**:
-- ✅ 全球最快的 CDN
-- ✅ 免费无限带宽
-- ✅ DDoS 保护
-- ✅ 0 配置部署
-- ✅ 边缘函数
+**Pros**:
+- ✅ Fastest global CDN
+- ✅ Free unlimited bandwidth
+- ✅ DDoS protection
+- ✅ Zero configuration deployment
+- ✅ Edge functions
 
-**缺点**:
-- ⚠️ 相对较新
-- ⚠️ 较少集成选项
+**Cons**:
+- ⚠️ Relatively new
+- ⚠️ Fewer integration options
 
-**适用场景**: 静态网站、需要无限带宽
+**Use Case**: Static websites, need unlimited bandwidth
 
-**免费额度**:
-- 无限带宽
-- 无限请求
-- 无限构建
+**Free Tier**:
+- Unlimited bandwidth
+- Unlimited requests
+- Unlimited builds
 
-**定价**: $20/月起(Pro)
-
----
-
-## 📋 部署前检查清单
-
-### 代码检查
-- [ ] 所有文件已提交到 Git
-- [ ] 移除 console.log 和调试代码
-- [ ] 环境变量已配置
-- [ ] 相对路径正确
-- [ ] 没有 localhost 或 127.0.0.1 引用
-
-### 内容检查
-- [ ] 所有链接有效
-- [ ] 图片路径正确
-- [ ] 没有 broken images
-- [ ] SEO 元标签完整
-- [ ] Favicon 已设置
-
-### 性能检查
-- [ ] 图片已压缩
-- [ ] CSS 已压缩
-- [ ] JavaScript 已压缩
-- [ ] 启用了缓存策略
-- [ ] 通过 Lighthouse 测试(90+)
-
-### 双语检查
-- [ ] i18n.js 已更新
-- [ ] 所有翻译键存在
-- [ ] 语言切换功能正常
-- [ ] 默认语言设置正确
+**Pricing**: From $20/month (Pro)
 
 ---
 
-## 🚀 Vercel 部署
+## 📋 Pre-Deployment Checklist
 
-### 步骤 1: 准备项目
+### Code Check
+- [ ] All files committed to Git
+- [ ] Remove console.log and debug code
+- [ ] Environment variables configured
+- [ ] Relative paths correct
+- [ ] No localhost or 127.0.0.1 references
+
+### Content Check
+- [ ] All links work
+- [ ] Image paths correct
+- [ ] No broken images
+- [ ] SEO meta tags complete
+- [ ] Favicon set
+
+### Performance Check
+- [ ] Images compressed
+- [ ] CSS minified
+- [ ] JavaScript minified
+- [ ] Cache strategy enabled
+- [ ] Pass Lighthouse test (90+)
+
+---
+
+## 🚀 Vercel Deployment
+
+### Step 1: Prepare Project
 
 ```bash
-# 进入项目目录
+# Navigate to project directory
 cd /Users/liyanmei/WorkBuddy/Claw
 
-# 初始化 Git(如果未初始化)
+# Initialize Git (if not already initialized)
 git init
 git add .
 git commit -m "Initial commit"
 ```
 
-### 步骤 2: 推送到 GitHub
+### Step 2: Push to GitHub
 
 ```bash
-# 在 GitHub 创建新仓库
-# 然后推送代码
+# Create new repository on GitHub
+# Then push code
 git remote add origin https://github.com/YOUR_USERNAME/Claw.git
 git branch -M main
 git push -u origin main
 ```
 
-### 步骤 3: 连接 Vercel
+### Step 3: Connect to Vercel
 
-1. 访问 https://vercel.com
-2. 点击 "Sign Up" 或 "Login"
-3. 使用 GitHub 账号登录
-4. 点击 "Add New Project"
-5. 选择 "Claw" 仓库
-6. 点击 "Import"
+1. Visit https://vercel.com
+2. Click "Sign Up" or "Login"
+3. Sign in with GitHub account
+4. Click "Add New Project"
+5. Select "Claw" repository
+6. Click "Import"
 
-### 步骤 4: 配置项目
+### Step 4: Configure Project
 
 **Framework Preset**: Other
 **Root Directory**: `./`
-**Build Command**: (留空)
+**Build Command**: (leave empty)
 **Output Directory**: `./`
 
-### 步骤 5: 环境变量(可选)
+### Step 5: Environment Variables (Optional)
 
-如果需要配置环境变量:
+If you need to configure environment variables:
 ```
 NEXT_PUBLIC_API_URL=https://api.example.com
 STRIPE_PUBLIC_KEY=pk_live_xxx
 ```
 
-### 步骤 6: 部署
+### Step 6: Deploy
 
-点击 "Deploy" 按钮,等待部署完成(通常 30-60 秒)
+Click "Deploy" button and wait for deployment to complete (usually 30-60 seconds)
 
-### 步骤 7: 验证部署
+### Step 7: Verify Deployment
 
-部署完成后:
-1. 访问提供的 URL(如 `https://claw.vercel.app`)
-2. 测试所有页面
-3. 检查双语切换功能
-4. 测试支付流程
-5. 在移动设备上测试
+After deployment:
+1. Visit the provided URL (e.g., `https://claw.vercel.app`)
+2. Test all pages
+3. Check payment flow
+4. Test on mobile devices
 
 ---
 
-## 🚀 Netlify 部署
+## 🚀 Netlify Deployment
 
-### 步骤 1: 准备项目
+### Step 1: Prepare Project
 
 ```bash
-# 确保项目在 Git 仓库中
+# Ensure project is in Git repository
 git add .
 git commit -m "Ready for deployment"
 git push
 ```
 
-### 步骤 2: 连接 Netlify
+### Step 2: Connect to Netlify
 
-1. 访问 https://netlify.com
-2. 点击 "Sign up"
-3. 使用 GitHub 账号登录
-4. 点击 "Add new site"
-5. 选择 "Import from an existing project"
+1. Visit https://netlify.com
+2. Click "Sign up"
+3. Sign in with GitHub account
+4. Click "Add new site"
+5. Select "Import from an existing project"
 
-### 步骤 3: 配置部署
+### Step 3: Configure Deployment
 
-**Build command**: (留空)
-**Publish directory**: (留空,使用根目录)
+**Build command**: (leave empty)
+**Publish directory**: (leave empty, use root directory)
 
-### 步骤 4: 部署
+### Step 4: Deploy
 
-点击 "Deploy site" 按钮
+Click "Deploy site" button
 
-### 步骤 5: 配置自定义域名
+### Step 5: Configure Custom Domain
 
-1. 在 Netlify 进入 Site settings
-2. 点击 "Domain management"
-3. 点击 "Add custom domain"
-4. 输入域名(如 `www.example.com`)
-5. 按照提示配置 DNS
-
----
-
-## 🚀 CloudFlare Pages 部署
-
-### 步骤 1: 连接 GitHub
-
-1. 访问 https://dash.cloudflare.com
-2. 点击 "Workers & Pages"
-3. 点击 "Create application"
-4. 选择 "Pages"
-5. 点击 "Connect to Git"
-
-### 步骤 2: 选择仓库
-
-1. 选择 "Claw" 仓库
-2. 点击 "Begin setup"
-
-### 步骤 3: 配置构建设置
-
-**Build command**: (留空)
-**Build output directory**: (留空,使用根目录)
-
-### 步骤 4: 部署
-
-点击 "Save and Deploy" 按钮
-
-### 步骤 5: 配置域名
-
-1. 在 CloudFlare 控制台
-2. 进入 Pages 项目设置
-3. 添加自定义域名
-4. DNS 会自动配置
+1. Go to Site settings in Netlify
+2. Click "Domain management"
+3. Click "Add custom domain"
+4. Enter domain (e.g., `www.example.com`)
+5. Follow instructions to configure DNS
 
 ---
 
-## 🌐 自定义域名配置
+## 🚀 CloudFlare Pages Deployment
 
-### 域名购买
+### Step 1: Connect GitHub
 
-**推荐注册商**:
-- Namecheap - 便宜且稳定
-- GoDaddy - 品牌知名度高
-- Cloudflare Registrar - 免费隐私保护
-- Alibaba Cloud - 国内访问快
+1. Visit https://dash.cloudflare.com
+2. Click "Workers & Pages"
+3. Click "Create application"
+4. Select "Pages"
+5. Click "Connect to Git"
 
-### DNS 配置
+### Step 2: Select Repository
+
+1. Select "Claw" repository
+2. Click "Begin setup"
+
+### Step 3: Configure Build Settings
+
+**Build command**: (leave empty)
+**Build output directory**: (leave empty, use root directory)
+
+### Step 4: Deploy
+
+Click "Save and Deploy" button
+
+### Step 5: Configure Domain
+
+1. In CloudFlare console
+2. Go to Pages project settings
+3. Add custom domain
+4. DNS will be automatically configured
+
+---
+
+## 🌐 Custom Domain Configuration
+
+### Domain Purchase
+
+**Recommended Registrars**:
+- Namecheap - Affordable and reliable
+- GoDaddy - High brand recognition
+- Cloudflare Registrar - Free privacy protection
+- Alibaba Cloud - Fast access in China
+
+### DNS Configuration
 
 #### Vercel
 ```bash
-# 在域名注册商添加 A 记录
+# Add A record at domain registrar
 Type: A
 Name: @
 Value: 76.76.21.21
 
-# 添加 CNAME 记录
+# Add CNAME record
 Type: CNAME
 Name: www
 Value: cname.vercel-dns.com
@@ -277,12 +270,12 @@ Value: cname.vercel-dns.com
 
 #### Netlify
 ```bash
-# 添加 CNAME 记录
+# Add CNAME record
 Type: CNAME
 Name: @
 Value: your-site.netlify.app
 
-# 或使用 Netlify DNS
+# Or use Netlify DNS
 Type: ALIAS
 Name: @
 Value: your-site.netlify.app
@@ -290,68 +283,51 @@ Value: your-site.netlify.app
 
 #### CloudFlare
 ```bash
-# 如果域名在 CloudFlare
-1. 进入 Pages 项目
-2. 点击 "Custom domains"
-3. 添加域名
-4. 自动配置 CNAME
+# If domain is on CloudFlare
+1. Go to Pages project
+2. Click "Custom domains"
+3. Add domain
+4. CNAME will be automatically configured
 ```
 
 ---
 
-## 🔒 HTTPS 配置
+## 🔒 HTTPS Configuration
 
-### 自动 SSL(推荐)
+### Automatic SSL (Recommended)
 
-所有推荐的平台(Vercel/Netlify/CloudFlare)都提供免费的 Let's Encrypt SSL 证书。
+All recommended platforms (Vercel/Netlify/CloudFlare) provide free Let's Encrypt SSL certificates.
 
-**验证**:
-1. 访问 `https://yourdomain.com`
-2. 检查浏览器地址栏的锁形图标
-3. 点击图标查看证书详情
+**Verification**:
+1. Visit `https://yourdomain.com`
+2. Check lock icon in browser address bar
+3. Click icon to view certificate details
 
-### 手动 SSL
+### Manual SSL
 
-如果使用自己的服务器:
+If using your own server:
 ```bash
-# 使用 Certbot
+# Use Certbot
 sudo apt-get install certbot python3-certbot-nginx
 sudo certbot --nginx -d yourdomain.com -d www.yourdomain.com
 ```
 
 ---
 
-## 📊 性能监控
+## 📊 Performance Monitoring
 
 ### Vercel Analytics
 
-1. 进入 Vercel 项目
-2. 点击 "Analytics"
-3. 查看:
+1. Go to Vercel project
+2. Click "Analytics"
+3. View:
    - Web Vitals
    - Real User Monitoring
    - Core Web Vitals
 
-### Netlify Analytics
-
-1. 安装 Netlify CLI
-```bash
-npm install -g netlify-cli
-```
-
-2. 连接项目
-```bash
-netlify link
-```
-
-3. 启用分析
-```bash
-netlify site:deploy --open
-```
-
 ### Google Analytics
 
-在所有页面添加:
+Add to all pages:
 ```html
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
@@ -365,178 +341,105 @@ netlify site:deploy --open
 
 ---
 
-## 🔄 持续集成/持续部署
+## 🧪 Testing Environment
 
-### 自动部署配置
+### Previews
 
-#### GitHub Actions
+Vercel and Netlify both provide preview environments for each Pull Request.
 
-创建 `.github/workflows/deploy.yml`:
+**Uses**:
+- Code review
+- Feature testing
+- Client demos
 
-```yaml
-name: Deploy to Vercel
-
-on:
-  push:
-    branches: [ main ]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Deploy to Vercel
-      uses: amondnet/vercel-action@v20
-      with:
-        vercel-token: ${{ secrets.VERCEL_TOKEN }}
-        vercel-org-id: ${{ secrets.ORG_ID }}
-        vercel-project-id: ${{ secrets.PROJECT_ID }}
-        working-directory: ./
-```
-
-#### Vercel 自动部署
-
-默认情况下,Vercel 会在每次推送到 main 分支时自动部署。
+**Enable**:
+1. Connect GitHub repository
+2. Enable Previews in platform settings
+3. Preview URL auto-generated on each PR
 
 ---
 
-## 🧪 测试环境
+## 📦 Deployment Scripts
 
-### Previews (预览)
+### Automated Deployment Script
 
-Vercel 和 Netlify 都提供每个 Pull Request 的预览环境。
-
-**用途**:
-- 代码审查
-- 功能测试
-- 客户演示
-
-**启用**:
-1. 连接 GitHub 仓库
-2. 在平台设置中启用 Previews
-3. 每次创建 PR,自动生成预览 URL
-
----
-
-## 📦 部署脚本
-
-### 自动化部署脚本
-
-创建 `deploy.sh`:
+Create `deploy.sh`:
 
 ```bash
 #!/bin/bash
 
-echo "🚀 开始部署流程..."
+echo "🚀 Starting deployment process..."
 
-# 1. 检查 Git 状态
+# 1. Check Git status
 if [ -n "$(git status --porcelain)" ]; then
-    echo "❌ 有未提交的更改,请先提交"
+    echo "❌ Uncommitted changes, please commit first"
     exit 1
 fi
 
-# 2. 运行测试
-echo "🧪 运行测试..."
+# 2. Run tests
+echo "🧪 Running tests..."
 # npm test
 
-# 3. 构建(如果需要)
-echo "🔨 构建项目..."
+# 3. Build (if needed)
+echo "🔨 Building project..."
 # npm run build
 
-# 4. 推送到远程
-echo "📤 推送到远程仓库..."
+# 4. Push to remote
+echo "📤 Pushing to remote repository..."
 git push origin main
 
-# 5. 触发部署
-echo "✅ 部署成功!"
-echo "📊 查看: https://claw.vercel.app"
+# 5. Trigger deployment
+echo "✅ Deployment successful!"
+echo "📊 View: https://claw.vercel.app"
 ```
 
-**使用**:
+**Usage**:
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
 ```
 
-### 多环境部署脚本
-
-创建 `deploy-multi.sh`:
-
-```bash
-#!/bin/bash
-
-ENV=$1
-
-case $ENV in
-    "staging")
-        echo "🧪 部署到测试环境..."
-        vercel --token=$VERCEL_TOKEN --prod=false
-        ;;
-    "production")
-        echo "🚀 部署到生产环境..."
-        vercel --token=$VERCEL_TOKEN --prod
-        ;;
-    *)
-        echo "用法: ./deploy-multi.sh [staging|production]"
-        exit 1
-        ;;
-esac
-```
-
 ---
 
-## 🔧 故障排查
+## 🔧 Troubleshooting
 
-### 部署失败
+### Deployment Failed
 
-**常见问题**:
+**Common Issues**:
 
-1. **构建超时**
-   - 解决方案: 优化构建时间,使用 Pro 版本
+1. **Build Timeout**
+   - Solution: Optimize build time, use Pro version
 
-2. **依赖安装失败**
-   - 解决方案: 检查 package.json,使用特定版本
+2. **Dependency Installation Failed**
+   - Solution: Check package.json, use specific versions
 
-3. **文件未找到**
-   - 解决方案: 检查输出目录设置
+3. **File Not Found**
+   - Solution: Check output directory settings
 
-### 页面不显示
+### Pages Not Displaying
 
-**检查步骤**:
+**Check Steps**:
 
-1. **检查浏览器控制台**
+1. **Check Browser Console**
    - F12 -> Console
-   - 查看错误信息
+   - View error messages
 
-2. **检查网络请求**
+2. **Check Network Requests**
    - F12 -> Network
-   - 检查 404 错误
+   - Check for 404 errors
 
-3. **检查文件路径**
-   - 确保相对路径正确
-   - 检查大小写(Linux 区分大小写)
-
-### 双语功能不工作
-
-**检查**:
-
-1. **i18n.js 文件路径**
-   - 确保 `<script src="js/i18n.js"></script>` 正确
-
-2. **浏览器兼容性**
-   - 测试 Chrome/Firefox/Safari
-
-3. **localStorage**
-   - 检查浏览器是否阻止了 localStorage
+3. **Check File Paths**
+   - Ensure relative paths are correct
+   - Check case sensitivity (Linux is case-sensitive)
 
 ---
 
-## 📈 部署后优化
+## 📈 Post-Deployment Optimization
 
-### 1. 性能监控
+### 1. Performance Monitoring
 
 ```javascript
-// 添加 Web Vitals 监控
+// Add Web Vitals monitoring
 import { getCLS, getFID, getLCP } from 'web-vitals';
 
 getCLS(console.log);
@@ -544,10 +447,10 @@ getFID(console.log);
 getLCP(console.log);
 ```
 
-### 2. 错误跟踪
+### 2. Error Tracking
 
 ```javascript
-// 使用 Sentry
+// Use Sentry
 import * as Sentry from "@sentry/browser";
 
 Sentry.init({
@@ -556,115 +459,101 @@ Sentry.init({
 });
 ```
 
-### 3. A/B 测试
+---
 
-```javascript
-// 简单的 A/B 测试
-const variant = Math.random() < 0.5 ? 'A' : 'B';
+## 📋 Deployment Checklist
 
-if (variant === 'A') {
-    // 显示版本 A
-} else {
-    // 显示版本 B
-}
-```
+### Pre-Deployment
+- [ ] Code committed to main branch
+- [ ] All tests pass
+- [ ] Environment variables configured
+- [ ] Domain DNS configured
+- [ ] SSL certificate ready
+
+### Post-Deployment
+- [ ] Homepage accessible
+- [ ] All page links work
+- [ ] Payment flow works
+- [ ] Mobile display correct
+- [ ] Performance metrics meet standards
+- [ ] SEO meta tags correct
+- [ ] Error monitoring configured
+- [ ] Analytics code added
 
 ---
 
-## 📋 部署检查清单
+## 🎯 Best Practices
 
-### 部署前
-- [ ] 代码已提交到 main 分支
-- [ ] 所有测试通过
-- [ ] 环境变量已配置
-- [ ] 域名 DNS 已配置
-- [ ] SSL 证书已准备好
-
-### 部署后
-- [ ] 主页可访问
-- [ ] 所有页面链接正常
-- [ ] 双语切换功能工作
-- [ ] 支付流程正常
-- [ ] 移动端显示正常
-- [ ] 性能指标达标
-- [ ] SEO 元标签正确
-- [ ] 错误监控已配置
-- [ ] 分析代码已添加
-
----
-
-## 🎯 最佳实践
-
-### 1. 版本控制
+### 1. Version Control
 
 ```bash
-# 使用语义化版本
+# Use semantic versioning
 git tag v1.0.0
 git push --tags
 
-# 创建发布分支
+# Create release branch
 git checkout -b release/v1.0.0
 ```
 
-### 2. 回滚策略
+### 2. Rollback Strategy
 
 ```bash
-# Git 回滚
+# Git rollback
 git revert <commit-hash>
 git push
 
-# 平台回滚
-# Vercel: 在 Dashboard 选择之前的部署
-# Netlify: 在 Deploys 选择 "Deployed"
+# Platform rollback
+# Vercel: Select previous deployment in Dashboard
+# Netlify: Select "Deployed" in Deploys
 ```
 
-### 3. 备份策略
+### 3. Backup Strategy
 
 ```bash
-# 定期备份数据库(如果有)
+# Regular database backup (if any)
 mysqldump -u user -p database > backup.sql
 
-# 使用 AWS S3/GitHub 存储备份
+# Use AWS S3/GitHub for backup storage
 aws s3 cp backup.sql s3://backups/
 ```
 
 ---
 
-## 📞 支持资源
+## 📞 Support Resources
 
-### 官方文档
+### Official Documentation
 - [Vercel Docs](https://vercel.com/docs)
 - [Netlify Docs](https://docs.netlify.com/)
 - [CloudFlare Pages Docs](https://developers.cloudflare.com/pages)
 
-### 社区支持
+### Community Support
 - [Vercel Discord](https://vercel.com/discord)
 - [Netlify Community](https://answers.netlify.com/)
 - [Stack Overflow](https://stackoverflow.com/questions/tagged/vercel)
 
-### 紧急联系
+### Emergency Contact
 - Vercel Support: support@vercel.com
 - Netlify Support: support@netlify.com
 - CloudFlare Support: support@cloudflare.com
 
 ---
 
-## 📊 部署统计
+## 📊 Deployment Statistics
 
-### 部署时间
-- 首次部署: ~30 秒
-- 增量部署: ~15 秒
-- 冷启动部署: ~45 秒
+### Deployment Time
+- First deployment: ~30 seconds
+- Incremental deployment: ~15 seconds
+- Cold start deployment: ~45 seconds
 
-### 成本估算
-| 平台 | 免费额度 | 预计月成本 |
-|------|----------|------------|
-| Vercel | 100GB 带宽 | $0-20 |
-| Netlify | 100GB 带宽 | $0-19 |
-| CloudFlare Pages | 无限带宽 | $0-20 |
+### Cost Estimation
+| Platform | Free Tier | Estimated Monthly Cost |
+|----------|-----------|----------------------|
+| Vercel | 100GB bandwidth | $0-20 |
+| Netlify | 100GB bandwidth | $0-19 |
+| CloudFlare Pages | Unlimited bandwidth | $0-20 |
 
 ---
 
-**文档版本**: 1.0
-**最后更新**: 2026-03-11
-**维护者**: 开发团队
+**Document Version**: 1.0
+**Last Updated**: March 13, 2026
+**Maintainer**: Development Team

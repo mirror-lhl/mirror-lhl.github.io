@@ -1,49 +1,49 @@
-// 收款账号配置文件
-// 请在此处填写您的真实收款信息
+// Payment account configuration file
+// Please fill in your real payment information here
 
 const PAYMENT_CONFIG = {
-    // 支付宝配置
+    // Alipay configuration
     alipay: {
-        // 收款二维码图片路径
+        // QR code image path
         qrCodePath: 'images/alipay-qr-code.jpg',
         
-        // 支付宝账号
+        // Alipay account
         account: 'your-alipay-account@example.com',
         
-        // 收款人姓名
-        name: '您的姓名',
+        // Payee name
+        name: 'Your Name',
         
-        // 收款提示
-        note: '请扫描二维码支付,支付时请备注订单号以便确认'
+        // Payment note
+        note: 'Please scan the QR code to pay. Include order ID for confirmation'
     },
     
-    // 微信支付配置
+    // WeChat Pay configuration
     wechat: {
-        // 收款二维码图片路径
+        // QR code image path
         qrCodePath: 'images/wechat-qr-code.jpg',
         
-        // 微信号
+        // WeChat ID
         account: 'your-wechat-id',
         
-        // 收款人昵称
-        name: '您的昵称',
+        // Payee nickname
+        name: 'Your Nickname',
         
-        // 收款提示
-        note: '请扫描二维码支付,支付时请备注订单号以便确认'
+        // Payment note
+        note: 'Please scan the QR code to pay. Include order ID for confirmation'
     },
     
-    // 通用配置
+    // General configuration
     general: {
-        // 收款确认时间 (毫秒)
-        confirmationTimeout: 300000, // 5分钟
+        // Payment confirmation timeout (milliseconds)
+        confirmationTimeout: 300000, // 5 minutes
         
-        // 订单备注前缀
+        // Order prefix
         orderPrefix: 'ORD',
         
-        // 是否显示联系方式
+        // Show contact information
         showContact: true,
         
-        // 联系方式
+        // Contact information
         contact: {
             phone: '',
             email: '',
@@ -52,7 +52,7 @@ const PAYMENT_CONFIG = {
     }
 };
 
-// 导出配置
+// Export configuration
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = PAYMENT_CONFIG;
 }

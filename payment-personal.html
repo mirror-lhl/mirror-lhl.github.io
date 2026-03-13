@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title> - </title><script src="https://cdn.tailwindcss.com"></script><script src="js/payment-config.js"></script><style>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Secure Payment - Claw</title><script src="https://cdn.tailwindcss.com"></script><script src="js/payment-config.js"></script><style>
  .payment-method {
  transition: all 0.3s ease;
  }
@@ -39,276 +39,276 @@
  height: auto;
  border-radius: 8px;
  }
- </style></head><body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50"><div class="container mx-auto px-4 py-8 max-w-4xl"><!-- --><div class="text-center mb-8"><h1 class="text-3xl font-bold text-gray-800 mb-2">💳 </h1><p class="text-gray-600"></p></div><!-- --><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">📋 </h2><div class="space-y-3"><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-medium text-gray-800" id="productName">AI - VIP</span></div><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-medium text-gray-800" id="orderId">ORD2026031000001</span></div><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-bold text-2xl text-red-600" id="amount">$100,000</span></div></div></div><!-- --><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">💳 </h2><div class="space-y-4"><!-- --><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer selected" onclick="selectPayment('alipay')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800"></div><div class="text-sm text-gray-500"></div></div></div><div class="w-6 h-6 border-2 border-blue-500 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-blue-500 rounded-full"></div></div></div></div><!-- --><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer" onclick="selectPayment('wechat')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800"></div><div class="text-sm text-gray-500"></div></div></div><div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-green-500 rounded-full hidden"></div></div></div></div></div></div><!-- --><button
- id="payBtn"
- class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
- onclick="showPaymentQrCode()"
- >
- 🚀 
- </button><!-- --><div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4"><div class="flex items-start"><div class="text-yellow-600 mr-2">🔒</div><div class="text-sm text-yellow-800"><div class="font-bold mb-1"></div><ul class="space-y-1"><li>• ,</li><li>• ""</li><li>• 1-2</li><li>• </li></ul></div></div></div><!-- --><div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-lg mx-4 fade-in w-full"><div class="text-center"><h2 class="text-2xl font-bold text-gray-800 mb-2" id="qrTitle"></h2><p class="text-gray-600 mb-4"></p><!-- --><div class="qr-code-container bg-gray-50 rounded-lg p-6 mb-4"><div id="qrPlaceholder" class="qr-placeholder"><div class="text-6xl mb-4">📱</div><div class="text-lg mb-2">...</div><div class="text-sm"></div></div><div id="qrImageContainer" class="hidden"><img id="qrImage" src="" alt="" class="qr-image"></div></div><!-- --><div class="bg-blue-50 rounded-lg p-4 mb-4 text-left"><div class="text-sm text-gray-500 mb-2"></div><div class="flex items-center justify-between mb-2"><span class="font-medium"></span><span class="font-bold text-blue-600" id="modalOrderId">ORD2026031000001</span></div><div class="flex items-center justify-between mb-2"><span class="font-medium"></span><span class="font-bold text-red-600 text-xl" id="modalAmount">$100,000</span></div><div class="text-sm text-gray-600 mt-2" id="paymentNote"></div></div><!-- --><div class="flex items-center justify-center mb-4" id="paymentStatus"><div class="loading w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full mr-2"></div><span class="text-gray-600">...</span></div><!-- --><div class="space-y-2"><button
- class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
- onclick="confirmPayment()"
- >
- ✓ 
- </button><button
- class="w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all"
- onclick="closeQrModal()"
- ></button></div></div></div></div><!-- --><div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in"><div class="text-center"><div class="text-6xl mb-4">✅</div><h2 class="text-2xl font-bold text-gray-800 mb-2">!</h2><p class="text-gray-600 mb-6">,</p><div class="bg-gray-50 rounded-lg p-4 mb-6 text-left"><div class="text-sm text-gray-500 mb-2"></div><div class="flex justify-between mb-1"><span></span><span class="font-medium" id="successOrderId">ORD2026031000001</span></div><div class="flex justify-between"><span></span><span class="font-medium text-red-600" id="successAmount">$100,000</span></div></div><p class="text-sm text-gray-500 mb-4">
- 1-2,
- </p><button
- class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
- onclick="closeSuccessModal()"
- ></button></div></div></div><!-- --><div class="mt-8 text-center text-gray-500 text-sm"><p>© 2026 Claw | </p></div></div><script>
- // 
- let selectedPayment = 'alipay';
- let currentOrderId = '';
- let currentAmount = 0;
+ </style></head><body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50"><div class="container mx-auto px-4 py-8 max-w-4xl"><!-- --><div class="text-center mb-8"><h1 class="text-3xl font-bold text-gray-800 mb-2">💳 Secure Payment</h1><p class="text-gray-600">Complete your order securely with Alipay or WeChat Pay</p></div><!-- Order Details --><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">📋 Order Details</h2><div class="space-y-3"><div class="flex justify-between"><span class="text-gray-600">Product:</span><span class="font-medium text-gray-800" id="productName">AI - VIP</span></div><div class="flex justify-between"><span class="text-gray-600">Order ID:</span><span class="font-medium text-gray-800" id="orderId">ORD2026031000001</span></div><div class="flex justify-between"><span class="text-gray-600">Amount:</span><span class="font-bold text-2xl text-red-600" id="amount">$100,000</span></div></div></div><!-- --><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">💳 Payment Method</h2><div class="space-y-4"><!-- Alipay --><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer selected" onclick="selectPayment('alipay')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800">Alipay</div><div class="text-sm text-gray-500">Fast and secure payment</div></div></div><div class="w-6 h-6 border-2 border-blue-500 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-blue-500 rounded-full"></div></div></div></div><!-- WeChat Pay --><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer" onclick="selectPayment('wechat')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800">WeChat Pay</div><div class="text-sm text-gray-500">Easy and convenient</div></div></div><div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-green-500 rounded-full hidden"></div></div></div></div></div></div><!-- --><button
+    id="payBtn"
+    class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+    onclick="showPaymentQrCode()"
+    >
+    🚀 Proceed to Pay
+    </button><!-- Security Tips --><div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4"><div class="flex items-start"><div class="text-yellow-600 mr-2">🔒</div><div class="text-sm text-yellow-800"><div class="font-bold mb-1">Payment Security Tips:</div><ul class="space-y-1"><li>• Scan QR code with your payment app</li><li>• Verify the order amount matches</li><li>• Include order ID in payment note for confirmation</li><li>• Contact us if you have any issues</li></ul></div></div></div><!-- --><div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-lg mx-4 fade-in w-full"><div class="text-center"><h2 class="text-2xl font-bold text-gray-800 mb-2" id="qrTitle">Scan QR Code to Pay</h2><p class="text-gray-600 mb-4">Please scan the QR code with your payment app</p><!-- QR Code Display --><div class="qr-code-container bg-gray-50 rounded-lg p-6 mb-4"><div id="qrPlaceholder" class="qr-placeholder"><div class="text-6xl mb-4">📱</div><div class="text-lg mb-2">Loading QR code...</div><div class="text-sm">Please wait</div></div><div id="qrImageContainer" class="hidden"><img id="qrImage" src="" alt="Payment QR Code" class="qr-image"></div></div><!-- Payment Info --><div class="bg-blue-50 rounded-lg p-4 mb-4 text-left"><div class="text-sm text-gray-500 mb-2">Payment Details:</div><div class="flex items-center justify-between mb-2"><span class="font-medium">Order ID:</span><span class="font-bold text-blue-600" id="modalOrderId">ORD2026031000001</span></div><div class="flex items-center justify-between mb-2"><span class="font-medium">Amount:</span><span class="font-bold text-red-600 text-xl" id="modalAmount">$100,000</span></div><div class="text-sm text-gray-600 mt-2" id="paymentNote"></div></div><!-- Payment Status --><div class="flex items-center justify-center mb-4" id="paymentStatus"><div class="loading w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full mr-2"></div><span class="text-gray-600">Waiting for payment...</span></div><!-- Action Buttons --><div class="space-y-2"><button
+    class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
+    onclick="confirmPayment()"
+    >
+    ✓ I've Completed Payment
+    </button><button
+    class="w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all"
+    onclick="closeQrModal()"
+    >Cancel</button></div></div></div></div><!-- --><div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in"><div class="text-center"><div class="text-6xl mb-4">✅</div><h2 class="text-2xl font-bold text-gray-800 mb-2">Payment Successful!</h2><p class="text-gray-600 mb-6">Thank you for your order. Your payment has been confirmed.</p><div class="bg-gray-50 rounded-lg p-4 mb-6 text-left"><div class="text-sm text-gray-500 mb-2">Transaction Details:</div><div class="flex justify-between mb-1"><span>Order ID:</span><span class="font-medium" id="successOrderId">ORD2026031000001</span></div><div class="flex justify-between"><span>Amount Paid:</span><span class="font-medium text-red-600" id="successAmount">$100,000</span></div></div><p class="text-sm text-gray-500 mb-4">
+    We will process your order within 1-2 hours. You'll receive a confirmation email shortly.
+    </p><button
+    class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
+    onclick="closeSuccessModal()"
+    >Return to Home</button></div></div></div><!-- Footer --><div class="mt-8 text-center text-gray-500 text-sm"><p>© 2026 Claw | All Rights Reserved</p></div></div><script>
+// Payment state
+let selectedPayment = 'alipay';
+let currentOrderId = '';
+let currentAmount = 0;
 
- // 
- const productPlans = {
- 'scriptgenerator': {
- name: 'AI',
- plans: {
- 'vip': { name: 'VIP', amount: '99.00' }
- }
- },
- 'geo-optimizer': {
- name: 'GEO',
- plans: {
- 'standard': { name: '', amount: '199.00' },
- 'consult': { name: '', amount: '0.00' }
- }
- },
- 'freelancer-crm': {
- name: 'Freelancer CRM',
- plans: {
- 'personal': { name: '', amount: '59.00' },
- 'team': { name: '', amount: '199.00' }
- }
- },
- 'aicreator': {
- name: 'AI',
- plans: {
- 'free': { name: '', amount: '0.00' },
- 'basic': { name: '', amount: '99.00' },
- 'pro': { name: '', amount: '299.00' },
- 'enterprise': { name: '', amount: '2999.00' }
- }
- },
- 'locallife': {
- name: ' - ',
- plans: {
- 'merchant': { name: '', amount: '0.00' }
- }
- },
- 'enterprisecrm': {
- name: ' - AICRM',
- plans: {
- 'basic': { name: '(5)', amount: '199.00' }
- }
- },
- 'enterprisehr': {
- name: ' - AI',
- plans: {
- 'basic': { name: '(50)', amount: '299.00' }
- }
- },
- 'enterprisefinance': {
- name: ' - AI',
- plans: {
- 'basic': { name: '', amount: '399.00' }
- }
- },
- 'enterprisescm': {
- name: ' - AI',
- plans: {
- 'basic': { name: '', amount: '499.00' }
- }
- },
- 'enterprisepm': {
- name: ' - AI',
- plans: {
- 'basic': { name: '(10)', amount: '99.00' }
- }
- },
- 'enterprisebi': {
- name: ' - AI',
- plans: {
- 'basic': { name: '', amount: '299.00' }
- }
- },
- 'enterpriseai': {
- name: ' - ',
- plans: {
- 'trial': { name: '14', amount: '0.00' }
- }
- }
- };
+// Product plans configuration
+const productPlans = {
+'scriptgenerator': {
+name: 'AI Short Video Script Generator',
+plans: {
+'vip': { name: 'VIP Plan', amount: '99.00' }
+}
+},
+'geo-optimizer': {
+name: 'GEO Location Optimizer',
+plans: {
+'standard': { name: 'Standard Plan', amount: '199.00' },
+'consult': { name: 'Consultation', amount: '0.00' }
+}
+},
+'freelancer-crm': {
+name: 'Freelancer CRM',
+plans: {
+'personal': { name: 'Personal Plan', amount: '59.00' },
+'team': { name: 'Team Plan', amount: '199.00' }
+}
+},
+'aicreator': {
+name: 'AI Creator Studio',
+plans: {
+'free': { name: 'Free Plan', amount: '0.00' },
+'basic': { name: 'Basic Plan', amount: '99.00' },
+'pro': { name: 'Pro Plan', amount: '299.00' },
+'enterprise': { name: 'Enterprise Plan', amount: '2999.00' }
+}
+},
+'locallife': {
+name: 'Local Life Platform',
+plans: {
+'merchant': { name: 'Merchant Plan', amount: '0.00' }
+}
+},
+'enterprisecrm': {
+name: 'Enterprise - AICRM',
+plans: {
+'basic': { name: 'Basic (5 users)', amount: '199.00' }
+}
+},
+'enterprisehr': {
+name: 'Enterprise - AI HR',
+plans: {
+'basic': { name: 'Basic (50 users)', amount: '299.00' }
+}
+},
+'enterprisefinance': {
+name: 'Enterprise - AI Finance',
+plans: {
+'basic': { name: 'Basic Plan', amount: '399.00' }
+}
+},
+'enterprisescm': {
+name: 'Enterprise - AI SCM',
+plans: {
+'basic': { name: 'Basic Plan', amount: '499.00' }
+}
+},
+'enterprisepm': {
+name: 'Enterprise - AI PM',
+plans: {
+'basic': { name: 'Basic (10 users)', amount: '99.00' }
+}
+},
+'enterprisebi': {
+name: 'Enterprise - AI BI',
+plans: {
+'basic': { name: 'Basic Plan', amount: '299.00' }
+}
+},
+'enterpriseai': {
+name: 'Enterprise - AI Solutions',
+plans: {
+'trial': { name: '14 Day Trial', amount: '0.00' }
+}
+}
+};
 
- // URL
- window.onload = function() {
- const urlParams = new URLSearchParams(window.location.search);
- const product = urlParams.get('product') || 'scriptgenerator';
- const plan = urlParams.get('plan') || 'vip';
- const customAmount = urlParams.get('amount');
- const orderId = urlParams.get('order') || generateOrderId();
+// URL parameters on page load
+window.onload = function() {
+const urlParams = new URLSearchParams(window.location.search);
+const product = urlParams.get('product') || 'scriptgenerator';
+const plan = urlParams.get('plan') || 'vip';
+const customAmount = urlParams.get('amount');
+const orderId = urlParams.get('order') || generateOrderId();
 
- // 
- let productName, amount;
- if (productPlans[product] && productPlans[product].plans[plan]) {
- productName = `${productPlans[product].name} - ${productPlans[product].plans[plan].name}`;
- amount = customAmount || productPlans[product].plans[plan].amount;
- } else {
- productName = '';
- amount = '0.00';
- }
+// Get product name and amount
+let productName, amount;
+if (productPlans[product] && productPlans[product].plans[plan]) {
+productName = `${productPlans[product].name} - ${productPlans[product].plans[plan].name}`;
+amount = customAmount || productPlans[product].plans[plan].amount;
+} else {
+productName = 'Unknown Product';
+amount = '0.00';
+}
 
- document.getElementById('productName').textContent = productName;
- document.getElementById('amount').textContent = `${amount}`;
- document.getElementById('orderId').textContent = orderId;
- document.getElementById('successOrderId').textContent = orderId;
- document.getElementById('successAmount').textContent = `${amount}`;
+document.getElementById('productName').textContent = productName;
+document.getElementById('amount').textContent = `$${amount}`;
+document.getElementById('orderId').textContent = orderId;
+document.getElementById('successOrderId').textContent = orderId;
+document.getElementById('successAmount').textContent = `$${amount}`;
 
- currentOrderId = orderId;
- currentAmount = parseFloat(amount);
- };
+currentOrderId = orderId;
+currentAmount = parseFloat(amount);
+};
 
- // 
- function generateOrderId() {
- const now = new Date();
- const timestamp = now.getFullYear().toString() +
- (now.getMonth() + 1).toString().padStart(2, '0') +
- now.getDate().toString().padStart(2, '0') +
- now.getHours().toString().padStart(2, '0') +
- now.getMinutes().toString().padStart(2, '0') +
- now.getSeconds().toString().padStart(2, '0');
- const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
- return `ORD${timestamp}${random}`;
- }
+// Generate unique order ID
+function generateOrderId() {
+const now = new Date();
+const timestamp = now.getFullYear().toString() +
+(now.getMonth() + 1).toString().padStart(2, '0') +
+now.getDate().toString().padStart(2, '0') +
+now.getHours().toString().padStart(2, '0') +
+now.getMinutes().toString().padStart(2, '0') +
+now.getSeconds().toString().padStart(2, '0');
+const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+return `ORD${timestamp}${random}`;
+}
 
- // 
- function selectPayment(method) {
- selectedPayment = method;
+// Select payment method
+function selectPayment(method) {
+selectedPayment = method;
 
- // UI
- const methods = document.querySelectorAll('.payment-method');
- methods.forEach(m => {
- m.classList.remove('selected');
- const circle = m.querySelector('.rounded-full');
- const dot = circle.querySelector('div');
- if (dot) {
- dot.classList.add('hidden');
- }
- circle.classList.remove('border-blue-500', 'border-green-500');
- circle.classList.add('border-gray-300');
- });
+// Update UI
+const methods = document.querySelectorAll('.payment-method');
+methods.forEach(m => {
+m.classList.remove('selected');
+const circle = m.querySelector('.rounded-full');
+const dot = circle.querySelector('div');
+if (dot) {
+dot.classList.add('hidden');
+}
+circle.classList.remove('border-blue-500', 'border-green-500');
+circle.classList.add('border-gray-300');
+});
 
- // 
- const selectedMethod = method === 'alipay' ? methods[0] : methods[1];
- selectedMethod.classList.add('selected');
- const selectedCircle = selectedMethod.querySelector('.rounded-full');
- const selectedDot = selectedCircle.querySelector('div');
- if (selectedDot) {
- selectedDot.classList.remove('hidden');
- }
- selectedCircle.classList.remove('border-gray-300');
- selectedCircle.classList.add(method === 'alipay' ? 'border-blue-500' : 'border-green-500');
- }
+// Highlight selected method
+const selectedMethod = method === 'alipay' ? methods[0] : methods[1];
+selectedMethod.classList.add('selected');
+const selectedCircle = selectedMethod.querySelector('.rounded-full');
+const selectedDot = selectedCircle.querySelector('div');
+if (selectedDot) {
+selectedDot.classList.remove('hidden');
+}
+selectedCircle.classList.remove('border-gray-300');
+selectedCircle.classList.add(method === 'alipay' ? 'border-blue-500' : 'border-green-500');
+}
 
- // 
- function showPaymentQrCode() {
- const modal = document.getElementById('qrModal');
- const title = document.getElementById('qrTitle');
- const qrPlaceholder = document.getElementById('qrPlaceholder');
- const qrImageContainer = document.getElementById('qrImageContainer');
- const qrImage = document.getElementById('qrImage');
- const paymentNote = document.getElementById('paymentNote');
+// Show payment QR code
+function showPaymentQrCode() {
+const modal = document.getElementById('qrModal');
+const title = document.getElementById('qrTitle');
+const qrPlaceholder = document.getElementById('qrPlaceholder');
+const qrImageContainer = document.getElementById('qrImageContainer');
+const qrImage = document.getElementById('qrImage');
+const paymentNote = document.getElementById('paymentNote');
 
- // 
- if (selectedPayment === 'alipay') {
- title.textContent = '';
- paymentNote.textContent = PAYMENT_CONFIG.alipay.note;
- 
- // 
- loadQrCode(PAYMENT_CONFIG.alipay.qrCodePath);
- } else {
- title.textContent = '';
- paymentNote.textContent = PAYMENT_CONFIG.wechat.note;
- 
- // 
- loadQrCode(PAYMENT_CONFIG.wechat.qrCodePath);
- }
+// Update modal based on payment method
+if (selectedPayment === 'alipay') {
+title.textContent = 'Scan Alipay QR Code';
+paymentNote.textContent = PAYMENT_CONFIG.alipay.note;
 
- // 
- document.getElementById('modalOrderId').textContent = currentOrderId;
- document.getElementById('modalAmount').textContent = `$${currentAmount.toFixed(2)}`;
+// Load Alipay QR code
+loadQrCode(PAYMENT_CONFIG.alipay.qrCodePath);
+} else {
+title.textContent = 'Scan WeChat Pay QR Code';
+paymentNote.textContent = PAYMENT_CONFIG.wechat.note;
 
- modal.classList.remove('hidden');
- modal.classList.add('flex');
- }
+// Load WeChat QR code
+loadQrCode(PAYMENT_CONFIG.wechat.qrCodePath);
+}
 
- // 
- function loadQrCode(imagePath) {
- const qrPlaceholder = document.getElementById('qrPlaceholder');
- const qrImageContainer = document.getElementById('qrImageContainer');
- const qrImage = document.getElementById('qrImage');
+// Update order details
+document.getElementById('modalOrderId').textContent = currentOrderId;
+document.getElementById('modalAmount').textContent = `$${currentAmount.toFixed(2)}`;
 
- // 
- const img = new Image();
- img.onload = function() {
- qrImage.src = imagePath;
- qrPlaceholder.classList.add('hidden');
- qrImageContainer.classList.remove('hidden');
- };
- img.onerror = function() {
- // ,
- showAccountInfo();
- };
- img.src = imagePath;
- }
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+}
 
- // 
- function showAccountInfo() {
- const qrPlaceholder = document.getElementById('qrPlaceholder');
- const config = selectedPayment === 'alipay' ? PAYMENT_CONFIG.alipay : PAYMENT_CONFIG.wechat;
- const platform = selectedPayment === 'alipay' ? '' : '';
- 
- qrPlaceholder.innerHTML = `
- <div class="text-4xl mb-4">${selectedPayment === 'alipay' ? '💙' : '💚'}</div><div class="text-lg mb-2">${platform}</div><div class="text-sm mb-2">: <span class="font-bold">${config.account}</span></div><div class="text-sm mb-2">: <span class="font-bold">${config.name}</span></div><div class="text-xs text-gray-500 mt-4">
- ${platform}<br></div>
- `;
- }
+// Load QR code image
+function loadQrCode(imagePath) {
+const qrPlaceholder = document.getElementById('qrPlaceholder');
+const qrImageContainer = document.getElementById('qrImageContainer');
+const qrImage = document.getElementById('qrImage');
 
- // 
- function confirmPayment() {
- const status = document.getElementById('paymentStatus');
- status.innerHTML = '<div class="text-green-600">✓ ...</div>';
- 
- // 
- setTimeout(() => {
- modal.classList.add('hidden');
- modal.classList.remove('flex');
- showSuccessModal();
- }, 1500);
- }
+// Try to load image
+const img = new Image();
+img.onload = function() {
+qrImage.src = imagePath;
+qrPlaceholder.classList.add('hidden');
+qrImageContainer.classList.remove('hidden');
+};
+img.onerror = function() {
+// Show account info if image fails
+showAccountInfo();
+};
+img.src = imagePath;
+}
 
- // 
- function showSuccessModal() {
- const modal = document.getElementById('successModal');
- modal.classList.remove('hidden');
- modal.classList.add('flex');
- }
+// Show account info as fallback
+function showAccountInfo() {
+const qrPlaceholder = document.getElementById('qrPlaceholder');
+const config = selectedPayment === 'alipay' ? PAYMENT_CONFIG.alipay : PAYMENT_CONFIG.wechat;
+const platform = selectedPayment === 'alipay' ? 'Alipay' : 'WeChat Pay';
 
- // 
- function closeQrModal() {
- document.getElementById('qrModal').classList.add('hidden');
- document.getElementById('qrModal').classList.remove('flex');
- }
+qrPlaceholder.innerHTML = `
+<div class="text-4xl mb-4">${selectedPayment === 'alipay' ? '💙' : '💚'}</div><div class="text-lg mb-2">${platform}</div><div class="text-sm mb-2">Account: <span class="font-bold">${config.account}</span></div><div class="text-sm mb-2">Name: <span class="font-bold">${config.name}</span></div><div class="text-xs text-gray-500 mt-4">
+Please transfer to this ${platform} account<br>and include order ID</div>
+`;
+}
 
- // 
- function closeSuccessModal() {
- document.getElementById('successModal').classList.add('hidden');
- document.getElementById('successModal').classList.remove('flex');
- window.location.href = 'index.html';
- }
- </script></body></html>
+// Confirm payment
+function confirmPayment() {
+const status = document.getElementById('paymentStatus');
+status.innerHTML = '<div class="text-green-600">✓ Payment confirmed</div>';
+
+// Show success modal after delay
+setTimeout(() => {
+modal.classList.add('hidden');
+modal.classList.remove('flex');
+showSuccessModal();
+}, 1500);
+}
+
+// Show success modal
+function showSuccessModal() {
+const modal = document.getElementById('successModal');
+modal.classList.remove('hidden');
+modal.classList.add('flex');
+}
+
+// Close QR code modal
+function closeQrModal() {
+document.getElementById('qrModal').classList.add('hidden');
+document.getElementById('qrModal').classList.remove('flex');
+}
+
+// Close success modal
+function closeSuccessModal() {
+document.getElementById('successModal').classList.add('hidden');
+document.getElementById('successModal').classList.remove('flex');
+window.location.href = 'index.html';
+}
+</script></body></html>

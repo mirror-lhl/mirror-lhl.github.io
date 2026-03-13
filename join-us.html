@@ -577,7 +577,7 @@
                 <p>Core Projects</p>
             </div>
             <div class="stat-card">
-                <h3>85%</h3>
+                <h3>95%</h3>
                 <p>Highest Commission Rate</p>
             </div>
             <div class="stat-card">
@@ -603,28 +603,28 @@
                 <tbody>
                     <tr>
                         <td>$10,000 or less</td>
-                        <td class="percentage">60%</td>
-                        <td class="earning">Up to $6,000</td>
+                        <td class="percentage">70%</td>
+                        <td class="earning">Up to $7,000</td>
                     </tr>
                     <tr>
                         <td>$10,000 - $100,000</td>
-                        <td class="percentage">70%</td>
-                        <td class="earning">$6,000 - $70,000</td>
+                        <td class="percentage">80%</td>
+                        <td class="earning">$7,000 - $80,000</td>
                     </tr>
                     <tr class="highlight-tier">
                         <td>$100,000 - $1,000,000</td>
-                        <td class="percentage">75%</td>
-                        <td class="earning">$70,000 - $750,000</td>
+                        <td class="percentage">85%</td>
+                        <td class="earning">$80,000 - $850,000</td>
                     </tr>
                     <tr class="highlight-tier">
                         <td>$1,000,000 - $10,000,000</td>
-                        <td class="percentage">80%</td>
-                        <td class="earning">$750,000 - $8,000,000</td>
+                        <td class="percentage">90%</td>
+                        <td class="earning">$850,000 - $9,000,000</td>
                     </tr>
                     <tr class="highlight-tier">
                         <td>$10,000,000 or more</td>
-                        <td class="percentage">85%</td>
-                        <td class="earning">$8,500,000+</td>
+                        <td class="percentage">95%</td>
+                        <td class="earning">$9,500,000+</td>
                     </tr>
                 </tbody>
             </table>
@@ -640,7 +640,7 @@
                 <h3>Ultra-High Commission</h3>
                 <ul>
                     <li>Industry-leading commission rates</li>
-                    <li>Up to 85%</li>
+                    <li>Up to 95%</li>
                     <li>Tiered growth incentives</li>
                     <li>Unlimited earning potential</li>
                 </ul>
@@ -824,15 +824,15 @@
             let earning = 0;
 
             if (salesAmount <= 1000000) {
-                commissionRate = 0.60;
-            } else if (salesAmount <= 10000000) {
                 commissionRate = 0.70;
-            } else if (salesAmount <= 100000000) {
-                commissionRate = 0.75;
-            } else if (salesAmount <= 10000000000) {
+            } else if (salesAmount <= 10000000) {
                 commissionRate = 0.80;
-            } else {
+            } else if (salesAmount <= 100000000) {
                 commissionRate = 0.85;
+            } else if (salesAmount <= 10000000000) {
+                commissionRate = 0.90;
+            } else {
+                commissionRate = 0.95;
             }
 
             earning = salesAmount * commissionRate;

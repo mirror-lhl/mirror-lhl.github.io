@@ -1,175 +1,175 @@
-# 🎬 AI短视频脚本生成器 - MVP上线说明
+# 🎬 AI Short Video Script Generator - MVP Launch
 
-## ✅ 已完成
+## ✅ Completed
 
-### 1. MVP核心功能
-- ✅ 前端界面完整开发
-- ✅ 输入主题功能
-- ✅ 选择时长（30秒/1分钟/3分钟）
-- ✅ 选择风格（轻松搞笑/专业知识/情感故事/干货分享）
-- ✅ AI脚本生成（本地模拟）
-- ✅ 复制/导出功能
-- ✅ 重新生成功能
-- ✅ 收费标准展示
+### 1. MVP Core Features
+- ✅ Complete frontend interface development
+- ✅ Topic input functionality
+- ✅ Duration selection (30 seconds / 1 minute / 3 minutes)
+- ✅ Style selection (Humorous / Professional / Emotional / Educational)
+- ✅ AI script generation (local simulation)
+- ✅ Copy/Export functionality
+- ✅ Regenerate functionality
+- ✅ Pricing display
 
-### 2. 文档准备
-- ✅ 详细MVP开发计划
-- ✅ 技术方案说明
-- ✅ 收费策略制定
-- ✅ 推广渠道规划
+### 2. Documentation
+- ✅ Detailed MVP development plan
+- ✅ Technical solution documentation
+- ✅ Pricing strategy formulation
+- ✅ Marketing channel planning
 
-## 🚀 当前状态
+## 🚀 Current Status
 
-### 本地预览
-**访问地址**: http://localhost:8001
+### Local Preview
+**Access URL**: http://localhost:8888
 
-你可以：
-1. 在浏览器中打开 http://localhost:8001
-2. 输入任意主题（如"如何做好减肥餐"）
-3. 选择时长和风格
-4. 点击"生成脚本"
-5. 查看生成的脚本并复制使用
+You can:
+1. Open http://localhost:8888 in your browser
+2. Enter any topic (e.g., "How to make healthy meals")
+3. Select duration and style
+4. Click "Generate Script"
+5. View and copy the generated script
 
-## 📊 下一步计划
+## 📊 Next Steps
 
-### 立即可以做的
-1. **测试功能**
-   - [ ] 测试各种主题生成效果
-   - [ ] 测试不同时长和风格
-   - [ ] 优化脚本质量
+### Immediate Actions
+1. **Testing**
+   - [ ] Test script generation with various topics
+   - [ ] Test different durations and styles
+   - [ ] Optimize script quality
 
-2. **准备上线**
-   - [ ] 注册域名
-   - [ ] 部署到云服务器（Vercel/Netlify）
-   - [ ] 配置AI API（OpenAI/Claude）
+2. **Launch Preparation**
+   - [ ] Register a domain
+   - [ ] Deploy to cloud server (Vercel/Netlify)
+   - [ ] Configure AI API (OpenAI/Claude)
 
-3. **开始推广**
-   - [ ] 制作演示视频
-   - [ ] 在小红书/抖音发布
-   - [ ] 准备首单优惠活动
+3. **Start Marketing**
+   - [ ] Create demo videos
+   - [ ] Post on social media (Xiaohongshu/Douyin)
+   - [ ] Prepare first-order discount promotions
 
-### 第二阶段开发
-- [ ] 接入真实AI API
-- [ ] 添加用户系统
-- [ ] 集成支付功能
-- [ ] 建立数据库
-- [ ] 添加历史记录
+### Phase 2 Development
+- [ ] Integrate real AI API
+- [ ] Add user system
+- [ ] Integrate payment functionality
+- [ ] Set up database
+- [ ] Add history tracking
 
-## 💰 收费策略
+## 💰 Pricing Strategy
 
-### 免费体验
-- 每天免费生成3个脚本
-- 限制时长（仅30秒）
+### Free Trial
+- 3 free script generations per day
+- Limited to 30-second duration only
 
-### 付费方案
-**单次购买**:
-- 30秒脚本: 9.9元
-- 1分钟脚本: 19.9元
-- 3分钟脚本: 49.9元
+### Paid Plans
+**One-time Purchase**:
+- 30-second script: ¥9.9
+- 1-minute script: ¥19.9
+- 3-minute script: ¥49.9
 
-**会员套餐**:
-- 月卡: 99元（无限生成）
-- 季卡: 269元（节省19%）
-- 年卡: 799元（节省33%）
+**Membership Plans**:
+- Monthly: ¥99 (unlimited generations)
+- Quarterly: ¥269 (save 19%)
+- Annual: ¥799 (save 33%)
 
-## 📢 推广计划
+## 📢 Marketing Plan
 
-### 短期（本周）
-1. **社交媒体**
-   - [ ] 小红书发布"AI生成脚本"教程
-   - [ ] 抖音制作"1分钟生成脚本"视频
-   - [ ] 朋友圈分享
+### Short-term (This Week)
+1. **Social Media**
+   - [ ] Post "AI Script Generation" tutorial on Xiaohongshu
+   - [ ] Create "Generate Script in 1 Minute" video on Douyin
+   - [ ] Share on Moments
 
-2. **首单优惠**
-   - [ ] 新用户首单5折
-   - [ ] 推荐奖励机制
+2. **First-Order Promotion**
+   - [ ] 50% discount for new users
+   - [ ] Referral reward system
 
-### 中期（1个月内）
-1. **内容创作**
-   - [ ] B站教程视频
-   - [ ] 知乎专业回答
-   - [ ] 建立用户群
+### Mid-term (1 Month)
+1. **Content Creation**
+   - [ ] Tutorial videos on Bilibili
+   - [ ] Professional answers on Zhihu
+   - [ ] Build user community
 
-2. **合作推广**
-   - [ ] 短视频博主合作
-   - [ ] MCN机构洽谈
+2. **Partnership Marketing**
+   - [ ] Collaborate with short video creators
+   - [ ] Negotiate with MCN agencies
 
-## 📈 收入目标
+## 📈 Revenue Targets
 
-### 保守估计（第1个月）
-- 日订单: 5-10单
-- 月订单: 150-300单
-- 月收入: 3,000-6,000元
+### Conservative Estimate (Month 1)
+- Daily orders: 5-10 orders
+- Monthly orders: 150-300 orders
+- Monthly revenue: ¥3,000-6,000
 
-### 正常估计（第3个月）
-- 日订单: 20单
-- 月订单: 600单
-- 月收入: 18,000元
+### Normal Estimate (Month 3)
+- Daily orders: 20 orders
+- Monthly orders: 600 orders
+- Monthly revenue: ¥18,000
 
-### 理想估计（第6个月）
-- 日订单: 50单 + 100会员
-- 月订单: 1500单
-- 月收入: 45,000元
+### Optimistic Estimate (Month 6)
+- Daily orders: 50 orders + 100 members
+- Monthly orders: 1,500 orders
+- Monthly revenue: ¥45,000
 
-## 🎯 成功指标
+## 🎯 Success Metrics
 
-### 第1个月目标
-- [ ] 完成首单交易
-- [ ] 获取10个付费用户
-- [ ] 收入达到1000元
+### Month 1 Goals
+- [ ] Complete first transaction
+- [ ] Acquire 10 paying users
+- [ ] Reach ¥1,000 in revenue
 
-### 第3个月目标
-- [ ] 日订单达到20单
-- [ ] 收入达到18000元
-- [ ] 获取100个会员
+### Month 3 Goals
+- [ ] Reach 20 daily orders
+- [ ] Reach ¥18,000 in revenue
+- [ ] Acquire 100 members
 
-### 第6个月目标
-- [ ] 日订单达到50单
-- [ ] 收入达到50000元
-- [ ] 获取500个会员
+### Month 6 Goals
+- [ ] Reach 50 daily orders
+- [ ] Reach ¥50,000 in revenue
+- [ ] Acquire 500 members
 
-## 💡 创业建议
+## 💡 Startup Advice
 
-### 1. 快速迭代
-- 先上线，再优化
-- 根据用户反馈快速调整
-- 保持每周更新频率
+### 1. Fast Iteration
+- Launch first, optimize later
+- Quickly adjust based on user feedback
+- Maintain weekly update frequency
 
-### 2. 专注价值
-- 脚本质量是核心竞争力
-- 建立用户口碑
-- 持续优化AI提示词
+### 2. Focus on Value
+- Script quality is the core competitive advantage
+- Build user reputation
+- Continuously optimize AI prompts
 
-### 3. 建立护城河
-- 收集用户数据
-- 优化算法模型
-- 建立行业知识库
+### 3. Build Moats
+- Collect user data
+- Optimize algorithmic models
+- Build industry knowledge base
 
-### 4. 规模化复制
-- 成功后扩展到其他平台
-- 开发更多AI工具
-- 建立产品矩阵
+### 4. Scale and Replicate
+- After success, expand to other platforms
+- Develop more AI tools
+- Build product matrix
 
-## 📞 需要帮助？
+## 📞 Need Help?
 
-随时联系我，我会帮你：
-- 优化脚本生成质量
-- 接入真实AI API
-- 部署到生产环境
-- 制定推广策略
-- 分析运营数据
+Contact me anytime, I can help you:
+- Optimize script generation quality
+- Integrate real AI API
+- Deploy to production environment
+- Develop marketing strategy
+- Analyze operational data
 
 ---
 
-## 🎉 恭喜！
+## 🎉 Congratulations!
 
-你已经完成了第一个MVP！
+You have completed your first MVP!
 
-现在最重要的是：
-1. **立即开始推广**，获取第一批用户
-2. **收集反馈**，快速迭代优化
-3. **建立信心**，证明商业模式可行
+The most important things now are:
+1. **Start marketing immediately** to get the first batch of users
+2. **Collect feedback** and iterate quickly
+3. **Build confidence** to prove the business model works
 
-记住：**完成比完美更重要！**
+Remember: **Done is better than perfect!**
 
-从今天开始，每一步都在向100亿目标迈进！💪
+Starting today, every step brings you closer to the 10 billion goal! 💪
