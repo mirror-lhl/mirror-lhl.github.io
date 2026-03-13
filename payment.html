@@ -1,42 +1,638 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Claw - Payment</title><script src="https://cdn.tailwindcss.com"></script><style>
- .payment-method {
- transition: all 0.3s ease;
- }
- .payment-method:hover {
- transform: translateY(-2px);
- box-shadow: 0 10px 25px rgba(0,0,0,0.1);
- }
- .payment-method.selected {
- border-color: #3b82f6;
- background: #eff6ff;
- }
- .loading {
- animation: spin 1s linear infinite;
- }
- @keyframes spin {
- from { transform: rotate(0deg); }
- to { transform: rotate(360deg); }
- }
- .fade-in {
- animation: fadeIn 0.5s ease-in;
- }
- @keyframes fadeIn {
- from { opacity: 0; transform: translateY(10px); }
- to { opacity: 1; transform: translateY(0); }
- }
- </style></head><body class="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50"><div class="container mx-auto px-4 py-8 max-w-4xl"><div class="text-center mb-8"><h1 class="text-3xl font-bold text-gray-800 mb-2">💳 </h1><p class="text-gray-600"></p></div><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">📋 </h2><div class="space-y-3"><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-medium text-gray-800" id="productName">AI Short Video Script Generator - VIP</span></div><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-medium text-gray-800" id="orderId">ORD2026031000001</span></div><div class="flex justify-between"><span class="text-gray-600"></span><span class="font-bold text-2xl text-red-600" id="amount">$100,000</span></div></div></div><div class="bg-white rounded-2xl shadow-xl p-6 mb-6"><h2 class="text-xl font-bold text-gray-800 mb-4">💳 </h2><div class="space-y-4"><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer selected" onclick="selectPayment('alipay')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-blue-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800"></div><div class="text-sm text-gray-500">，</div></div></div><div class="w-6 h-6 border-2 border-blue-500 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-blue-500 rounded-full"></div></div></div></div><div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer" onclick="selectPayment('wechat')"><div class="flex items-center justify-between"><div class="flex items-center"><div class="w-12 h-12 bg-green-500 rounded-lg flex items-center justify-center mr-4"><svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6zm-2-8c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg></div><div><div class="font-bold text-gray-800"></div><div class="text-sm text-gray-500">，</div></div></div><div class="w-6 h-6 border-2 border-gray-300 rounded-full flex items-center justify-center"><div class="w-4 h-4 bg-green-500 rounded-full hidden"></div></div></div></div></div></div><button
- id="payBtn"
- class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold text-lg rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
- onclick="initiatePayment()"
- >
- 🚀 
- </button><div class="mt-6 bg-yellow-50 border border-yellow-200 rounded-lg p-4"><div class="flex items-start"><div class="text-yellow-600 mr-2">🔒</div><div class="text-sm text-yellow-800"><div class="font-bold mb-1"></div><ul class="space-y-1"><li>• ，</li><li>• /</li><li>• ：400-888-8888</li></ul></div></div></div><div id="successModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in"><div class="text-center"><div class="text-6xl mb-4">✅</div><h2 class="text-2xl font-bold text-gray-800 mb-2">！</h2><p class="text-gray-600 mb-6">，</p><div class="bg-gray-50 rounded-lg p-4 mb-6 text-left"><div class="text-sm text-gray-500 mb-2"></div><div class="flex justify-between mb-1"><span></span><span class="font-medium" id="successOrderId">ORD2026031000001</span></div><div class="flex justify-between"><span></span><span class="font-medium text-red-600" id="successAmount">$100,000</span></div></div><button
- class="w-full py-3 bg-gradient-to-r from-green-500 to-blue-600 text-white font-bold rounded-lg hover:from-green-600 hover:to-blue-700 transition-all"
- onclick="closeModal()"
- ></button></div></div></div><div id="qrModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50"><div class="bg-white rounded-2xl p-8 max-w-md mx-4 fade-in"><div class="text-center"><h2 class="text-2xl font-bold text-gray-800 mb-2" id="qrTitle"></h2><p class="text-gray-600 mb-6"></p><div class="bg-gray-50 rounded-lg p-6 mb-6"><!-- - --><div class="w-48 h-48 mx-auto bg-white border-2 border-gray-200 rounded-lg flex items-center justify-center"><div class="text-center"><div class="text-4xl mb-2" id="qrIcon">📱</div><div class="text-sm text-gray-500">...</div></div></div></div><div class="flex items-center justify-center mb-4" id="paymentStatus"><div class="loading w-5 h-5 border-2 border-blue-500 border-t-transparent rounded-full mr-2"></div><span class="text-gray-600">...</span></div><button
- class="w-full py-3 border-2 border-gray-300 text-gray-700 font-bold rounded-lg hover:bg-gray-50 transition-all mb-2"
- onclick="checkPaymentStatus()"
- ></button><button
- class="w-full py-3 text-gray-500 hover:text-gray-700"
- onclick="closeQrModal()"
- ></button></div></div></div><div class="mt-8 text-center text-gray-500 text-sm"><p>© 2026 Claw | </p></div></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Payment - Claw</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="js/payment-config.js"></script>
+  <style>
+    .payment-method { transition: all 0.3s ease; }
+    .payment-method:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center; z-index: 50;
+    }
+    .modal-overlay.show { display: flex; }
+    .modal-box {
+      background: #fff; border-radius: 20px;
+      padding: 28px; max-width: 460px; width: calc(100% - 32px);
+      max-height: 92vh; overflow-y: auto;
+      animation: popIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes popIn {
+      from { opacity:0; transform: scale(0.85) translateY(20px); }
+      to   { opacity:1; transform: scale(1)   translateY(0); }
+    }
+
+    /* Tab switch inside modal */
+    .pay-tab {
+      flex: 1; padding: 10px 0; border-radius: 10px;
+      font-weight: 700; font-size: 15px; cursor: pointer;
+      transition: all 0.25s; border: 2px solid transparent;
+      background: transparent; color: #9ca3af;
+    }
+    .pay-tab.active-alipay { background: #e8f4ff; color: #1677ff; border-color: #1677ff; }
+    .pay-tab.active-wechat { background: #e8f7ee; color: #07c160; border-color: #07c160; }
+    .pay-tab:hover:not(.active-alipay):not(.active-wechat) { background: #f3f4f6; color: #374151; }
+
+    /* QR area */
+    .qr-area {
+      min-height: 200px; display: flex; align-items: center; justify-content: center;
+      background: #f9fafb; border-radius: 14px; border: 2px dashed #e5e7eb;
+      position: relative; overflow: hidden;
+    }
+    .qr-area img { max-width: 180px; max-height: 180px; border-radius: 8px; }
+
+    /* Amount badge */
+    .amount-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ef4444, #f97316);
+      color: #fff; font-size: 24px; font-weight: 900;
+      padding: 5px 18px; border-radius: 999px;
+    }
+
+    /* Countdown ring */
+    .countdown-ring { width: 36px; height: 36px; flex-shrink: 0; }
+    .countdown-ring circle {
+      fill: none; stroke-width: 4;
+      stroke-linecap: round;
+      transform-origin: 50% 50%;
+      transform: rotate(-90deg);
+    }
+    .ring-track { stroke: #e5e7eb; }
+    .ring-fill  { stroke: #3b82f6; transition: stroke-dashoffset 1s linear; }
+    .ring-fill.urgent { stroke: #ef4444; }
+
+    /* Copy button */
+    .copy-btn {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 10px; border-radius: 6px; font-size: 12px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s;
+      background: #eff6ff; color: #3b82f6; border: 1px solid #bfdbfe;
+    }
+    .copy-btn:hover { background: #dbeafe; }
+    .copy-btn.copied { background: #f0fdf4; color: #16a34a; border-color: #bbf7d0; }
+
+    /* Remark box */
+    .remark-box {
+      background: linear-gradient(135deg, #fffbeb, #fef3c7);
+      border: 1.5px solid #fbbf24;
+      border-radius: 12px; padding: 12px 14px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .fade-in { animation: fadeIn 0.4s ease; }
+
+    .spin { animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Timeout warning */
+    .timeout-warning {
+      background: #fef2f2; border: 1.5px solid #fca5a5;
+      border-radius: 10px; padding: 10px 14px;
+      color: #dc2626; font-size: 13px; font-weight: 600;
+      text-align: center; display: none;
+    }
+    .timeout-warning.show { display: block; }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
+
+<div class="container mx-auto px-4 py-10 max-w-2xl">
+
+  <!-- Header -->
+  <div class="text-center mb-8">
+    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl shadow-lg mb-4">
+      <span class="text-3xl">💳</span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-gray-800 mb-1">安全支付</h1>
+    <p class="text-gray-500 text-sm">支持支付宝 · 微信支付，扫码即付</p>
+  </div>
+
+  <!-- Order Card -->
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-5">
+    <div class="flex items-center mb-4">
+      <span class="text-xl mr-2">📋</span>
+      <h2 class="text-lg font-bold text-gray-800">订单详情</h2>
+    </div>
+    <div class="space-y-3">
+      <div class="flex justify-between items-center py-2 border-b border-gray-50">
+        <span class="text-gray-500 text-sm">产品</span>
+        <span class="font-semibold text-gray-800 text-sm text-right max-w-xs" id="productName">加载中...</span>
+      </div>
+      <div class="flex justify-between items-center py-2 border-b border-gray-50">
+        <span class="text-gray-500 text-sm">订单号</span>
+        <div class="flex items-center gap-2">
+          <span class="font-mono text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded" id="orderId">—</span>
+          <button class="copy-btn" id="copyOrderBtn">
+            <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/><path d="M2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
+            复制
+          </button>
+        </div>
+      </div>
+      <div class="flex justify-between items-center py-2">
+        <span class="text-gray-500 text-sm">金额</span>
+        <span class="amount-badge" id="amount">¥0.00</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Method Select -->
+  <div class="bg-white rounded-2xl shadow-lg border border-gray-100 p-6 mb-5">
+    <div class="flex items-center mb-4">
+      <span class="text-xl mr-2">💳</span>
+      <h2 class="text-lg font-bold text-gray-800">选择支付方式</h2>
+    </div>
+    <div class="space-y-3">
+
+      <!-- Alipay -->
+      <div class="payment-method border-2 border-blue-400 bg-blue-50 rounded-xl p-4 cursor-pointer"
+           id="method-alipay">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 bg-blue-500 rounded-xl flex items-center justify-center shadow">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 48 48" fill="currentColor">
+                <path d="M24 4C12.95 4 4 12.95 4 24s8.95 20 20 20 20-8.95 20-20S35.05 4 24 4zm10.47 24.6c-2.2-.94-4.1-1.76-5.84-2.5.9-1.5 1.6-3.2 2.07-5.1H26v-2h5v-1.5h-5v-2h-3v2h-4.5v1.5H23v2h-5.5c.56 2.5 1.6 4.65 3 6.37-1.36.53-2.43.84-3 .84-2.1 0-3.5-1.4-3.5-3.71 0-3.63 3.8-6.5 8.5-6.5h.5c.37-1.2.5-2.38.5-3.5v-.5H20c-.64 1.1-1.5 2.1-2.5 2.9v-3.4C18.93 11.5 21.3 10 24 10c6.63 0 12 5.37 12 12 0 2.1-.54 4.07-1.53 5.8z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-gray-800">支付宝</div>
+              <div class="text-xs text-gray-400">扫码即时到账</div>
+            </div>
+          </div>
+          <div class="w-5 h-5 rounded-full border-2 border-blue-500 flex items-center justify-center" id="radio-alipay">
+            <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WeChat Pay -->
+      <div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer"
+           id="method-wechat">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 bg-green-500 rounded-xl flex items-center justify-center shadow">
+              <svg class="w-7 h-7 text-white" viewBox="0 0 48 48" fill="currentColor">
+                <path d="M19.2 8C11.3 8 5 13.5 5 20.3c0 3.7 1.8 7 4.8 9.3l-1.2 3.6 4.1-2.1c1.4.4 2.9.6 4.4.6.4 0 .9 0 1.3-.1-.3-.9-.4-1.8-.4-2.8 0-6.1 5.5-11 12.4-11 .6 0 1.1 0 1.6.1C30.6 12.7 25.3 8 19.2 8zm-3.8 7.5c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5zm7.5 0c.8 0 1.5.7 1.5 1.5s-.7 1.5-1.5 1.5-1.5-.7-1.5-1.5.7-1.5 1.5-1.5zM30.5 20c-5.8 0-10.5 4.1-10.5 9.2s4.7 9.2 10.5 9.2c1.3 0 2.5-.2 3.6-.6l3.3 1.7-.9-2.9C38.7 34.5 41 32 41 29.2 41 24.1 36.3 20 30.5 20zm-3 5.5c.7 0 1.2.5 1.2 1.2s-.5 1.2-1.2 1.2-1.2-.5-1.2-1.2.5-1.2 1.2-1.2zm6 0c.7 0 1.2.5 1.2 1.2s-.5 1.2-1.2 1.2-1.2-.5-1.2-1.2.5-1.2 1.2-1.2z"/>
+              </svg>
+            </div>
+            <div>
+              <div class="font-bold text-gray-800">微信支付</div>
+              <div class="text-xs text-gray-400">微信扫一扫付款</div>
+            </div>
+          </div>
+          <div class="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center" id="radio-wechat">
+            <div class="w-3 h-3 bg-green-500 rounded-full hidden"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Pay Button -->
+  <button id="payBtn"
+    class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-extrabold text-lg rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-blue-200 mb-5">
+    🚀 立即支付
+  </button>
+
+  <!-- Security note -->
+  <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 flex gap-3">
+    <span class="text-amber-500 text-xl flex-shrink-0">🔒</span>
+    <div class="text-sm text-amber-800">
+      <div class="font-bold mb-1">支付安全提示</div>
+      <ul class="space-y-1 text-amber-700">
+        <li>• 使用支付宝或微信扫描弹出的收款码</li>
+        <li>• 请核对支付金额与订单金额一致</li>
+        <li>• <strong>备注中填写订单号</strong>，方便核单发货</li>
+        <li>• 遇到问题请联系客服</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center text-gray-400 text-xs">© 2026 Claw &nbsp;·&nbsp; All Rights Reserved</div>
+</div>
+
+
+<!-- ===================== QR CODE MODAL ===================== -->
+<div id="qrModal" class="modal-overlay">
+  <div class="modal-box" id="qrModalBox">
+
+    <!-- Modal header: title + countdown -->
+    <div class="flex items-center justify-between mb-4">
+      <h2 class="text-xl font-extrabold text-gray-800">扫码支付</h2>
+      <div class="flex items-center gap-2">
+        <!-- Countdown ring -->
+        <div class="flex items-center gap-1.5" id="countdownWrap">
+          <svg class="countdown-ring" viewBox="0 0 36 36">
+            <circle class="ring-track" cx="18" cy="18" r="15.9"/>
+            <circle class="ring-fill" id="ringFill" cx="18" cy="18" r="15.9"
+              stroke-dasharray="100 100" stroke-dashoffset="0"/>
+          </svg>
+          <span class="text-sm font-bold tabular-nums" id="countdownText" style="min-width:32px">5:00</span>
+        </div>
+        <button id="closeQrBtn"
+          class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500 text-lg font-bold ml-1">×</button>
+      </div>
+    </div>
+
+    <!-- Timeout warning -->
+    <div class="timeout-warning mb-3" id="timeoutWarning">
+      ⏰ 支付已超时，请关闭后重新发起支付
+    </div>
+
+    <!-- Tab switch: Alipay / WeChat -->
+    <div class="flex gap-2 mb-4 bg-gray-100 p-1 rounded-xl">
+      <button id="tab-alipay" class="pay-tab active-alipay">
+        💙&nbsp;支付宝
+      </button>
+      <button id="tab-wechat" class="pay-tab">
+        💚&nbsp;微信支付
+      </button>
+    </div>
+
+    <!-- QR code display area -->
+    <div class="qr-area mb-4" id="qrArea">
+      <div id="qrLoading" class="text-center text-gray-400">
+        <div class="spin w-10 h-10 border-4 border-blue-400 border-t-transparent rounded-full mx-auto mb-3"></div>
+        <div class="text-sm">收款码加载中…</div>
+      </div>
+      <img id="qrImage" src="" alt="收款码" class="hidden">
+      <div id="qrFallback" class="hidden text-center px-4">
+        <div class="text-4xl mb-2" id="qrFallbackIcon">💙</div>
+        <div class="font-bold text-gray-700 mb-1" id="qrFallbackTitle">支付宝</div>
+        <div class="text-sm text-gray-500 mb-1">账号：<span class="font-semibold text-gray-700" id="qrFallbackAccount">—</span></div>
+        <div class="text-sm text-gray-500">收款人：<span class="font-semibold text-gray-700" id="qrFallbackName">—</span></div>
+        <div class="text-xs text-gray-400 mt-2">收款码暂不可用，请手动转账</div>
+      </div>
+    </div>
+
+    <!-- ⚠️ 备注引导（核心新增） -->
+    <div class="remark-box mb-4">
+      <div class="flex items-start gap-2">
+        <span class="text-lg flex-shrink-0">⚠️</span>
+        <div class="flex-1">
+          <div class="font-bold text-amber-800 text-sm mb-1">付款备注 <span class="text-red-600">必填</span></div>
+          <div class="text-xs text-amber-700 mb-2">扫码后在备注/留言栏填写订单号，方便核单发货</div>
+          <div class="flex items-center gap-2 bg-white rounded-lg px-3 py-2 border border-amber-200">
+            <span class="text-xs text-gray-500">备注内容：</span>
+            <span class="font-mono text-sm font-bold text-gray-800 flex-1" id="remarkOrderId">—</span>
+            <button class="copy-btn" id="copyRemarkBtn">
+              <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/><path d="M2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
+              一键复制
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Amount + order info -->
+    <div class="bg-gray-50 rounded-xl px-4 py-3 mb-4 space-y-2 text-sm">
+      <div class="flex justify-between">
+        <span class="text-gray-500">订单号</span>
+        <span class="font-mono text-xs text-gray-600 bg-white border border-gray-200 px-2 py-0.5 rounded" id="modalOrderId">—</span>
+      </div>
+      <div class="flex justify-between items-center">
+        <span class="text-gray-500">支付金额</span>
+        <span class="text-xl font-extrabold text-red-500" id="modalAmount">¥0.00</span>
+      </div>
+      <div class="text-xs text-gray-400 pt-1 border-t border-gray-100" id="modalNote">
+        请扫码支付，备注订单号后联系客服确认。
+      </div>
+    </div>
+
+    <!-- Waiting indicator -->
+    <div class="flex items-center justify-center gap-2 text-sm text-gray-500 mb-4" id="waitingStatus">
+      <div class="spin w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full"></div>
+      等待支付中…
+    </div>
+
+    <!-- Action buttons -->
+    <button id="confirmBtn"
+      class="w-full py-3 mb-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all shadow-md shadow-green-100">
+      ✓ 我已完成付款
+    </button>
+    <button id="cancelQrBtn"
+      class="w-full py-3 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all text-sm">
+      取消
+    </button>
+  </div>
+</div>
+
+
+<!-- ===================== SUCCESS MODAL ===================== -->
+<div id="successModal" class="modal-overlay">
+  <div class="modal-box text-center">
+    <div class="text-7xl mb-4">✅</div>
+    <h2 class="text-2xl font-extrabold text-gray-800 mb-2">支付成功！</h2>
+    <p class="text-gray-500 mb-6 text-sm">感谢您的订单，我们将尽快处理。</p>
+    <div class="bg-gray-50 rounded-xl p-4 mb-6 text-sm text-left space-y-2">
+      <div class="flex justify-between">
+        <span class="text-gray-500">订单号</span>
+        <span class="font-mono text-xs text-gray-700" id="successOrderId">—</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">支付金额</span>
+        <span class="font-bold text-red-500" id="successAmount">¥0.00</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-gray-500">支付方式</span>
+        <span class="font-semibold text-gray-700" id="successMethod">—</span>
+      </div>
+    </div>
+    <p class="text-xs text-gray-400 mb-6">我们将在 1-2 个工作小时内处理您的订单。<br>如有疑问请联系客服并提供订单号。</p>
+    <button id="closeSuccessBtn"
+      class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg">
+      返回首页
+    </button>
+  </div>
+</div>
+
+
+<script>
+/* ─── State ─────────────────────────────────────────── */
+let selectedPayment = 'alipay';
+let modalPayment    = 'alipay';
+let currentOrderId  = '';
+let currentAmount   = 0;
+let countdownTimer  = null;
+let countdownSecs   = 300; // will be set from config
+
+/* ─── Product Plans ──────────────────────────────────── */
+const productPlans = {
+  scriptgenerator:   { name: 'AI短视频脚本生成器', plans: { vip: { name: 'VIP套餐', amount: '99.00' } } },
+  'geo-optimizer':   { name: 'GEO位置优化器',      plans: { standard: { name: '标准版', amount: '199.00' }, consult: { name: '咨询服务', amount: '0.00' } } },
+  'freelancer-crm':  { name: '自由职业者CRM',       plans: { personal: { name: '个人版', amount: '59.00' }, team: { name: '团队版', amount: '199.00' } } },
+  aicreator:         { name: 'AI创作者工作室',      plans: { free: { name: '免费版', amount: '0.00' }, basic: { name: '基础版', amount: '99.00' }, pro: { name: 'Pro版', amount: '299.00' }, enterprise: { name: '企业版', amount: '2999.00' } } },
+  locallife:         { name: '本地生活平台',         plans: { merchant: { name: '商家入驻', amount: '0.00' } } },
+  enterprisecrm:     { name: '企业AI CRM',          plans: { basic: { name: '基础版(5用户)', amount: '199.00' } } },
+  enterprisehr:      { name: '企业AI HR',           plans: { basic: { name: '基础版(50用户)', amount: '299.00' } } },
+  enterprisefinance: { name: '企业AI财务',          plans: { basic: { name: '基础版', amount: '399.00' } } },
+  enterprisescm:     { name: '企业AI供应链',        plans: { basic: { name: '基础版', amount: '499.00' } } },
+  enterprisepm:      { name: '企业AI项目管理',      plans: { basic: { name: '基础版(10用户)', amount: '99.00' } } },
+  enterprisebi:      { name: '企业AI BI',           plans: { basic: { name: '基础版', amount: '299.00' } } },
+  enterpriseai:      { name: '企业AI解决方案',      plans: { trial: { name: '14天试用', amount: '0.00' } } }
+};
+
+/* ─── Init ───────────────────────────────────────────── */
+window.onload = function () {
+  const p = new URLSearchParams(window.location.search);
+  const product = p.get('product') || 'scriptgenerator';
+  const plan    = p.get('plan')    || 'vip';
+  const orderId = p.get('order')   || generateOrderId();
+
+  let productName = '未知产品', amount = '0.00';
+  if (productPlans[product]?.plans[plan]) {
+    productName = `${productPlans[product].name} — ${productPlans[product].plans[plan].name}`;
+    amount      = p.get('amount') || productPlans[product].plans[plan].amount;
+  }
+
+  document.getElementById('productName').textContent = productName;
+  document.getElementById('amount').textContent      = '¥' + parseFloat(amount).toFixed(2);
+  document.getElementById('orderId').textContent     = orderId;
+
+  currentOrderId = orderId;
+  currentAmount  = parseFloat(amount);
+
+  // Read timeout from config (ms → seconds)
+  countdownSecs = Math.floor((PAYMENT_CONFIG.general?.confirmationTimeout || 300000) / 1000);
+};
+
+function generateOrderId() {
+  const n = new Date();
+  const ts = [n.getFullYear(), n.getMonth()+1, n.getDate(), n.getHours(), n.getMinutes(), n.getSeconds()]
+    .map(v => String(v).padStart(2,'0')).join('');
+  return 'ORD' + ts + String(Math.floor(Math.random()*10000)).padStart(4,'0');
+}
+
+/* ─── Copy helpers ───────────────────────────────────── */
+function copyText(text, btnId) {
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById(btnId);
+    const orig = btn.innerHTML;
+    btn.classList.add('copied');
+    btn.innerHTML = '<svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/></svg> 已复制';
+    setTimeout(() => { btn.classList.remove('copied'); btn.innerHTML = orig; }, 2000);
+  }).catch(() => {
+    // fallback for older browsers
+    const el = document.createElement('textarea');
+    el.value = text; document.body.appendChild(el);
+    el.select(); document.execCommand('copy');
+    document.body.removeChild(el);
+  });
+}
+
+function copyOrderId() {
+  copyText(currentOrderId, 'copyOrderBtn');
+}
+function copyOrderIdRemark() {
+  copyText(currentOrderId, 'copyRemarkBtn');
+}
+
+/* ─── Main page: select payment method ──────────────── */
+function selectPayment(method) {
+  selectedPayment = method;
+  const isAlipay = method === 'alipay';
+
+  const ma = document.getElementById('method-alipay');
+  const mw = document.getElementById('method-wechat');
+  const ra = document.getElementById('radio-alipay');
+  const rw = document.getElementById('radio-wechat');
+
+  ma.className = 'payment-method border-2 rounded-xl p-4 cursor-pointer ' +
+    (isAlipay ? 'border-blue-400 bg-blue-50' : 'border-gray-200');
+  mw.className = 'payment-method border-2 rounded-xl p-4 cursor-pointer ' +
+    (!isAlipay ? 'border-green-400 bg-green-50' : 'border-gray-200');
+
+  ra.className = 'w-5 h-5 rounded-full border-2 flex items-center justify-center ' +
+    (isAlipay ? 'border-blue-500' : 'border-gray-300');
+  ra.querySelector('div').classList.toggle('hidden', !isAlipay);
+
+  rw.className = 'w-5 h-5 rounded-full border-2 flex items-center justify-center ' +
+    (!isAlipay ? 'border-green-500' : 'border-gray-300');
+  rw.querySelector('div').classList.toggle('hidden', isAlipay);
+}
+
+/* ─── Open modal ─────────────────────────────────────── */
+function openPayModal() {
+  document.getElementById('modalOrderId').textContent  = currentOrderId;
+  document.getElementById('remarkOrderId').textContent = currentOrderId;
+  document.getElementById('modalAmount').textContent   = '¥' + currentAmount.toFixed(2);
+  document.getElementById('timeoutWarning').classList.remove('show');
+  document.getElementById('confirmBtn').disabled = false;
+  document.getElementById('confirmBtn').classList.remove('opacity-40', 'cursor-not-allowed');
+
+  switchModalTab(selectedPayment);
+  document.getElementById('qrModal').classList.add('show');
+
+  startCountdown();
+}
+
+/* ─── Countdown ──────────────────────────────────────── */
+function startCountdown() {
+  clearInterval(countdownTimer);
+  let remaining = countdownSecs;
+  const total = countdownSecs;
+  const circumference = 2 * Math.PI * 15.9; // r=15.9
+
+  function tick() {
+    const mins = String(Math.floor(remaining / 60)).padStart(1,'0');
+    const secs = String(remaining % 60).padStart(2,'0');
+    document.getElementById('countdownText').textContent = mins + ':' + secs;
+
+    const offset = circumference * (1 - remaining / total);
+    const ring = document.getElementById('ringFill');
+    ring.style.strokeDasharray = circumference;
+    ring.style.strokeDashoffset = offset;
+
+    // Turn red in last 60s
+    if (remaining <= 60) {
+      ring.classList.add('urgent');
+      document.getElementById('countdownText').style.color = '#dc2626';
+    }
+
+    if (remaining <= 0) {
+      clearInterval(countdownTimer);
+      onTimeout();
+      return;
+    }
+    remaining--;
+  }
+
+  tick();
+  countdownTimer = setInterval(tick, 1000);
+}
+
+function onTimeout() {
+  document.getElementById('timeoutWarning').classList.add('show');
+  document.getElementById('waitingStatus').innerHTML =
+    '<span class="text-red-500 font-semibold">⏰ 支付超时</span>';
+  document.getElementById('confirmBtn').disabled = true;
+  document.getElementById('confirmBtn').classList.add('opacity-40', 'cursor-not-allowed');
+}
+
+/* ─── Switch tab inside modal ────────────────────────── */
+function switchModalTab(method) {
+  modalPayment = method;
+
+  const tabA = document.getElementById('tab-alipay');
+  const tabW = document.getElementById('tab-wechat');
+  tabA.className = 'pay-tab ' + (method === 'alipay' ? 'active-alipay' : '');
+  tabW.className = 'pay-tab ' + (method === 'wechat' ? 'active-wechat' : '');
+
+  const cfg = method === 'alipay' ? PAYMENT_CONFIG.alipay : PAYMENT_CONFIG.wechat;
+  document.getElementById('modalNote').textContent = cfg.note;
+
+  loadQrCode(cfg.qrCodePath, method, cfg);
+}
+
+/* ─── Load QR image ──────────────────────────────────── */
+function loadQrCode(path, method, cfg) {
+  const loading  = document.getElementById('qrLoading');
+  const img      = document.getElementById('qrImage');
+  const fallback = document.getElementById('qrFallback');
+
+  loading.classList.remove('hidden');
+  img.classList.add('hidden');
+  fallback.classList.add('hidden');
+  img.src = '';
+
+  const probe = new Image();
+  probe.onload = function () {
+    img.src = path;
+    loading.classList.add('hidden');
+    img.classList.remove('hidden');
+  };
+  probe.onerror = function () {
+    loading.classList.add('hidden');
+    document.getElementById('qrFallbackIcon').textContent    = method === 'alipay' ? '💙' : '💚';
+    document.getElementById('qrFallbackTitle').textContent   = method === 'alipay' ? '支付宝' : '微信支付';
+    document.getElementById('qrFallbackAccount').textContent = cfg.account;
+    document.getElementById('qrFallbackName').textContent    = cfg.name;
+    fallback.classList.remove('hidden');
+  };
+  probe.src = path;
+}
+
+/* ─── Overlay click ──────────────────────────────────── */
+function handleOverlayClick(e) {
+  if (e.target === document.getElementById('qrModal')) closeQrModal();
+}
+
+/* ─── Confirm payment ────────────────────────────────── */
+function confirmPayment() {
+  const status = document.getElementById('waitingStatus');
+  status.innerHTML = '<span class="text-green-600 font-semibold">✓ 已确认，正在处理…</span>';
+
+  setTimeout(() => {
+    closeQrModal();
+    document.getElementById('successOrderId').textContent = currentOrderId;
+    document.getElementById('successAmount').textContent  = '¥' + currentAmount.toFixed(2);
+    document.getElementById('successMethod').textContent  = modalPayment === 'alipay' ? '支付宝' : '微信支付';
+    document.getElementById('successModal').classList.add('show');
+  }, 1400);
+}
+
+/* ─── Close modals ───────────────────────────────────── */
+function closeQrModal() {
+  clearInterval(countdownTimer);
+  document.getElementById('qrModal').classList.remove('show');
+  // reset
+  document.getElementById('waitingStatus').innerHTML =
+    '<div class="spin w-4 h-4 border-2 border-blue-400 border-t-transparent rounded-full"></div>等待支付中…';
+  document.getElementById('countdownText').textContent = '';
+  document.getElementById('countdownText').style.color = '';
+  document.getElementById('ringFill').classList.remove('urgent');
+}
+
+function closeSuccessModal() {
+  document.getElementById('successModal').classList.remove('show');
+  window.location.href = 'index.html';
+}
+
+/* ─── Bind all events via addEventListener (CSP-safe) ── */
+document.addEventListener('DOMContentLoaded', function () {
+  // Payment method selection
+  document.getElementById('method-alipay').addEventListener('click', function () { selectPayment('alipay'); });
+  document.getElementById('method-wechat').addEventListener('click', function () { selectPayment('wechat'); });
+
+  // Pay button (also aliased as initiatePayment for backward compat)
+  document.getElementById('payBtn').addEventListener('click', openPayModal);
+
+  // Modal tab switch
+  document.getElementById('tab-alipay').addEventListener('click', function () { switchModalTab('alipay'); });
+  document.getElementById('tab-wechat').addEventListener('click', function () { switchModalTab('wechat'); });
+
+  // Copy buttons
+  document.getElementById('copyOrderBtn').addEventListener('click', copyOrderId);
+  document.getElementById('copyRemarkBtn').addEventListener('click', copyOrderIdRemark);
+
+  // Modal close
+  document.getElementById('closeQrBtn').addEventListener('click', closeQrModal);
+  document.getElementById('cancelQrBtn').addEventListener('click', closeQrModal);
+
+  // Click overlay to close
+  document.getElementById('qrModal').addEventListener('click', function (e) {
+    if (e.target === this) closeQrModal();
+  });
+
+  // Confirm payment
+  document.getElementById('confirmBtn').addEventListener('click', confirmPayment);
+
+  // Success modal close
+  document.getElementById('closeSuccessBtn').addEventListener('click', closeSuccessModal);
+});
+
+// Backward-compat alias
+function initiatePayment() { openPayModal(); }
+</script>
+</body>
+</html>
