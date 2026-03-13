@@ -165,7 +165,7 @@
         <!-- Pricing Section -->
         <div id="pricing" class="mb-20">
             <h2 class="text-3xl font-bold text-center text-gray-800 mb-12">Simple Pricing</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="crmPricingCards">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6" id="crmPricingCards">
 
                 <!-- Starter Plan -->
                 <div class="crm-plan bg-white rounded-2xl shadow-xl p-8 border-2 border-transparent cursor-pointer hover:border-purple-300 transition-all"
@@ -217,7 +217,25 @@
                         <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> Dedicated support</li>
                     </ul>
                 </div>
-            </div>
+
+                <!-- Enterprise Plan -->
+                <div class="crm-plan bg-white rounded-2xl shadow-xl p-8 border-2 border-transparent cursor-pointer hover:border-yellow-400 transition-all"
+                     data-plan="enterprise" data-amount="1000000" data-label="Enterprise · ¥1,000,000/year">
+                    <div class="text-center">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-2">Enterprise</h3>
+                        <div class="text-4xl font-bold text-yellow-500 mb-1">¥1,000,000</div>
+                        <div class="text-gray-500 mb-6">/year (approx ¥83,333/month)</div>
+                    </div>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> Unlimited team members</li>
+                        <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> All Team features</li>
+                        <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> Custom integrations</li>
+                        <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> SLA & priority support</li>
+                        <li class="flex items-center text-gray-600"><span class="mr-2">✓</span> Dedicated account manager</li>
+                    </ul>
+                </div>
+
+            </div><!-- /crmPricingCards -->
 
             <div class="mt-6">
                 <button id="crmBuyBtn"
@@ -378,6 +396,12 @@
         </div>
     </div>
 
+<!-- Sticky bottom buy bar (must be before the script so getElementById works) -->
+<div id="stickyBuyBar">
+    <div id="stickyPlanLabel" class="plan-label">📦 Selected: <strong>Professional · ¥10,000/year</strong></div>
+    <button id="stickyPayBtn">💳 Pay Now</button>
+</div>
+
 <script>
 // ── CRM Pricing card selection ──
 let crmSelectedPlan = { plan: 'professional', amount: '10000', label: 'Professional · ¥10,000/year' };
@@ -393,9 +417,10 @@ function updateBuyUI() {
         : '🚀 Buy Now — ' + crmSelectedPlan.label;
     crmBuyBtn.textContent = btnText;
     // update sticky bar
-    stickyLabel.innerHTML = '📦 Selected: <strong>' + crmSelectedPlan.label + '</strong>'
-        + (isFree ? '' : '<span>click to pay →</span>');
-    stickyBtn.textContent = isFree ? 'Get Started Free' : '💳 Pay Now';
+    const amountDisplay = isFree ? 'Free' : '¥' + Number(crmSelectedPlan.amount).toLocaleString();
+    stickyLabel.innerHTML = '📦 <strong>' + crmSelectedPlan.label + '</strong>'
+        + ' <span>· ' + amountDisplay + '</span>';
+    stickyBtn.textContent = isFree ? '🚀 Get Started Free' : '💳 Pay Now · ' + amountDisplay;
 }
 
 crmCards.forEach(card => {
@@ -425,11 +450,5 @@ stickyBtn.addEventListener('click', doPay);
 // init sticky bar text
 updateBuyUI();
 </script>
-
-<!-- Sticky bottom buy bar -->
-<div id="stickyBuyBar">
-    <div id="stickyPlanLabel" class="plan-label">📦 Selected: <strong>Professional · ¥10,000/year</strong></div>
-    <button id="stickyPayBtn">💳 Pay Now</button>
-</div>
 </body>
 </html>

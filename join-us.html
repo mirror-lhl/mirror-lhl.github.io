@@ -569,7 +569,7 @@
         <!-- Stats -->
         <div class="stats">
             <div class="stat-card">
-                <h3>$1.39,000 Billion</h3>
+                <h3>¥1.39,000 Billion</h3>
                 <p>10-Year Revenue Target</p>
             </div>
             <div class="stat-card">
@@ -602,29 +602,29 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>$10,000 or less</td>
+                        <td>¥10,000 or less</td>
                         <td class="percentage">70%</td>
-                        <td class="earning">Up to $7,000</td>
+                        <td class="earning">Up to ¥7,000</td>
                     </tr>
                     <tr>
-                        <td>$10,000 - $100,000</td>
+                        <td>¥10,000 - ¥100,000</td>
                         <td class="percentage">80%</td>
-                        <td class="earning">$7,000 - $80,000</td>
+                        <td class="earning">¥7,000 - ¥80,000</td>
                     </tr>
                     <tr class="highlight-tier">
-                        <td>$100,000 - $1,000,000</td>
+                        <td>¥100,000 - ¥1,000,000</td>
                         <td class="percentage">85%</td>
-                        <td class="earning">$80,000 - $850,000</td>
+                        <td class="earning">¥80,000 - ¥850,000</td>
                     </tr>
                     <tr class="highlight-tier">
-                        <td>$1,000,000 - $10,000,000</td>
+                        <td>¥1,000,000 - ¥10,000,000</td>
                         <td class="percentage">90%</td>
-                        <td class="earning">$850,000 - $9,000,000</td>
+                        <td class="earning">¥850,000 - ¥9,000,000</td>
                     </tr>
                     <tr class="highlight-tier">
-                        <td>$10,000,000 or more</td>
+                        <td>¥10,000,000 or more</td>
                         <td class="percentage">95%</td>
-                        <td class="earning">$9,500,000+</td>
+                        <td class="earning">¥9,500,000+</td>
                     </tr>
                 </tbody>
             </table>
@@ -732,7 +732,7 @@
             </p>
             <div class="calculator-form">
                 <div class="form-group">
-                    <label for="salesAmount">Sales Performance ($)</label>
+                    <label for="salesAmount">Sales Performance (¥)</label>
                     <input type="number" id="salesAmount" placeholder="e.g., 5000000" min="0">
                 </div>
                 <button class="calculate-btn" onclick="calculateCommission()">Calculate My Earnings</button>
@@ -740,7 +740,7 @@
                     <h3>🎉 Your Earnings Analysis</h3>
                     <div class="result-item">
                         <span>Sales Performance:</span>
-                        <span id="resultSales">$0.00</span>
+                        <span id="resultSales">¥0.00</span>
                     </div>
                     <div class="result-item">
                         <span>Commission Rate:</span>
@@ -748,11 +748,11 @@
                     </div>
                     <div class="result-item">
                         <span>Your Earnings:</span>
-                        <span id="resultEarning">$0.00</span>
+                        <span id="resultEarning">¥0.00</span>
                     </div>
                     <div class="result-item">
                         <span>Monthly Average:</span>
-                        <span id="resultMonthly">$0.00</span>
+                        <span id="resultMonthly">¥0.00</span>
                     </div>
                 </div>
             </div>
@@ -850,11 +850,11 @@
 
         function formatCurrency(amount) {
             if (amount >= 100000000) {
-                return '$' + (amount / 100000000).toFixed(2) + ' hundred million';
+                return '¥' + (amount / 100000000).toFixed(2) + ' hundred million';
             } else if (amount >= 10000) {
-                return '$' + (amount / 10000).toFixed(2) + ' ten thousand';
+                return '¥' + (amount / 10000).toFixed(2) + ' ten thousand';
             } else {
-                return '$' + amount.toLocaleString();
+                return '¥' + amount.toLocaleString();
             }
         }
 
