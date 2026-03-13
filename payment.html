@@ -382,8 +382,8 @@ const productPlans = {
   enterpriseai:      { name: 'Enterprise AI Suite',  plans: { trial: { name: '14-Day Free Trial', amount: '0.00' }, basic: { name: 'Basic Plan', amount: '10000.00' }, professional: { name: 'Professional Plan', amount: '100000.00' }, enterprise: { name: 'Enterprise Plan', amount: '1000000.00' } } }
 };
 
-/* ─── Init ───────────────────────────────────────────── */
-window.onload = function () {
+/* ─── Init (runs in DOMContentLoaded below) ─────────── */
+function initPage() {
   const p = new URLSearchParams(window.location.search);
   const product = p.get('product') || 'scriptgenerator';
   const plan    = p.get('plan')    || 'vip';
@@ -404,7 +404,7 @@ window.onload = function () {
 
   // Read timeout from config (ms → seconds)
   countdownSecs = Math.floor((PAYMENT_CONFIG.general?.confirmationTimeout || 300000) / 1000);
-};
+}
 
 function generateOrderId() {
   const n = new Date();
@@ -600,6 +600,9 @@ function closeSuccessModal() {
 
 /* ─── Bind all events via addEventListener (CSP-safe) ── */
 document.addEventListener('DOMContentLoaded', function () {
+  // Init page data first (read URL params → set amount/orderId/productName)
+  initPage();
+
   // Payment method selection
   document.getElementById('method-alipay').addEventListener('click', function () { selectPayment('alipay'); });
   document.getElementById('method-wechat').addEventListener('click', function () { selectPayment('wechat'); });

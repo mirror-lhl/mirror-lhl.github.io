@@ -12,6 +12,49 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        /* Sticky bottom buy bar */
+        #stickyBuyBar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 999;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 -4px 24px rgba(102,126,234,0.3);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        #stickyBuyBar .plan-label {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        #stickyBuyBar .plan-label span {
+            opacity: 0.8;
+            font-weight: 400;
+            font-size: 12px;
+            margin-left: 6px;
+        }
+        #stickyPayBtn {
+            flex-shrink: 0;
+            padding: 10px 24px;
+            background: #fff;
+            color: #764ba2;
+            font-weight: 700;
+            font-size: 14px;
+            border-radius: 999px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        #stickyPayBtn:hover { background: #f3e8ff; }
+        /* push page content up so footer isn't hidden behind bar */
+        body { padding-bottom: 70px; }
     </style>
 </head>
 <body class="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
@@ -340,6 +383,20 @@
 let crmSelectedPlan = { plan: 'professional', amount: '10000', label: 'Professional · ¥10,000/year' };
 const crmCards = document.querySelectorAll('.crm-plan');
 const crmBuyBtn = document.getElementById('crmBuyBtn');
+const stickyLabel = document.getElementById('stickyPlanLabel');
+const stickyBtn   = document.getElementById('stickyPayBtn');
+
+function updateBuyUI() {
+    const isFree = crmSelectedPlan.amount === '0';
+    const btnText = isFree
+        ? '🚀 Get Started Free — ' + crmSelectedPlan.label
+        : '🚀 Buy Now — ' + crmSelectedPlan.label;
+    crmBuyBtn.textContent = btnText;
+    // update sticky bar
+    stickyLabel.innerHTML = '📦 Selected: <strong>' + crmSelectedPlan.label + '</strong>'
+        + (isFree ? '' : '<span>click to pay →</span>');
+    stickyBtn.textContent = isFree ? 'Get Started Free' : '💳 Pay Now';
+}
 
 crmCards.forEach(card => {
     card.addEventListener('click', () => {
@@ -350,19 +407,29 @@ crmCards.forEach(card => {
         card.classList.remove('border-transparent');
         card.classList.add('border-purple-500', 'bg-purple-50');
         crmSelectedPlan = { plan: card.dataset.plan, amount: card.dataset.amount, label: card.dataset.label };
-        crmBuyBtn.textContent = crmSelectedPlan.amount === '0'
-            ? '🚀 Get Started Free — ' + crmSelectedPlan.label
-            : '🚀 Buy Now — ' + crmSelectedPlan.label;
+        updateBuyUI();
     });
 });
 
-crmBuyBtn.addEventListener('click', () => {
+function doPay() {
     if (crmSelectedPlan.amount === '0') {
         document.querySelector('#signup')?.scrollIntoView({ behavior: 'smooth' });
     } else {
         window.location.href = 'payment.html?product=freelancer-crm&plan=' + crmSelectedPlan.plan + '&amount=' + crmSelectedPlan.amount;
     }
-});
+}
+
+crmBuyBtn.addEventListener('click', doPay);
+stickyBtn.addEventListener('click', doPay);
+
+// init sticky bar text
+updateBuyUI();
 </script>
+
+<!-- Sticky bottom buy bar -->
+<div id="stickyBuyBar">
+    <div id="stickyPlanLabel" class="plan-label">📦 Selected: <strong>Professional · ¥10,000/year</strong></div>
+    <button id="stickyPayBtn">💳 Pay Now</button>
+</div>
 </body>
 </html>
