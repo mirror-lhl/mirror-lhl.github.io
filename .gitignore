@@ -3,3 +3,10 @@
 
 # 排除.workbuddy目录
 .workbuddy/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
