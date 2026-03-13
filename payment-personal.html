@@ -132,7 +132,7 @@
         <span class="text-gray-500 text-sm">订单号</span>
         <div class="flex items-center gap-2">
           <span class="font-mono text-xs text-gray-600 bg-gray-100 px-2 py-1 rounded" id="orderId">—</span>
-          <button class="copy-btn" id="copyOrderBtn" onclick="copyOrderId()">
+          <button class="copy-btn" id="copyOrderBtn">
             <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/><path d="M2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
             复制
           </button>
@@ -155,7 +155,7 @@
 
       <!-- Alipay -->
       <div class="payment-method border-2 border-blue-400 bg-blue-50 rounded-xl p-4 cursor-pointer"
-           id="method-alipay" onclick="selectPayment('alipay')">
+           id="method-alipay">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-blue-500 rounded-xl flex items-center justify-center shadow">
@@ -176,7 +176,7 @@
 
       <!-- WeChat Pay -->
       <div class="payment-method border-2 border-gray-200 rounded-xl p-4 cursor-pointer"
-           id="method-wechat" onclick="selectPayment('wechat')">
+           id="method-wechat">
         <div class="flex items-center justify-between">
           <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-green-500 rounded-xl flex items-center justify-center shadow">
@@ -199,7 +199,7 @@
   </div>
 
   <!-- Pay Button -->
-  <button id="payBtn" onclick="openPayModal()"
+  <button id="payBtn"
     class="w-full py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-extrabold text-lg rounded-2xl hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-xl shadow-blue-200 mb-5">
     🚀 立即支付
   </button>
@@ -223,7 +223,7 @@
 
 
 <!-- ===================== QR CODE MODAL ===================== -->
-<div id="qrModal" class="modal-overlay" onclick="handleOverlayClick(event)">
+<div id="qrModal" class="modal-overlay">
   <div class="modal-box" id="qrModalBox">
 
     <!-- Modal header: title + countdown -->
@@ -239,7 +239,7 @@
           </svg>
           <span class="text-sm font-bold tabular-nums" id="countdownText" style="min-width:32px">5:00</span>
         </div>
-        <button onclick="closeQrModal()"
+        <button id="closeQrBtn"
           class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition text-gray-500 text-lg font-bold ml-1">×</button>
       </div>
     </div>
@@ -251,10 +251,10 @@
 
     <!-- Tab switch: Alipay / WeChat -->
     <div class="flex gap-2 mb-4 bg-gray-100 p-1 rounded-xl">
-      <button id="tab-alipay" class="pay-tab active-alipay" onclick="switchModalTab('alipay')">
+      <button id="tab-alipay" class="pay-tab active-alipay">
         💙&nbsp;支付宝
       </button>
-      <button id="tab-wechat" class="pay-tab" onclick="switchModalTab('wechat')">
+      <button id="tab-wechat" class="pay-tab">
         💚&nbsp;微信支付
       </button>
     </div>
@@ -285,7 +285,7 @@
           <div class="flex items-center gap-2 bg-white rounded-lg px-3 py-2 border border-amber-200">
             <span class="text-xs text-gray-500">备注内容：</span>
             <span class="font-mono text-sm font-bold text-gray-800 flex-1" id="remarkOrderId">—</span>
-            <button class="copy-btn" id="copyRemarkBtn" onclick="copyOrderIdRemark()">
+            <button class="copy-btn" id="copyRemarkBtn">
               <svg class="w-3 h-3" viewBox="0 0 16 16" fill="currentColor"><path d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H6z"/><path d="M2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1H2z"/></svg>
               一键复制
             </button>
@@ -316,11 +316,11 @@
     </div>
 
     <!-- Action buttons -->
-    <button onclick="confirmPayment()" id="confirmBtn"
+    <button id="confirmBtn"
       class="w-full py-3 mb-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white font-bold rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all shadow-md shadow-green-100">
       ✓ 我已完成付款
     </button>
-    <button onclick="closeQrModal()"
+    <button id="cancelQrBtn"
       class="w-full py-3 border-2 border-gray-200 text-gray-600 font-semibold rounded-xl hover:bg-gray-50 transition-all text-sm">
       取消
     </button>
@@ -349,7 +349,7 @@
       </div>
     </div>
     <p class="text-xs text-gray-400 mb-6">我们将在 1-2 个工作小时内处理您的订单。<br>如有疑问请联系客服并提供订单号。</p>
-    <button onclick="closeSuccessModal()"
+    <button id="closeSuccessBtn"
       class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg">
       返回首页
     </button>
@@ -597,6 +597,42 @@ function closeSuccessModal() {
   document.getElementById('successModal').classList.remove('show');
   window.location.href = 'index.html';
 }
+
+/* ─── Bind all events via addEventListener (CSP-safe) ── */
+document.addEventListener('DOMContentLoaded', function () {
+  // Payment method selection
+  document.getElementById('method-alipay').addEventListener('click', function () { selectPayment('alipay'); });
+  document.getElementById('method-wechat').addEventListener('click', function () { selectPayment('wechat'); });
+
+  // Pay button (also aliased as initiatePayment for backward compat)
+  document.getElementById('payBtn').addEventListener('click', openPayModal);
+
+  // Modal tab switch
+  document.getElementById('tab-alipay').addEventListener('click', function () { switchModalTab('alipay'); });
+  document.getElementById('tab-wechat').addEventListener('click', function () { switchModalTab('wechat'); });
+
+  // Copy buttons
+  document.getElementById('copyOrderBtn').addEventListener('click', copyOrderId);
+  document.getElementById('copyRemarkBtn').addEventListener('click', copyOrderIdRemark);
+
+  // Modal close
+  document.getElementById('closeQrBtn').addEventListener('click', closeQrModal);
+  document.getElementById('cancelQrBtn').addEventListener('click', closeQrModal);
+
+  // Click overlay to close
+  document.getElementById('qrModal').addEventListener('click', function (e) {
+    if (e.target === this) closeQrModal();
+  });
+
+  // Confirm payment
+  document.getElementById('confirmBtn').addEventListener('click', confirmPayment);
+
+  // Success modal close
+  document.getElementById('closeSuccessBtn').addEventListener('click', closeSuccessModal);
+});
+
+// Backward-compat alias
+function initiatePayment() { openPayModal(); }
 </script>
 </body>
 </html>
