@@ -136,27 +136,33 @@
 
         <div class="mt-6 bg-white rounded-2xl shadow-xl p-6">
             <h3 class="text-lg font-bold text-gray-800 mb-4">💰 Pricing</h3>
-            <div class="grid grid-cols-3 gap-4">
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl mb-1">Basic</div>
-                    <div class="text-3xl font-bold text-blue-600">$10,000</div>
+            <div class="grid grid-cols-3 gap-4" id="pricingCards">
+                <div class="pricing-card text-center p-4 bg-gray-50 rounded-xl border-2 border-transparent cursor-pointer hover:border-blue-300 transition-all"
+                     data-plan="basic" data-amount="10000" data-label="Basic · ¥10,000/script">
+                    <div class="text-xl font-bold mb-1">Basic</div>
+                    <div class="text-2xl font-bold text-blue-600">¥10,000</div>
                     <div class="text-sm text-gray-500">/script</div>
+                    <div class="mt-2 text-xs text-transparent select-none">·</div>
                 </div>
-                <div class="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-500">
-                    <div class="text-2xl mb-1">Pro</div>
-                    <div class="text-3xl font-bold text-blue-600">$100,000</div>
+                <div class="pricing-card text-center p-4 bg-blue-50 rounded-xl border-2 border-blue-500 cursor-pointer hover:border-blue-600 transition-all"
+                     data-plan="pro" data-amount="100000" data-label="Pro · ¥100,000/script">
+                    <div class="text-xl font-bold mb-1">Pro</div>
+                    <div class="text-2xl font-bold text-blue-600">¥100,000</div>
                     <div class="text-sm text-gray-500">/script</div>
-                    <div class="mt-2 text-xs text-blue-600">Recommended</div>
+                    <div class="mt-2 text-xs text-blue-600 font-semibold">⭐ Recommended</div>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl mb-1">Enterprise</div>
-                    <div class="text-3xl font-bold text-blue-600">$1,000,000</div>
+                <div class="pricing-card text-center p-4 bg-gray-50 rounded-xl border-2 border-transparent cursor-pointer hover:border-blue-300 transition-all"
+                     data-plan="enterprise" data-amount="1000000" data-label="Enterprise · ¥1,000,000/script">
+                    <div class="text-xl font-bold mb-1">Enterprise</div>
+                    <div class="text-2xl font-bold text-blue-600">¥1,000,000</div>
                     <div class="text-sm text-gray-500">/script</div>
+                    <div class="mt-2 text-xs text-transparent select-none">·</div>
                 </div>
             </div>
-            <div class="mt-4 text-center">
-                <button onclick="window.location.href='payment.html?product=scriptgenerator&plan=vip'" class="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-lg">
-                    VIP Member: $1,000,000/month Unlimited Generation
+            <div class="mt-4">
+                <button id="buyBtn"
+                    class="w-full py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-md">
+                    🚀 Buy Now — Pro · ¥100,000/script
                 </button>
             </div>
         </div>
@@ -391,6 +397,43 @@ Line: "Like and save, don't lose it!"`
         // Regenerate button
         regenerateBtn.addEventListener('click', () => {
             generateBtn.click();
+        });
+
+        // ── Pricing card selection ──────────────────────────
+        let selectedPlan = { plan: 'pro', amount: '100000', label: 'Pro · ¥100,000/script' };
+
+        const pricingCards = document.querySelectorAll('.pricing-card');
+        const buyBtn = document.getElementById('buyBtn');
+
+        pricingCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // Reset all cards
+                pricingCards.forEach(c => {
+                    c.classList.remove('border-blue-500', 'bg-blue-50');
+                    c.classList.add('border-transparent', 'bg-gray-50');
+                    // hide recommended badge if not pro
+                    const badge = c.querySelector('.text-blue-600.font-semibold');
+                    if (badge) badge.classList.add('text-transparent');
+                });
+                // Highlight selected
+                card.classList.remove('border-transparent', 'bg-gray-50');
+                card.classList.add('border-blue-500', 'bg-blue-50');
+                const badge = card.querySelector('.text-transparent.font-semibold, .text-blue-600.font-semibold');
+                if (badge) badge.classList.remove('text-transparent');
+
+                selectedPlan = {
+                    plan:   card.dataset.plan,
+                    amount: card.dataset.amount,
+                    label:  card.dataset.label
+                };
+                buyBtn.textContent = '🚀 Buy Now — ' + selectedPlan.label;
+            });
+        });
+
+        buyBtn.addEventListener('click', () => {
+            window.location.href =
+                'payment.html?product=scriptgenerator&plan=' + selectedPlan.plan +
+                '&amount=' + selectedPlan.amount;
         });
     </script>
 </body>
