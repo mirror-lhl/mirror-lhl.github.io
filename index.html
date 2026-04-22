@@ -71,7 +71,13 @@
     @media (max-width: 1024px){
       .grid{grid-template-columns:repeat(2,1fr)}
     }
-    system-reminder{display:block;padding:12px 14px;margin:12px 0;border-radius:8px;background:rgba(2,6,23,.65);border-left:4px solid #3b82f6;color:#e6eaff}
+system-reminder{display:block;padding:12px 14px;margin:12px 0;border-radius:8px;background:rgba(2,6,23,.65);border-left:4px solid #3b82f6;color:#e6eaff}
+
+/* Daily visits card styles */ 
+.stat-card{ background: linear-gradient(135deg, rgba(76,201,240,.25), rgba(76,255,169,.15)); border-radius: 14px; padding: 14px 18px; border: 1px solid rgba(255,255,255,.15); box-shadow: var(--shadow); min-width: 240px; color:#fff; display:flex; flex-direction:column; gap:6px; }
+.stat-card-header{ font-weight:700; font-size:14px; color:#eaffff; opacity:.95; }
+.stat-card-value{ font-size:28px; font-weight:800; line-height:1.2; }
+.stat-card-sub{ font-size:12px; color: rgba(255,255,255,.9); }
     @media (max-width: 640px){
       .hero-inner{grid-template-columns:1fr}
       .grid{grid-template-columns:1fr}
@@ -289,6 +295,21 @@
     }
   }
 
+  // simple numeric animation for counts
+  function animateCount(el, end){
+    const start = parseInt(el.textContent || '0', 10);
+    const target = Number.isFinite(end) ? end : 0;
+    const duration = 350;
+    const startTime = performance.now();
+    function step(now){
+      const p = Math.min(1, (now - startTime) / duration);
+      const val = Math.round(start + (target - start) * p);
+      el.textContent = val;
+      if (p < 1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+
   // interactions
   document.querySelectorAll('#categoryFilter .tag').forEach(el => {
     el.addEventListener('click', () => {
@@ -326,7 +347,50 @@
 
   // initial render
   render();
-  // set initial category active if any (none by default)
+  // daily visit tracking (card-based)
+  (function trackDailyVisit(){
+    try {
+      const today = new Date().toISOString().slice(0,10);
+      const lastDateKey = 'vd_last_visit_date';
+      const countKey = 'vd_daily_visits';
+      const lastDate = localStorage.getItem(lastDateKey);
+      let count = parseInt(localStorage.getItem(countKey) || '0', 10);
+      if (lastDate !== today){
+        count = Number.isFinite(count) ? count : 0;
+        count += 1;
+        localStorage.setItem(lastDateKey, today);
+        localStorage.setItem(countKey, String(count));
+      }
+      // create or update the stat card
+      let card = document.getElementById('daily-visit-card');
+      let valueEl = document.getElementById('daily-visit-value');
+      let subEl = document.getElementById('daily-visit-sub');
+      if (!card){
+        const target = document.querySelector('#direct-downloads .container');
+        if (target){
+          card = document.createElement('div');
+          card.id = 'daily-visit-card';
+          card.className = 'stat-card';
+          card.innerHTML = `
+            <div class="stat-card-header">每日访问统计</div>
+            <div class="stat-card-value" id="daily-visit-value">0</div>
+            <div class="stat-card-sub" id="daily-visit-sub">日期：${today}</div>
+          `;
+          target.appendChild(card);
+        }
+      }
+      valueEl = document.getElementById('daily-visit-value');
+      subEl = document.getElementById('daily-visit-sub');
+      if (valueEl){
+        animateCount(valueEl, count);
+      }
+      if (subEl){
+        subEl.textContent = `日期：${today}`;
+      }
+    } catch (e){
+      // ignore
+    }
+  })();
   </script>
 </body>
 </html>
