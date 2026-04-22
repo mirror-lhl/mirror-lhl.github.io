@@ -3,295 +3,316 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mirror-LHL • 个人站点</title>
-  <meta name="description" content="优雅、简洁的个人主页，展示作品、故事与联系信息。" />
+  <title>免费开发资源下载站</title>
+  <meta name="description" content="免费开发资源合集，来自网盘分享链接，一键下载，快速获取你所需的开发资料。" />
   <style>
     :root{
       --bg: #0b0e14;
-      --bg-soft: #141a22;
-      --surface: #1e2430;
-      --card: #232a3a;
-      --fg: #e6e9f0;
+      --surface: #141a22;
+      --card: #1e2430;
+      --fg: #e9f0ff;
       --muted: #a9b3c2;
-      --primary: #5b6bff;
-      --secondary: #7ee8fa;
-      --radius: 14px;
-      --shadow: 0 6px 20px rgba(0,0,0,.25);
+      --primary: #4cc9f0;
+      --radius: 12px;
+      --shadow: 0 6px 18px rgba(0,0,0,.25);
     }
-
     *{box-sizing:border-box}
     html,body{margin:0;padding:0;height:100%}
-    body{
-      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    body{font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
       color:var(--fg);
-      background: radial-gradient(1200px circle at 10% -10%, rgba(91,107,255,.25), transparent 40%),
-                  radial-gradient(900px circle at 90% 0%, rgba(126,232,250,.25), transparent 40%),
-                  linear-gradient(180deg, #0b0e14 0%, #0b0e14 100%);
+      background: radial-gradient(circle at 20% -10%, rgba(76,201,240,.25), transparent 40%),
+                  radial-gradient(circle at 90% 0%, rgba(76,255,169,.15), transparent 40%),
+                  #0b0e14;
       min-height:100%;
       overflow-x:hidden;
     }
-
     a{color:inherit;text-decoration:none}
     img{max-width:100%;display:block}
 
-    /* Layout helpers */
+    /* Layout */
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
-    header{position:sticky;top:0;z-index:50;background:rgba(10,12,18,.95);backdrop-filter:saturate(1.2) blur(6px);}
-    nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{font-weight:700;letter-spacing:.4px;display:flex;gap:8px;align-items:center}
-    .brand .dot{width:10px;height:10px;border-radius:50%;background:var(--secondary);box-shadow:0 0 0 4px rgba(126,232,250,.15)}
-    .nav-links{display:flex;gap:20px;align-items:center}
-    .nav-links a{padding:8px 12px;border-radius:8px;color:#e9eaff;background:transparent}
-    .nav-links a:hover{background:rgba(255,255,255,.06)}
+    header{position:sticky;top:0;z-index:50;background:rgba(10,12,18,.92);backdrop-filter:saturate(1.2) blur(6px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .brand{font-weight:700;display:flex;gap:8px;align-items:center}
+    .nav{display:flex;gap:14px;align-items:center}
+    .nav a{padding:8px 12px;border-radius:8px;background:transparent;color:#e8f0ff}
+    .nav a:hover{background:rgba(255,255,255,.08)}
+    .search{flex:1;min-width:220px}
     .theme-toggle{border:1px solid rgba(255,255,255,.15);padding:8px 12px;border-radius:8px;background:rgba(255,255,255,.04);cursor:pointer}
 
     /* Hero */
-    .hero{padding:72px 0 60px;background: linear-gradient(135deg, rgba(91,107,255,.25), rgba(126,232,250,.15) 60%);border-bottom:1px solid rgba(255,255,255,.08)}
-    .hero-inner{display:grid;grid-template-columns:1.05fr 0.95fr;gap:40px;align-items:center}
-    .hero h1{font-size: clamp(28px, 4vw, 48px);line-height:1.05;margin:0 0 12px}
-    .hero p{color:var(--muted);font-size: clamp(14px, 1.8vw, 18px);margin:0 0 20px}
-    .cta{display:flex;gap:14px;align-items:center}
-    .btn{padding:12px 18px;border-radius:10px;border:0;cursor:pointer;font-weight:600}
-    .btn.primary{background:linear-gradient(135deg, var(--primary), #7a5cff);color:white;box-shadow:0 4px 14px rgba(91,107,255,.5)}
-    .btn.secondary{background:rgba(255,255,255,.08);color:#e9f0ff}
-    .hero-visual{min-height:260px;background:radial-gradient(circle at 20% 20%, rgba(91,107,255,.5), transparent 40%), radial-gradient(circle at 80% 0%, rgba(126,232,250,.4), transparent 40%), linear-gradient(135deg,#1a2130 0%, #111522 100%);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}
-    .hero-visual .mock{height:100%;border-radius:12px;background:linear-gradient(135deg, rgba(255,255,255,.1), rgba(255,255,255,.0));}
+    .hero{padding:48px 0 28px}
+    .hero-inner{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center}
+    .hero h1{font-size: clamp(26px, 3.5vw, 42px);line-height:1.15;margin:0 0 8px}
+    .hero p{color:var(--muted);font-size:15px;margin:0 0 16px}
+    .cta{display:flex;gap:12px;align-items:center}
+    .btn{padding:12px 16px;border-radius:8px;border:0;cursor:pointer;font-weight:600}
+    .btn.primary{background: linear-gradient(135deg, #4cc9f0, #1ec2a8);color:white}
+    .btn.secondary{background: rgba(255,255,255,.08);color:#e9f4ff}
+    .hero-visual{min-height:240px;background:radial-gradient(circle at 20% 20%, rgba(76,201,240,.4), transparent 40%), linear-gradient(135deg,#1b2030 0%, #111522 100%);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.08)}
+    .hero-visual .mock{height:100%;border-radius:10px;background:linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.0));}
 
-    section{padding:60px 0}
-    h2{font-size:28px;margin:0 0 14px}
-    .sub{color:var(--muted);font-size:14px;margin-bottom:28px}
+    section{padding:40px 0}
+    h2{font-size:26px;margin:0 0 8px}
+    .sub{color:var(--muted);font-size:13px;margin-bottom:18px}
 
-    /* Features grid */
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-    .card{background:var(--card);border-radius:14px;padding:20px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.05)}
-    .card h3{margin:0 0 8px;font-size:18px}
-    .card p{margin:0;color:var(--muted);font-size:14px}
-    .icon{width:28px;height:28px;display:inline-block;margin-right:8px;vertical-align:middle}
-
-    /* Projects / gallery */
-    .grid-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-    .proj{background:var(--surface);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.06)}
-    .proj .title{font-weight:600;margin:6px 0 4px}
-    .proj .meta{color:var(--muted);font-size:12px}
-
-    /* About */
-    .about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
-    .avatar{width:120px;height:120px;border-radius:50%;background:linear-gradient(135deg, var(--primary), #7a5cff);border:4px solid rgba(255,255,255,.4)}
+    /* Resource grid */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+    .card{background:var(--card);border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,.06);box-shadow:var(--shadow)}
+    .card h3{margin:6px 0 4px;font-size:16px}
+    .card p{margin:0 0 8px;color:var(--muted);font-size:13px}
+    .tag{display:inline-block;background:rgba(76,201,240,.15);padding:4px 8px;border-radius:999px;font-size:12px;margin-right:6px}
+    .download{display:inline-block;margin-top:6px;padding:8px 12px;background: #1e6bd6;color:white;border-radius:6px}
+    .download:hover{opacity:.95}
+    .copy{margin-left:6px;padding:6px 10px;border-radius:6px;background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer}
 
     /* Footer */
-    footer{color:var(--muted);font-size:12px;border-top:1px solid rgba(255,255,255,.08);padding:20px 0;margin-top:40px}
+    footer{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;margin-top:30px;color:var(--muted);font-size:12px}
 
     @media (max-width: 1024px){
-      .grid{grid-template-columns: repeat(2, 1fr)}
-      .hero-inner{grid-template-columns:1fr;gap:20px}
-      .hero-visual{min-height:200px}
-      .about{grid-template-columns:1fr}
-      .grid-projects{grid-template-columns: repeat(2, 1fr)}
+      .grid{grid-template-columns:repeat(2,1fr)}
     }
     @media (max-width: 640px){
-      nav{height:56px}
-      .nav-links{gap:12px}
-      .grid{grid-template-columns: 1fr}
-      .grid-projects{grid-template-columns:1fr}
-      .hero{padding:48px 0 40px}
-      .card{padding:16px}
+      .hero-inner{grid-template-columns:1fr}
+      .grid{grid-template-columns:1fr}
     }
   </style>
 </head>
 <body>
   <header>
-    <div class="container" style="display:flex;align-items:center;justify-content:space-between;">
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;">
       <div class="brand" aria-label="站点品牌">
-        <span class="dot" style="width:10px;height:10px;border-radius:50%;background:var(--secondary);"></span>
-        <span style="font-weight:700;letter-spacing:.4px;">Mirror-LHL</span>
+        <span class="dot" style="width:12px;height:12px;border-radius:50%;background:#4cc9f0;display:inline-block"></span>
+        <span style="font-weight:800;letter-spacing:.3px;font-size:18px;">FreeDevHub</span>
       </div>
-      <nav class="nav-links" aria-label="主导航">
+      <div class="nav" role="navigation" aria-label="主导航">
+        <a href="#resources">资源</a>
         <a href="#about">关于</a>
-        <a href="#projects">作品</a>
-        <a href="#blog">博客</a>
         <a href="#contact">联系</a>
         <button class="theme-toggle" id="themeToggle" aria-label="切换主题">🌗</button>
-      </nav>
+        <input class="search" aria-label="快速搜索" placeholder="搜索资源（示例：react、docker）" />
+      </div>
     </div>
   </header>
 
-  <main>
+  <main class="container" id="main">
     <section class="hero" aria-label="欢迎区">
-      <div class="container hero-inner">
+      <div class="hero-inner" style="align-items:center;gap:28px;">
         <div>
-          <h1>简约而不简单的个人站点</h1>
-          <p>用清晰的排版、匠心的细节，讲述我的故事、作品与所思所想。</p>
+          <h1>永久免费开发资源库</h1>
+          <p>聚合来自云端分享的高质量开发资源，支持快速下载与分类检索。</p>
           <div class="cta">
-            <a class="btn primary" href="#projects" aria-label="查看作品">查看作品</a>
-            <a class="btn secondary" href="#about" aria-label="了解我">了解我</a>
+            <a class="btn primary" href="#resources" aria-label="开始浏览资源">开始浏览</a>
+            <a class="btn secondary" href="#about" aria-label="关于本站">关于本站</a>
           </div>
         </div>
-        <div class="hero-visual" aria-label="示意画板">
-          <div class="mock"></div>
-        </div>
+        <div class="hero-visual" aria-label="示意画板"><div class="mock"></div></div>
       </div>
     </section>
 
-    <section id="features" aria-label="核心亮点">
-      <div class="container">
-        <h2>核心亮点</h2>
-        <p class="sub">简要描述你能带来的价值与能力</p>
-        <div class="grid" role="list">
-          <article class="card" role="listitem">
-            <div class="icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7ee8fa" stroke-width="2"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M3 11l9 4 9-4"/></svg>
-            </div>
-            <h3>清晰的内容结构</h3>
-            <p>以信息层级和排版韵律提升可读性与用户体验。</p>
-          </article>
-          <article class="card" role="listitem">
-            <div class="icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#5b6bff" stroke-width="2"><path d="M3 7h18"/><path d="M3 12h18"/><path d="M3 17h18"/></svg>
-            </div>
-            <h3>响应式网格布局</h3>
-            <p>在桌面、平板和手机上保持一致的视觉节奏。</p>
-          </article>
-          <article class="card" role="listitem">
-            <div class="icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7ee8fa" stroke-width="2"><path d="M12 3l9 4-9 4-9-4 9-4z"/><path d="M3 11l9 4 9-4"/></svg>
-            </div>
-            <h3>可维护的设计系统</h3>
-            <p>设计 tokens 与组件化思路，方便未来扩展。</p>
-          </article>
-          <article class="card" role="listitem">
-            <div class="icon" aria-hidden="true">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#ffc857" stroke-width="2"><path d="M3 12h18"/><path d="M3 6h18"/><path d="M3 18h18"/></svg>
-            </div>
-            <h3>无障碍友好</h3>
-            <p>对比度、键盘导航与无障碍可操作性是基本要求。</p>
-          </article>
-        </div>
+    <section id="filters" aria-label="筛选与排序">
+      <div class="sub" style="margin:8px 0 12px;color:var(--muted);">快速筛选</div>
+      <div id="categoryFilter" class="tags" style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:8px">
+        <span class="tag" data-cat="Frontend">Frontend</span>
+        <span class="tag" data-cat="Backend">Backend</span>
+        <span class="tag" data-cat="DevOps">DevOps</span>
+        <span class="tag" data-cat="Design">Design</span>
+        <span class="tag" data-cat="Templates">Templates</span>
+        <span class="tag" data-cat="Cheatsheet">Cheatsheet</span>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px">
+        <select id="sort" aria-label="排序" style="padding:8px 12px;border-radius:6px;background:#11161f;border:1px solid #334155;color:white">
+          <option value="downloads">下载量高到低</option>
+          <option value="date">最近更新</option>
+          <option value="title">标题排序</option>
+        </select>
       </div>
     </section>
 
-    <section id="projects" aria-label="作品预览">
-      <div class="container">
-        <h2>作品与案例</h2>
-        <p class="sub">精选项目快照，点击进入详情页面（若有）。</p>
-        <div class="grid-projects" role="list">
-          <div class="proj" role="listitem">
-            <div class="title">项目 A</div>
-            <div class="meta">React • 静态站点 • 2026</div>
-          </div>
-          <div class="proj" role="listitem">
-            <div class="title">项目 B</div>
-            <div class="meta">HTML/CSS/JS • 响应式</div>
-          </div>
-          <div class="proj" role="listitem">
-            <div class="title">项目 C</div>
-            <div class="meta">设计系统 • 组件库</div>
-          </div>
-          <div class="proj" role="listitem">
-            <div class="title">项目 D</div>
-            <div class="meta">博客/案例混合页</div>
-          </div>
-          <div class="proj" role="listitem">
-            <div class="title">项目 E</div>
-            <div class="meta">静态页面 • SEO 基线</div>
-          </div>
-          <div class="proj" role="listitem">
-            <div class="title">项目 F</div>
-            <div class="meta">交互原型 • 无障碍优化</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" aria-label="关于我">
-      <div class="container about">
-        <div>
-          <div class="avatar" aria-label="头像"></div>
-        </div>
-        <div>
-          <h2>关于我</h2>
-          <p class="sub" style="margin:0 0 12px;">我是一个注重体验与可维护性的前端开发者，热爱简洁、性能与无障碍。</p>
-          <p style="color:var(--muted);line-height:1.7;margin:0 0 8px;">
-            擅长将设计转化为高质量的实现，善于在设计和实现之间找到平衡。
-            追求可复用的组件化、清晰的代码结构以及快速的迭代节奏。
-          </p>
-          <p style="margin:0 0 8px;color:var(--muted);">技能：HTML5、CSS3、JavaScript、React、无障碍、性能优化、静态站点生成等。</p>
-        </div>
-      </div>
-    </section>
-
-    <section id="blog" aria-label="最新动态">
-      <div class="container">
-        <h2>最新动态</h2>
-        <p class="sub">文章摘录与更新日志</p>
-        <div class="grid-projects" role="list">
-          <article class="proj" role="listitem">
-            <div class="title">如何用 CSS Grid 实现灵活布局</div>
-            <div class="meta">2026-04-15</div>
-          </article>
-          <article class="proj" role="listitem">
-            <div class="title">无障碍友好设计的实际要点</div>
-            <div class="meta">2026-03-28</div>
-          </article>
-          <article class="proj" role="listitem">
-            <div class="title">小型站点的性能优化清单</div>
-            <div class="meta">2026-02-10</div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" aria-label="联系我">
-      <div class="container" style="display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center;">
-        <div>
-          <h2>联系我</h2>
-          <p class="sub">通过以下方式与我取得联系，或提交邮件简讯</p>
-          <form action="#" method="post" aria-label="联系表单" style="display:grid;gap:12px;max-width:520px">
-            <label>邮箱
-              <input type="email" name="email" required placeholder="your@example.com" style="width:100%;padding:12px;border-radius:8px;background:#11161f;border:1px solid #334155;color:white;"/>
-            </label>
-            <label>信息
-              <textarea name="message" rows="4" placeholder="简短描述您的需求..." style="width:100%;padding:12px;border-radius:8px;background:#11161f;border:1px solid #334155;color:white;"></textarea>
-            </label>
-            <button class="btn primary" type="submit" aria-label="发送信息">发送</button>
-          </form>
-        </div>
-        <div aria-label="联系信息">
-          <h3 style="margin:0 0 6px">也可以直接联系</h3>
-          <p style="color:var(--muted);margin:0 0 6px">Email: hello@example.com</p>
-          <p style="color:var(--muted);margin:0 0 6px">GitHub: https://github.com/your-profile</p>
-          <p style="color:var(--muted);margin:0 0 6px">Weibo/知乎等社交：链接待定</p>
-        </div>
-      </div>
+    <section id="resources" aria-label="资源列表">
+      <div class="grid" id="resourcesGrid"></div>
+      <div id="noResults" style="display:none;text-align:center;color:var(--muted);padding:20px">未找到匹配的资源</div>
     </section>
   </main>
 
   <footer>
-    <div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center">
-      <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-        <span>© 2026 Mirror-LHL</span>
-        <span>·</span>
-        <a href="#" aria-label="隐私政策">隐私政策</a>
-      </div>
-      <div style="display:flex;gap:12px;align-items:center">
-        <a href="#" aria-label="GitHub">GitHub</a>
-        <a href="#" aria-label="Twitter/X">X</a>
-      </div>
+    <div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
+      <div>© 2026 FreeDevHub</div>
+      <div>隐私政策 · 使用条款</div>
     </div>
   </footer>
 
   <script>
-    // Very small theme toggle (light/dark) for demonstration
-    (function(){
-      const btn = document.getElementById('themeToggle');
-      const body = document.body;
-      const dataTheme = localStorage.getItem('theme');
-      if(dataTheme==='light') body.style.background = '#fff';
-      btn?.addEventListener('click', ()=>{
-        const next = body.style.background === 'rgb(6, 10, 14)' ? '#fff' : '#0b0e14';
-        body.style.background = next;
-        localStorage.setItem('theme',''+(next==='rgb(6,10,14)'? 'dark':'light'));
-      });
-    })();
+  // Demo data: 免费开发资源清单（示例）
+  const RESOURCES = [
+    {
+      id: 'react-boilerplate',
+      title: 'React Boilerplate Starter',
+      description: '快速上手的 React 应用模板，包含路由、状态管理示例、CI 配置等。',
+      category: 'Frontend',
+      type: 'Template',
+      shareLink: 'https://drive.example.com/file1',
+      size: '4.2 MB',
+      date: '2026-04-01',
+      tags: ['react','template','starter'],
+      downloads: 1024
+    },
+    {
+      id: 'docker-dev-env',
+      title: 'Docker Dev Environment',
+      description: '本地开发环境的一键搭建脚本与 docker-compose 配置。',
+      category: 'DevOps',
+      type: 'Script',
+      shareLink: 'https://drive.example.com/file2',
+      size: '1.2 MB',
+      date: '2026-03-18',
+      tags: ['docker','devops','docker-compose'],
+      downloads: 820
+    },
+    {
+      id: 'node-api-starter',
+      title: 'Node.js API Starter',
+      description: '轻量级后端 API 框架模板，包含路由与中间件示例。',
+      category: 'Backend',
+      type: 'Template',
+      shareLink: 'https://drive.example.com/file3',
+      size: '2.5 MB',
+      date: '2026-02-28',
+      tags: ['node','api','express'],
+      downloads: 640
+    },
+    {
+      id: 'bash-cheatsheet',
+      title: 'Bash/CLI Cheatsheet',
+      description: '常用命令速查表，提升日常工作效率。',
+      category: 'Cheatsheet',
+      type: 'Document',
+      shareLink: 'https://drive.example.com/file4',
+      size: '320 KB',
+      date: '2025-12-10',
+      tags: ['linux','cli','tips'],
+      downloads: 1400
+    },
+    {
+      id: 'tailwind-ui-kit',
+      title: 'Tailwind UI Kit',
+      description: '可自定义的 UI 组件集合，适用于快速搭建页面。',
+      category: 'Frontend',
+      type: 'Template',
+      shareLink: 'https://drive.example.com/file5',
+      size: '3.4 MB',
+      date: '2026-01-12',
+      tags: ['tailwind','ui','components'],
+      downloads: 920
+    },
+    {
+      id: 'python-ds-pack',
+      title: 'Python Data Science Pack',
+      description: '常用数据处理与分析工具合集。',
+      category: 'Backend',
+      type: 'Archive',
+      shareLink: 'https://drive.example.com/file6',
+      size: '5.1 MB',
+      date: '2025-11-05',
+      tags: ['python','data','pandas'],
+      downloads: 510
+    }
+  ];
+
+  // 状态
+  let currentCat = null;
+  let query = '';
+  let sortKey = 'downloads';
+
+  const grid = document.getElementById('resourcesGrid');
+  const noResults = document.getElementById('noResults');
+  const searchInput = document.querySelector('.search');
+  const categoryFilter = document.getElementById('categoryFilter');
+  const sortSelect = document.getElementById('sort');
+
+  function render(){
+    let items = RESOURCES.slice();
+    // filter by category
+    if(currentCat){
+      items = items.filter(r => r.category === currentCat);
+    }
+    // search
+    if(query.trim()){
+      const q = query.toLowerCase();
+      items = items.filter(r => (
+        r.title.toLowerCase().includes(q) ||
+        r.description.toLowerCase().includes(q) ||
+        r.tags.join(' ').toLowerCase().includes(q)
+      ));
+    }
+    // sort
+    sortKey = sortSelect.value;
+    if(sortKey === 'downloads') items.sort((a,b)=> b.downloads - a.downloads);
+    if(sortKey === 'date') items.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    if(sortKey === 'title') items.sort((a,b)=> a.title.localeCompare(b.title));
+
+    // render
+    grid.innerHTML = '';
+    if(items.length === 0){ noResults.style.display = 'block'; } else { noResults.style.display = 'none'; }
+    for(const r of items){
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <div style="display:flex;gap:8px;align-items:baseline">
+          <strong>${r.title}</strong>
+          <span class="tag" style="background: rgba(76,201,240,.15);">${r.category}</span>
+        </div>
+        <p style="color:var(--muted);font-size:13px;margin:6px 0 6px">${r.description}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+          ${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
+          <a href="${r.shareLink}" target="_blank" class="download" rel="noopener">下载</a>
+          <button class="copy" data-link="${r.shareLink}" aria-label="复制下载链接">复制链接</button>
+          <span style="margin-left:auto;color:var(--muted);font-size:12px">${r.size} • ${r.date}</span>
+        </div>
+      `;
+      grid.appendChild(card);
+    }
+  }
+
+  // interactions
+  document.querySelectorAll('#categoryFilter .tag').forEach(el => {
+    el.addEventListener('click', () => {
+      const cat = el.getAttribute('data-cat');
+      currentCat = currentCat === cat ? null : cat;
+      // highlight active tag
+      document.querySelectorAll('#categoryFilter .tag').forEach(t => t.style.filter = 'none');
+      if(currentCat){ el.style.filter = 'invert(0.2) brightness(1.2)'; }
+      render();
+    });
+  });
+
+  sortSelect.addEventListener('change', render);
+  if(searchInput){ searchInput.addEventListener('input', (e)=>{ query = e.target.value; render(); }); }
+  grid.addEventListener('click', (e)=>{
+    const btn = e.target.closest('button.copy');
+    if(btn){
+      const link = btn.getAttribute('data-link');
+      navigator.clipboard.writeText(link).then(()=>{ btn.textContent = '已复制'; setTimeout(()=>{ btn.textContent = '复制链接';}, 1200); }).catch(()=>{ /* ignore */ });
+    }
+  });
+
+  // theme toggle minimal
+  (function(){
+    const btn = document.getElementById('themeToggle');
+    const html = document.documentElement;
+    const stored = localStorage.getItem('theme');
+    if(stored){ html.setAttribute('data-theme', stored); }
+    btn?.addEventListener('click', ()=>{
+      const next = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  })();
+
+  // initial render
+  render();
+  // set initial category active if any (none by default)
   </script>
 </body>
 </html>
