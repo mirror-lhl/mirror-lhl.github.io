@@ -3,3 +3,5 @@
 
 # 排除.workbuddy目录
 .workbuddy/
+
+.memory/
