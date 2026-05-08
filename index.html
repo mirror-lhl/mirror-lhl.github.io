@@ -3,8 +3,27 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>免费开发资源下载站</title>
+  <title>免费开发资源下载站 - FreeDevHub</title>
   <meta name="description" content="免费开发资源合集，来自网盘分享链接，一键下载，快速获取你所需的开发资料。" />
+  <meta name="keywords" content="免费资源,开发工具,Ubuntu ISO,Windows ISO,React模板,网盘下载" />
+  <meta property="og:title" content="免费开发资源下载站" />
+  <meta property="og:description" content="聚合网盘分享的高质量开发资源，支持搜索、分类、一键下载。" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://mirror-lhl.github.io/" />
+  <meta name="twitter:card" content="summary" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "免费开发资源下载站",
+    "description": "免费开发资源合集，来自网盘分享链接，一键下载。",
+    "url": "https://mirror-lhl.github.io/",
+    "about": {
+      "@type": "Thing",
+      "name": "开发资源下载"
+    }
+  }
+  </script>
   <style>
     :root{
       --bg: #0b0e14;
@@ -65,6 +84,20 @@
     .download{display:inline-block;margin-top:6px;padding:8px 12px;background: #1e6bd6;color:white;border-radius:6px}
     .download:hover{opacity:.95}
     .copy{margin-left:6px;padding:6px 10px;border-radius:6px;background: rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:pointer}
+
+    /* Share buttons */
+    .share-row{display:flex;gap:6px;align-items:center;margin-top:8px;padding-top:8px;border-top:1px solid rgba(255,255,255,.06)}
+    .share-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:6px;border:0;cursor:pointer;font-size:12px;background:rgba(255,255,255,.06);color:var(--fg);transition:background .15s}
+    .share-btn:hover{background:rgba(255,255,255,.12)}
+    .share-btn svg{width:14px;height:14px;fill:currentColor}
+
+    /* QR modal */
+    .qr-overlay{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center}
+    .qr-overlay.active{display:flex}
+    .qr-box{background:#fff;border-radius:14px;padding:24px;text-align:center;max-width:260px}
+    .qr-box img{width:160px;height:160px;margin:0 auto 10px}
+    .qr-box .qr-close{margin-top:10px;padding:6px 16px;border-radius:6px;border:0;cursor:pointer;background:#eee;color:#333;font-size:13px}
+    .qr-box .qr-label{color:#555;font-size:12px}
 
     /* Footer */
     footer{border-top:1px solid rgba(255,255,255,.08);padding:20px 0;margin-top:30px;color:var(--muted);font-size:12px}
@@ -143,6 +176,15 @@
       <div id="noResults" style="display:none;text-align:center;color:var(--muted);padding:20px">未找到匹配的资源</div>
     </section>
   </main>
+
+  <!-- QR overlay for WeChat share -->
+  <div class="qr-overlay" id="qrOverlay">
+    <div class="qr-box">
+      <img id="qrImage" src="" alt="QR Code" />
+      <div class="qr-label">打开微信扫码分享</div>
+      <button class="qr-close" id="qrClose">关闭</button>
+    </div>
+  </div>
 
   <footer>
     <div class="container" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;">
@@ -303,21 +345,27 @@
       const card = document.createElement('div');
       card.className = 'card';
       card.innerHTML = `
-        <div style="display:flex;gap:8px;align-items:baseline">
-          <strong>${r.title}</strong>
-          <span class="tag" style="background: rgba(76,201,240,.15);">${r.category}</span>
+        <div itemscope itemtype="https://schema.org/SoftwareApplication" style="display:flex;gap:8px;align-items:baseline">
+          <strong itemprop="name">${r.title}</strong>
+          <span class="tag" style="background: rgba(76,201,240,.15);"><span itemprop="applicationCategory">${r.category}</span></span>
         </div>
-        <p style="color:var(--muted);font-size:13px;margin:6px 0 6px">${r.description}</p>
+        <p itemprop="description" style="color:var(--muted);font-size:13px;margin:6px 0 6px">${r.description}</p>
         <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
           ${r.tags.map(t => `<span class="tag">${t}</span>`).join('')}
         </div>
         <div style="display:flex;gap:8px;align-items:center;margin-top:8px">
-          <a href="${r.shareLink}" target="_blank" class="download" rel="noopener">下载</a>
+          <a href="${r.shareLink}" target="_blank" class="download" rel="noopener" itemprop="url">下载</a>
           <button class="copy" data-link="${r.shareLink}" aria-label="复制下载链接">复制链接</button>
-          <span style="margin-left:auto;color:var(--muted);font-size:12px">${r.size} • ${r.date}</span>
+          <span style="margin-left:auto;color:var(--muted);font-size:12px" itemprop="dateModified">${r.date}</span>
         </div>
-        
-      `;
+        <meta itemprop="operatingSystem" content="Cross-platform" />
+        <meta itemprop="fileSize" content="${r.size}" />
+        <div class="share-row">
+          <span style="font-size:11px;color:var(--muted);margin-right:2px">分享</span>
+          <button class="share-btn share-weibo" data-title="${r.title}" data-url="${r.shareLink}" aria-label="分享到微博"><svg viewBox="0 0 24 24"><path d="M10.1 10.3c-.4-.2-.7-.1-.9.2-.2.3-.1.7.2.9.4.2.7.1.9-.2.2-.3.1-.7-.2-.9zm1.5 1.1c-.2-.1-.4 0-.5.2-.1.2 0 .4.2.5.2.1.4 0 .5-.2.1-.2 0-.4-.2-.5zm4.4-1.2c.2.1.3.3.2.5-.1.2-.3.3-.5.2-.2-.1-.3-.3-.2-.5.1-.2.3-.3.5-.2zm-3.3-1.9c-.2-.1-.5 0-.7.2-.1.2-.2.5-.1.7.1.2.3.3.5.3.2 0 .5-.1.6-.3.1-.2.1-.5-.1-.7l-.2-.2zm-.8 4.6c-.2.1-.3.3-.3.5 0 .2.1.4.3.5.2.1.5.1.7 0 .2-.1.3-.3.3-.5 0-.2-.1-.4-.3-.5-.2-.1-.4-.1-.7 0z"/><path d="M21.8 11.7c.8-3.5-.3-6.5-2.4-7.2-2.1-.7-4.6 1-5.4 4.5-.8 3.5.3 6.5 2.4 7.2.6.2 1.3.2 2 .1"/><path d="M10.7 16.6c2.6.9 5.6-.2 6.8-2.4 1.2-2.2.1-4.8-2.5-5.7-2.6-.9-5.6.2-6.8 2.4-1.2 2.2-.1 4.8 2.5 5.7z"/><circle cx="16.8" cy="9.3" r=".5"/></svg></button>
+          <button class="share-btn share-twitter" data-title="${r.title}" data-url="${r.shareLink}" aria-label="分享到 Twitter / X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></button>
+          <button class="share-btn share-wechat" data-title="${r.title}" data-url="${r.shareLink}" aria-label="分享到微信"><svg viewBox="0 0 24 24"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm5.34 2.867c-1.797-.052-3.746.512-5.28 1.786-1.72 1.428-2.687 3.72-1.78 6.22.942 2.453 3.666 4.229 6.884 4.229.827 0 1.622-.12 2.361-.336a.722.722 0 0 1 .598.082l1.584.926a.272.272 0 0 0 .14.045c.134 0 .24-.11.24-.245 0-.06-.024-.12-.04-.178l-.325-1.233a.583.583 0 0 1-.04-.2.49.49 0 0 1 .201-.398C23.026 19.74 24 18.117 24 16.227c0-3.256-3.307-5.918-7.062-5.918zm-2.012 2.65c.535 0 .969.44.969.982a.976.976 0 0 1-.97.983.976.976 0 0 1-.968-.983c0-.542.434-.983.969-.983zm4.024 0c.535 0 .969.44.969.982a.976.976 0 0 1-.97.983.976.976 0 0 1-.968-.983c0-.542.434-.983.969-.983z"/></svg></button>
+        </div>`;
       grid.appendChild(card);
     }
   }
@@ -352,10 +400,27 @@
   sortSelect.addEventListener('change', render);
   if(searchInput){ searchInput.addEventListener('input', (e)=>{ query = e.target.value; render(); }); }
   grid.addEventListener('click', (e)=>{
-    const btn = e.target.closest('button.copy');
-    if(btn){
-      const link = btn.getAttribute('data-link');
-      navigator.clipboard.writeText(link).then(()=>{ btn.textContent = '已复制'; setTimeout(()=>{ btn.textContent = '复制链接';}, 1200); }).catch(()=>{ /* ignore */ });
+    const copyBtn = e.target.closest('button.copy');
+    if(copyBtn){
+      const link = copyBtn.getAttribute('data-link');
+      navigator.clipboard.writeText(link).then(()=>{ copyBtn.textContent = '已复制'; setTimeout(()=>{ copyBtn.textContent = '复制链接';}, 1200); }).catch(()=>{ /* ignore */ });
+      return;
+    }
+    // share buttons
+    const shareBtn = e.target.closest('.share-btn');
+    if(!shareBtn) return;
+    const title = shareBtn.getAttribute('data-title');
+    const url = shareBtn.getAttribute('data-url');
+    const text = `免费下载: ${title}`;
+    if(shareBtn.classList.contains('share-weibo')){
+      window.open(`https://service.weibo.com/share/share.php?title=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=500');
+    } else if(shareBtn.classList.contains('share-twitter')){
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank', 'width=600,height=400');
+    } else if(shareBtn.classList.contains('share-wechat')){
+      const overlay = document.getElementById('qrOverlay');
+      const qrImg = document.getElementById('qrImage');
+      qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(url)}`;
+      overlay.classList.add('active');
     }
   });
 
@@ -421,6 +486,14 @@
       // ignore
     }
   })();
+
+  // QR overlay close
+  document.getElementById('qrClose')?.addEventListener('click', ()=>{
+    document.getElementById('qrOverlay').classList.remove('active');
+  });
+  document.getElementById('qrOverlay')?.addEventListener('click', (e)=>{
+    if(e.target === e.currentTarget) e.currentTarget.classList.remove('active');
+  });
   </script>
 </body>
 </html>
